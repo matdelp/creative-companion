@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/app.ts"
+  },
   "dependencies": {
     "@creative-companion/common": "*",
-    "express": "4"
+    "@types/express": "^5.0.3",
+    "axios": "^1.10.0",
+    "dotenv": "^17.0.0",
+    "express": "4",
+    "nodemon": "^3.1.10"
   }
 }

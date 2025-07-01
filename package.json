@@ -1,0 +1,21 @@
+{
+  "name": "@creative-companion/root",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:matdelp/creative-companion.git",
+  "author": "matdelp <mathilde.delpeuch@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "clean-install": "rm -f yarn.lock && yarn cache clean && rm -rf **/node_modules && yarn",
+    "frontend:dev": "yarn workspace @creative-companion/frontend run dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "eslint": "^9.29.0",
+    "typescript-eslint": "^8.34.1"
+  }
+}

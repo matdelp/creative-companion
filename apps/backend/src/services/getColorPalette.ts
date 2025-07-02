@@ -6,7 +6,7 @@ const getRandomHexColor = () => {
 };
 
 export const getColorPalette = async () => {
-  const hex = getRandomHexColor(); // change to get a random one
+  const hex = getRandomHexColor();
   const mode = "triad"; //Choices: monochrome monochrome-dark monochrome-light analogic complement analogic-complement triad quad
   const count = 5;
   const API = `https://www.thecolorapi.com/scheme?hex=${hex}&mode=${mode}&count=${count}&format=json`;

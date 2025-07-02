@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getQuote = async () => {
   const API = "https://api.api-ninjas.com/v1/quotes";
-  const APIKEY = "Ez+No7m46L5KPfFRJHygtA==mfDT2uq34mgg6Xe9";
+  const APIKEY = process.env.QUOTEAPIKEY;
   try {
     const response = await axios.get(API, {
       headers: { "X-Api-Key": APIKEY },

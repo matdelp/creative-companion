@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { promptRouter } from "./routes/promptRouter";
+import { userRouter } from "./routes/userRouter";
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
@@ -13,6 +14,7 @@ app.use(
   })
 );
 app.use("/prompt", promptRouter);
+app.use("/artist", userRouter);
 app.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });

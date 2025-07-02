@@ -1,14 +1,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  /* --color-myblue-400: #70d6ff;
+  /* 
   --color-mypink-400: #ff70a6;
   --color-myorange-400: #ff9770;
   --color-myyellow-700: #ffd670;
   --color-myyellow-400: #ecf8a4; */
 
+  --color-myblue-100: #b3e8fd;
+  --color-myblue-300: #70d6ff;
   --color-myblue-400: #56c4ec;
-  --color-mypink-400: #ff5c9a;
+  --color-mypink-400: #ff70a6;
   --color-myorange-400: #ff8359;
   --color-myyellow-700: #f5c842;
   --color-myyellow-400: #cde86c;
@@ -24,6 +26,9 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  width: 100vw;
+  height: 100vh;
+  /* color: #b3e8fd */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

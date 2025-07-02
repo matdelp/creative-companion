@@ -3,4 +3,4 @@ import { promptController } from "../controllers/promptController";
 
 export const promptRouter = express.Router();
 
-promptRouter.get("/", promptController.getPaletteColor);
+promptRouter.get("/", promptController.getPrompt);

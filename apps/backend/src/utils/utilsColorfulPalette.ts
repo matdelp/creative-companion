@@ -1,5 +1,5 @@
 import { DBClient } from "@creative-companion/database";
-import { Color, ColorsList } from "../types/colorfulPalette";
+import { Color, ColorsList } from "../types/colors";
 
 export const createColorfulPalette = async (
   prompt_id: number,

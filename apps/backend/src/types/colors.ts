@@ -1,22 +1,4 @@
-export type ColorPaletteData = {
-  mode: string;
-  count: string;
-  colors: ColorData[];
-  seed: ColorData;
-  image: {
-    bare: string;
-    named: string;
-  };
-  _links: {
-    self: string;
-    schemes: {
-      [key: string]: string;
-    };
-  };
-  _embedded: Record<string, unknown>;
-};
-
-export type ColorData = {
+export type ColorRes = {
   hex: {
     value: string;
     clean: string;
@@ -97,4 +79,11 @@ export type ColorData = {
     };
   };
   _embedded: Record<string, unknown>;
+};
+
+export type ColorsList = Color[];
+
+export type Color = {
+  hex: string;
+  name: string;
 };

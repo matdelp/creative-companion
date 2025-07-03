@@ -1,42 +1,27 @@
 import { Request, Response } from "express";
-import { getColorPalette } from "../services/getColorPalette";
-import { getPhoto } from "../services/getPhoto";
-import { getQuote } from "../services/getQuote";
-import { Prompt } from "../types/prompt";
-import { extractColorsFromPalette } from "../views/extractColorsFromPalette";
-import { extractPhotoInfo } from "../views/extractPhotoInfo";
-import { DBClient } from "@creative-companion/database";
-import { createColorfulPalette } from "../utils/utilsColorfulPalette";
+import { PromptRes } from "../types/prompt";
+import {
+  checkIfTodayHasPrompt,
+  createNewPrompt,
+  getPromptOfTheDay,
+} from "../utils/utilsLimitPrompt";
 
 export const promptController = {
   getPrompt: async (req: Request, res: Response) => {
     try {
-      const quoteRes = await getQuote();
-      const photoRes = await getPhoto(quoteRes.category);
-      const photo = extractPhotoInfo(photoRes);
-      const paletteRes = await getColorPalette();
-      const palette = extractColorsFromPalette(paletteRes);
-
-      const dbPrompt = {
-        quote: quoteRes.quote,
-        quote_author: quoteRes.author,
-        photo: photo.urls.full,
-        photo_author: photo.author,
-        photo_promo: photo.promo,
-        quote_category: quoteRes.category,
-      };
-
-      const promptRecord = await DBClient.prompt.create({ data: dbPrompt });
-      await createColorfulPalette(promptRecord.id, palette);
-
-      const promptRes: Prompt = {
-        quote: quoteRes,
-        palette: palette,
-        photo: photo,
-      };
+      const todayPrompt = await checkIfTodayHasPrompt();
+      if (todayPrompt) {
+        getPromptOfTheDay(todayPrompt);
+        console.log("Today has already a prompt");
+        res.send(todayPrompt);
+        return;
+      }
+      const promptRes: PromptRes = await createNewPrompt();
+      console.log("New prompt created");
       res.send(promptRes);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
   },
 };
+// TODO change format to have the same in both cases

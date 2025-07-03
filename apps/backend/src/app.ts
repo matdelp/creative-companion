@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { promptRouter } from "./routes/promptRouter";
 import { userRouter } from "./routes/userRouter";
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cors());
 app.use("/prompt", promptRouter);
 app.use("/artist", userRouter);
 app.get("/", (req, res) => {

@@ -1,12 +1,11 @@
+import { DBClient } from "@creative-companion/database";
 import { Request, Response } from "express";
-import { users } from "../dummyData"; //removed upon db implementation
 import { User } from "../types/user";
 import {
   createToken,
   encryptPasword,
   validatePassword,
 } from "../utils/utilsAuth";
-import { DBClient } from "@creative-companion/database";
 
 export const userController = {
   getUsers: async (req: Request, res: Response) => {

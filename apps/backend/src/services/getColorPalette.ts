@@ -5,9 +5,18 @@ const getRandomHexColor = () => {
   return randomColor.padStart(6, "0");
 };
 
+type ColorMode =
+  | "monochrome"
+  | "monochrome-dark"
+  | "monochrome-light"
+  | "analogic"
+  | "complement"
+  | "analogic-complement"
+  | "triad"
+  | "quad";
 export const getColorPalette = async () => {
   const hex = getRandomHexColor();
-  const mode = "triad"; //Choices: monochrome monochrome-dark monochrome-light analogic complement analogic-complement triad quad
+  const mode: ColorMode = "triad";
   const count = 5;
   const API = `https://www.thecolorapi.com/scheme?hex=${hex}&mode=${mode}&count=${count}&format=json`;
 

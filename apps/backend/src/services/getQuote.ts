@@ -1,8 +1,9 @@
 import axios from "axios";
 
+const APIKEY = process.env.QUOTEAPIKEY;
+
 export const getQuote = async () => {
   const API = "https://api.api-ninjas.com/v1/quotes";
-  const APIKEY = process.env.QUOTEAPIKEY;
   try {
     const response = await axios.get(API, {
       headers: { "X-Api-Key": APIKEY },

@@ -2,5 +2,26 @@
   "name": "@creative-companion/database",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "prisma": {
+    "seed": "ts-node seed_database/seed.ts"
+  },
+  "scripts": {
+    "seed": "prisma db seed",
+    "reset": "prisma migrate reset",
+    "migrate": "prisma migrate dev",
+    "migrate:new": "prisma migrate dev --name",
+    "pull": "prisma db pull",
+    "generate": "prisma generate",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "6.5.0",
+    "prisma": "6.5.0"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.11",
+    "dotenv": "^16.5.0",
+    "pg": "8.14.1"
+  }
 }

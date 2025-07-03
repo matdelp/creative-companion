@@ -1,17 +1,15 @@
 import React from "react";
-import { ImageCard } from "../components/home/ImageCard";
-import { QuoteCard } from "../components/home/QuoteCard";
+import PromptContainer from "../components/home/PromptContainer";
+import { UploadButton } from "../components/home/UploadButton";
+import { NavBar } from "../components/NavBar";
 
 export const HomePage: React.FC = () => {
   return (
-    <div className="bg-whiteText-accent w-full h-screen">
-      <nav className="w-full bg-mypink-400">Navbar</nav>
+    <div className="bg-blackText-primary w-full min-h-screen flex flex-col gap-20">
+      <NavBar />
       <main className="flex flex-col justify-center items-center h-full gap-10">
-        <h1 className="text-4xl text-myblue-400">Inspiration of the day</h1>
-        <ImageCard />
-        <QuoteCard />
-        <div>Palette</div>
-        <div>upload your art</div>
+        <PromptContainer />
+        <UploadButton />
       </main>
     </div>
   );

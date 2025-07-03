@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const APIKEY = process.env.PHOTOAPIKEY;
-
 export const getPhoto = async (category: string) => {
+  const APIKEY = process.env.PHOTOAPIKEY;
   const API = `https://api.unsplash.com/photos/random?query=${category}`;
 
   try {

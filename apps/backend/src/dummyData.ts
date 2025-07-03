@@ -4,25 +4,21 @@ import { Prompt } from "./types/prompt";
 
 export const users: User[] = [
   {
-    id: 1,
     first_name: "Alice",
     last_name: "Dupont",
     username: "Alice",
     email: "alice@example.com",
     password: "test123",
     posted_artwork: 10,
-    tags: ["watercolor", "oil painting"],
     artworks: ["id1, id2, id3"],
   },
   {
-    id: 2,
     first_name: "Bob",
     last_name: "Martin",
     username: "BobM",
     email: "bob.martin@example.com",
     password: "test123",
     posted_artwork: 5,
-    tags: ["digital art", "sketching"],
     artworks: ["id1, id2, id3"],
   },
 ];
@@ -82,6 +78,28 @@ export const prompts: Prompt[] = [
       author: "Cristina Gottardi",
       promo: "cristina.gottardi",
     },
-    artworks: ["id1", "id2", "id3"],
+  },
+];
+
+export const testColors = [
+  {
+    hex: "#8B1E18",
+    name: "Falu Red",
+  },
+  {
+    hex: "#189824",
+    name: "Slimy Green",
+  },
+  {
+    hex: "#2117A6",
+    name: "Torea Bay",
+  },
+  {
+    hex: "#2216B3",
+    name: "Persian Blue",
+  },
+  {
+    hex: "#2216B3",
+    name: "Persian Blue duplicate",
   },
 ];

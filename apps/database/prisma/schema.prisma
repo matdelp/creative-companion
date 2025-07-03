@@ -8,6 +8,74 @@ datasource db {
 }
 
 model user {
-  id         Int    @id(map: "user_pk") @default(autoincrement())
-  first_name String @db.VarChar
+  id         Int       @id(map: "user_pk") @default(autoincrement())
+  first_name String    @db.VarChar
+  last_name  String    @db.VarChar
+  username   String    @unique(map: "user_unique") @db.VarChar
+  email      String    @unique(map: "user_unique_1") @db.VarChar
+  password   String    @db.VarChar
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  artwork    artwork[]
+}
+
+model artwork {
+  id              Int               @id(map: "artwork_pk") @default(autoincrement())
+  created_at      DateTime          @default(now()) @db.Timestamptz(6)
+  title           String?           @db.VarChar
+  description     String?           @db.VarChar
+  content         String            @db.VarChar
+  user_id         Int
+  prompt_id       Int
+  prompt          prompt            @relation(fields: [prompt_id], references: [id], map: "artwork_prompt_fk")
+  user            user              @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "artwork_user_fk")
+  artwork_has_tag artwork_has_tag[]
+}
+
+model artwork_has_tag {
+  id         Int     @id(map: "artwork_has_tag_pk") @default(autoincrement())
+  artwork_id Int
+  tag_id     Int
+  artwork    artwork @relation(fields: [artwork_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artwork_has_tag_artwork_fk")
+  tag        tag     @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artwork_has_tag_tag_fk")
+}
+
+model prompt {
+  id             Int       @id(map: "prompt_pk") @default(autoincrement())
+  quote          String    @db.VarChar
+  quote_author   String    @db.VarChar
+  photo          String    @db.VarChar
+  photo_author   String    @db.VarChar
+  photo_promo    String?   @db.VarChar
+  quote_category String    @db.VarChar
+  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  artwork        artwork[]
+  palette        palette?
+}
+
+model tag {
+  id              Int               @id(map: "tags_pk") @default(autoincrement())
+  name            String            @unique(map: "tags_unique") @db.VarChar
+  artwork_has_tag artwork_has_tag[]
+}
+
+model color {
+  name              String              @db.VarChar
+  hex               String              @unique(map: "color_unique") @db.VarChar
+  id                Int                 @id(map: "color_pk") @default(autoincrement())
+  palette_has_color palette_has_color[]
+}
+
+model palette {
+  id                Int                 @id(map: "palette_pk") @default(autoincrement())
+  prompt_id         Int                 @unique(map: "palette_unique")
+  prompt            prompt              @relation(fields: [prompt_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "palette_prompt_fk")
+  palette_has_color palette_has_color[]
+}
+
+model palette_has_color {
+  id         Int     @id(map: "palette_has_color_pk") @default(autoincrement())
+  palette_id Int
+  color_id   Int
+  color      color   @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "palette_has_color_color_fk")
+  palette    palette @relation(fields: [palette_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "palette_has_color_palette_fk")
 }

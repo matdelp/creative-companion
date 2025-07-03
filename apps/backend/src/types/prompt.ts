@@ -18,7 +18,6 @@ export type Prompt = {
     author: string;
     promo: string | null | undefined;
   };
-  artworks: string[];
 };
 
 type Color = {

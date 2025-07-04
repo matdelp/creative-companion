@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { PhotoCard } from "./PhotoCard";
 import Palettecard, { type Color } from "./Palettecard";
-import { QuoteCard } from "./QuoteCard";
+import { InspirationCard } from "./InspirationCard";
 
 const PromptContainer: React.FC = () => {
-  const [quote, setQuote] = useState<string>("");
-  const [quoteAuthor, setQuoteAuthor] = useState<string>("");
+  const [inspiration, setInspiration] = useState<string>("");
+  const [theme, setTheme] = useState<string>("");
   const [palette, setPalette] = useState<Color[]>([]);
   const [photo, setPhoto] = useState<string>("");
   const [photoAuthor, setPhotoAuthor] = useState<string>("");
@@ -20,8 +20,8 @@ const PromptContainer: React.FC = () => {
         return response.json();
       })
       .then((data) => {
-        setQuote(data.quote.quote);
-        setQuoteAuthor(data.quote.author);
+        setInspiration(data.inspiration.name);
+        setTheme(data.inspiration.category);
         setPalette(data.palette);
         setPhoto(data.photo.url);
         setPhotoAuthor(data.photo.author);
@@ -33,15 +33,24 @@ const PromptContainer: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-whiteText-accent rounded-4xl w-4/5 flex flex-col gap-8">
-      <div className="gap-4 flex flex-col">
-        <h1 className="text-4xl text-myblue-400 font-semibold pt-15 pl-4">
-          Inspiration of the day
-        </h1>
-        <QuoteCard quote={quote} author={quoteAuthor} />
+    <div className="bg-whiteText-accent rounded-4xl w-4/5 max-w-3xl mx-auto flex flex-col gap-2 shadow-lg">
+      <div className="p-10 flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-6 items-center w-full">
+          <h1 className="text-4xl text-myblue-500 text-center font-bold pt-4 pb-2">
+            Today's Inspiration
+          </h1>
+          <span className="text-myblue-400 font-semibold text-5xl">
+            {theme}
+          </span>
+          <InspirationCard inspiration={inspiration} />
+        </div>
+        <div className="flex justify-center">
+          <Palettecard colors={palette} />
+        </div>
       </div>
-      <Palettecard colors={palette} />
-      <PhotoCard url={photo} author={photoAuthor} promo={photoPromo} />
+      <div className="flex justify-center">
+        <PhotoCard url={photo} author={photoAuthor} promo={photoPromo} />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getRandomHexColor = () => {
+const getRandomHexColor = (): string => {
   const randomColor = Math.floor(Math.random() * 0xffffff).toString(16);
   return randomColor.padStart(6, "0");
 };
@@ -16,8 +16,8 @@ type ColorMode =
   | "quad";
 export const getColorPalette = async () => {
   const hex = getRandomHexColor();
-  const mode: ColorMode = "triad";
-  const count = 5;
+  const mode: ColorMode = "quad";
+  const count = 4;
   const API = `https://www.thecolorapi.com/scheme?hex=${hex}&mode=${mode}&count=${count}&format=json`;
 
   try {

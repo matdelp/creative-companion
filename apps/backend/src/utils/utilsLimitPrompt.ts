@@ -1,30 +1,37 @@
 import { DBClient } from "@creative-companion/database";
 import { endOfDay, startOfDay } from "date-fns";
-import { DbPromptWithPalette, PromptRes } from "../types/prompt";
-import { getQuote } from "../services/getQuote";
-import { getPhoto } from "../services/getPhoto";
-import { extractPhotoInfo } from "../views/extractPhotoInfo";
 import { getColorPalette } from "../services/getColorPalette";
+import { getPhoto } from "../services/getPhoto";
+import { getQuote } from "../services/getQuote";
+import { PromptRes } from "../types/prompt";
 import { extractColorsFromPalette } from "../views/extractColorsFromPalette";
+import { extractPhotoInfo } from "../views/extractPhotoInfo";
 import { createColorfulPalette } from "./utilsColorfulPalette";
 
-export const checkIfTodayHasPrompt = async () => {
+type FetchedPrompt = Awaited<ReturnType<typeof getTodayPrompt>>;
+
+export const getTodayPrompt = async () => {
+  const now = new Date();
   const todayPrompt = await DBClient.prompt.findFirst({
     where: {
       created_at: {
-        gte: startOfDay(new Date()), // greater than or equal to
-        lte: endOfDay(new Date()), // less than or equal to
+        gte: startOfDay(now), // greater than or equal to
+        lte: endOfDay(now), // less than or equal to
       },
     },
     include: {
-      palette: { include: { palette_has_color: { include: { color: true } } } },
+      palette: {
+        include: { palette_has_color: { include: { color: true } } },
+      },
     },
   });
 
   return todayPrompt;
 };
 
-export const getPromptOfTheDay = (todayPrompt: any): PromptRes => {
+export const parseFetchedPrompt = (
+  todayPrompt: NonNullable<FetchedPrompt>
+): PromptRes => {
   return {
     quote: {
       quote: todayPrompt.quote,
@@ -34,9 +41,13 @@ export const getPromptOfTheDay = (todayPrompt: any): PromptRes => {
     photo: {
       url: todayPrompt.photo,
       author: todayPrompt.photo_author,
-      promo: todayPrompt.photo_promo,
+      promo: todayPrompt.photo_promo ?? null,
     },
-    palette: todayPrompt.palette,
+    palette:
+      todayPrompt.palette?.palette_has_color.map((entry) => ({
+        hex: entry.color.hex,
+        name: entry.color.name,
+      })) ?? [],
   };
 };
 

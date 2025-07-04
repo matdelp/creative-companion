@@ -11,7 +11,7 @@
     "seed": "prisma db seed",
     "reset": "prisma migrate reset",
     "migrate": "prisma migrate dev",
-    "migrate:new": "prisma migrate dev --name",
+    "migrate:new": "prisma migrate dev --name=initial_migration",
     "pull": "prisma db pull",
     "generate": "prisma generate",
     "postinstall": "prisma generate"

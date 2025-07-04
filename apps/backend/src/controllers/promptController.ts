@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { PromptRes } from "../types/prompt";
 import {
-  checkIfTodayHasPrompt,
+  getTodayPrompt,
   createNewPrompt,
-  getPromptOfTheDay,
+  parseFetchedPrompt,
 } from "../utils/utilsLimitPrompt";
 
 export const promptController = {
   getPrompt: async (req: Request, res: Response) => {
     try {
-      const todayPrompt = await checkIfTodayHasPrompt();
+      const todayPrompt = await getTodayPrompt();
       if (todayPrompt) {
-        getPromptOfTheDay(todayPrompt);
+        const parsedPrompt = parseFetchedPrompt(todayPrompt);
         console.log("Today has already a prompt");
-        res.send(todayPrompt);
+        res.send(parsedPrompt);
         return;
       }
       const promptRes: PromptRes = await createNewPrompt();
@@ -24,4 +24,3 @@ export const promptController = {
     }
   },
 };
-// TODO change format to have the same in both cases

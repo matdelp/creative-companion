@@ -1,32 +1,13 @@
 import React from "react";
 
-const PALETTE = [
-  {
-    hex: "#ff70a6",
-    name: "Falu Red",
-  },
-  {
-    hex: "#ff9770",
-    name: "Slimy Green",
-  },
-  {
-    hex: "#ffd670",
-    name: "Torea Bay",
-  },
-  {
-    hex: "#70d6ff",
-    name: "Persian Blue",
-  },
-  {
-    hex: "#b3e8fd",
-    name: "Persian Blue",
-  },
-];
-
-const Palettecard: React.FC = () => {
+export type Color = { hex: string; name: string };
+type PaletteCardProps = {
+  colors: Color[];
+};
+const Palettecard: React.FC<PaletteCardProps> = ({ colors }) => {
   return (
     <div className="w-full flex justify-center gap-5">
-      {PALETTE.map((color, index) => (
+      {colors.map((color, index) => (
         <div
           key={index}
           className="w-12 h-12 rounded-full"

@@ -40,16 +40,15 @@ model artwork_has_tag {
 }
 
 model prompt {
-  id             Int       @id(map: "prompt_pk") @default(autoincrement())
-  quote          String    @db.VarChar
-  quote_author   String    @db.VarChar
-  photo          String    @db.VarChar
-  photo_author   String    @db.VarChar
-  photo_promo    String?   @db.VarChar
-  quote_category String    @db.VarChar
-  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  id             Int         @id(map: "prompt_pk") @default(autoincrement())
+  photo          String      @db.VarChar
+  photo_author   String      @db.VarChar
+  photo_promo    String?     @db.VarChar
+  created_at     DateTime    @default(now()) @db.Timestamptz(6)
+  inspiration_id Int
   artwork        artwork[]
   palette        palette?
+  inspiration    inspiration @relation(fields: [inspiration_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "prompt_inspiration_fk")
 }
 
 model tag {
@@ -78,4 +77,11 @@ model palette_has_color {
   color_id   Int
   color      color   @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "palette_has_color_color_fk")
   palette    palette @relation(fields: [palette_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "palette_has_color_palette_fk")
+}
+
+model inspiration {
+  id       Int      @id(map: "newtable_pk") @default(autoincrement())
+  name     String   @unique(map: "theme_unique") @db.VarChar
+  category String   @db.VarChar
+  prompt   prompt[]
 }

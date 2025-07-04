@@ -5,7 +5,7 @@ import { NavBar } from "../components/NavBar";
 
 export const HomePage: React.FC = () => {
   return (
-    <div className="bg-blackText-primary w-full min-h-screen flex flex-col gap-20">
+    <div className="bg-blackText-primary w-full min-h-screen flex flex-col gap-10">
       <NavBar />
       <main className="flex flex-col justify-center items-center h-full gap-10">
         <PromptContainer />

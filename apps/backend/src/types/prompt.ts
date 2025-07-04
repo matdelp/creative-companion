@@ -1,9 +1,8 @@
 import { PaletteDb } from "./colorPalette";
 
 export type PromptRes = {
-  quote: {
-    quote: string;
-    author: string;
+  inspiration: {
+    name: string;
     category: string;
   };
   palette: Color[];
@@ -20,10 +19,9 @@ type Color = {
 };
 
 export type DbToPrompt = {
-  quote: string;
-  quote_author: string;
+  inspiration_name: string;
+  inspiration_category: string;
   photo: string;
   photo_author: string;
   photo_promo: string | null;
-  quote_category: string;
 };

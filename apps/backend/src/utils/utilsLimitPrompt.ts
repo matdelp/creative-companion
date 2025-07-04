@@ -2,7 +2,7 @@ import { DBClient } from "@creative-companion/database";
 import { endOfDay, startOfDay } from "date-fns";
 import { getColorPalette } from "../services/getColorPalette";
 import { getPhoto } from "../services/getPhoto";
-import { getQuote } from "../services/getQuote";
+import { getInspiration } from "../services/getPrompt";
 import { PromptRes } from "../types/prompt";
 import { extractColorsFromPalette } from "../views/extractColorsFromPalette";
 import { extractPhotoInfo } from "../views/extractPhotoInfo";
@@ -23,6 +23,7 @@ export const getTodayPrompt = async () => {
       palette: {
         include: { palette_has_color: { include: { color: true } } },
       },
+      inspiration: true,
     },
   });
 
@@ -33,10 +34,9 @@ export const parseFetchedPrompt = (
   todayPrompt: NonNullable<FetchedPrompt>
 ): PromptRes => {
   return {
-    quote: {
-      quote: todayPrompt.quote,
-      author: todayPrompt.quote_author,
-      category: todayPrompt.quote_category,
+    inspiration: {
+      name: todayPrompt.inspiration.name,
+      category: todayPrompt.inspiration.category,
     },
     photo: {
       url: todayPrompt.photo,
@@ -52,24 +52,22 @@ export const parseFetchedPrompt = (
 };
 
 export const createNewPrompt = async () => {
-  const quoteRes = await getQuote();
-  const photoRes = await getPhoto(quoteRes.category);
+  const inspirationRes = await getInspiration();
+  const photoRes = await getPhoto(inspirationRes.category);
   const photo = extractPhotoInfo(photoRes);
   const paletteRes = await getColorPalette();
   const palette = extractColorsFromPalette(paletteRes);
 
   const dbPrompt = {
-    quote: quoteRes.quote,
-    quote_author: quoteRes.author,
     photo: photo.url,
     photo_author: photo.author,
     photo_promo: photo.promo,
-    quote_category: quoteRes.category,
+    inspiration_id: inspirationRes.id,
   };
   const promptRecord = await DBClient.prompt.create({ data: dbPrompt });
   await createColorfulPalette(promptRecord.id, palette);
   return {
-    quote: quoteRes,
+    inspiration: inspirationRes,
     palette: palette,
     photo: photo,
   };

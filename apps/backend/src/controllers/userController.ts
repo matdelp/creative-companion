@@ -48,7 +48,7 @@ export const userController = {
       return;
     }
     const hashedPswd = await encryptPasword(password);
-    const newUser = {
+    const newUser: User = {
       first_name: first_name,
       last_name: last_name,
       username: username,
@@ -76,9 +76,6 @@ export const userController = {
       if (!user) throw new Error("Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
       const isMatching = await validatePassword(password, user.password);
-      console.log("body", password);
-      console.log("db", user.password);
-      console.log(isMatching);
 
       if (!isMatching) throw new Error("Invalid Credentials");
 

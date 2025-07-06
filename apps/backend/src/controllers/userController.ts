@@ -76,7 +76,6 @@ export const userController = {
       if (!user) throw new Error("Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
       const isMatching = await validatePassword(password, user.password);
-
       if (!isMatching) throw new Error("Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);

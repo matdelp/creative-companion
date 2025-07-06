@@ -48,14 +48,12 @@ export const userController = {
       return;
     }
     const hashedPswd = await encryptPasword(password);
-    const newUser: User = {
+    const newUser = {
       first_name: first_name,
       last_name: last_name,
       username: username,
       email: email,
       password: hashedPswd,
-      posted_artwork: 0,
-      artworks: [],
     };
     await DBClient.user.create({ data: newUser });
     res.json({
@@ -78,6 +76,10 @@ export const userController = {
       if (!user) throw new Error("Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
       const isMatching = await validatePassword(password, user.password);
+      console.log("body", password);
+      console.log("db", user.password);
+      console.log(isMatching);
+
       if (!isMatching) throw new Error("Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);

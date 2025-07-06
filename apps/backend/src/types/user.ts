@@ -4,6 +4,4 @@ export type User = {
   username: string;
   email: string;
   password: string;
-  posted_artwork: number;
-  artworks: string[];
 };

@@ -1,6 +1,5 @@
 import React from "react";
-import { CgProfile } from "react-icons/cg";
-import { NavLink } from "react-router-dom";
+import { ProfileDropdown } from "./ProfileDropDown";
 
 export const NavBar: React.FC = () => {
   return (
@@ -18,11 +17,9 @@ export const NavBar: React.FC = () => {
         </li>
       </ul>
       <div className="flex items-center cursor-pointer">
-        <NavLink to={"/profile/:id"}>
-          <CgProfile className="w-7 h-7" />
-        </NavLink>
-        <span className="hidden sm:inline">Profile</span>
+        <ProfileDropdown />
       </div>
     </nav>
   );
 };
+//TODO change to id when profile implemented

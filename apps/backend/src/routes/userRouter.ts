@@ -7,5 +7,5 @@ export const userRouter = express.Router();
 userRouter.get("/profile", auth, userController.getUserById);
 userRouter.post("/register", userController.createUser);
 userRouter.post("/login", userController.loginUser);
-userRouter.delete("/delete/", auth, userController.deleteUser);
+userRouter.delete("/delete", auth, userController.deleteUser);
 userRouter.get("/", userController.getUsers);

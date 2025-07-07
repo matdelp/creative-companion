@@ -5,8 +5,8 @@ type ArtworkCardProps = {
 };
 
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
-  const formatDate = (date: string) => {
-    return date.split("T")[0];
+  const formatDate = (date: Date) => {
+    return date.toString().split("T")[0];
   };
   return (
     <div className="flex flex-wrap gap-1">

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-
 import type { UserProfile } from "@creative-companion/common";
+import React, { useEffect, useState } from "react";
 import { ArtworkCard } from "../components/profile/ArtworkCard";
 import { ProfileCard } from "../components/profile/ProfileCard";
-import { useNavigate } from "react-router-dom";
 
 export const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
   const [user, setUser] = useState<UserProfile | null>(null);
 
   useEffect(() => {
@@ -25,7 +22,6 @@ export const ProfilePage: React.FC = () => {
       });
   }, []);
   if (user == null) {
-    navigate("/");
     return;
   }
 

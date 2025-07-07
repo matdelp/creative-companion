@@ -44,9 +44,14 @@ export const ProfileDropdown = () => {
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-40 bg-blackText-primary border-2 border-whiteText-primary rounded-md shadow-lg z-50">
-          <button onClick={() => navigate("/profile")} className={buttonStyle}>
-            Profile
-          </button>
+          {isLoggedIn && (
+            <button
+              onClick={() => navigate("/profile")}
+              className={buttonStyle}
+            >
+              Profile
+            </button>
+          )}
           {!isLoggedIn && (
             <button onClick={() => navigate("/login")} className={buttonStyle}>
               Login

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export const ProfilePage: React.FC = () => {
   const [username, setUsername] = useState("");
   useEffect(() => {
-    fetch("http://localhost:5000/artist/profile")
+    fetch("http://localhost:5000/artist/profile", { credentials: "include" })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

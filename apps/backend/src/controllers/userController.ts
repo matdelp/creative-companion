@@ -1,4 +1,5 @@
 import { DBClient } from "@creative-companion/database";
+import { UserProfile } from "@creative-companion/common";
 import { Request, Response } from "express";
 import { User } from "../types/user";
 import {
@@ -9,16 +10,23 @@ import {
 import { AuthenticatedRequest } from "../middleware/authenticate";
 
 export const userController = {
-  getUsers: async (req: Request, res: Response) => {
+  getUsers: async (req: Request, res: Response<UserProfile[]>) => {
     const users = await DBClient.user.findMany({ include: { artwork: true } });
     res.json(users);
   },
 
-  getUserById: async (req: AuthenticatedRequest, res: Response) => {
+  getUserById: async (
+    req: AuthenticatedRequest,
+    res: Response<UserProfile | { error: string }>
+  ) => {
     const userId = req.userId;
     const user = await DBClient.user.findUnique({
       where: { id: userId },
-      include: { artwork: true },
+      include: {
+        artwork: {
+          include: { artwork_has_tag: { include: { tag: true } } },
+        },
+      },
     });
     if (!user) {
       res.status(404).json({ error: "User not found" });

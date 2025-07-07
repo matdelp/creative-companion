@@ -1,12 +1,13 @@
 import React from "react";
 type ProfileCardProps = {
-  picture?: string;
   firstName: string;
   lastName: string;
   username: string;
-  description?: string;
+  description?: string | null;
+  picture?: string | null;
   projects: number;
 };
+
 export const ProfileCard: React.FC<ProfileCardProps> = ({
   picture = "/images/Portrait_Placeholder.png",
   firstName,
@@ -15,15 +16,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   description = "Write here about your art and yourself !",
   projects,
 }) => {
-  const tagStyle =
-    "px-3 py-1 bg-myblue-100  text-myblue-800 text-sm font-medium rounded-full";
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="h-42 bg-gradient-to-r from-mypink-400 to-myorange-400 relative">
         <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
           <img
             className="h-32 w-32 rounded-full border-4 border-white object-cover"
-            src={picture}
+            src={picture!}
             alt="Profile picture"
           />
         </div>
@@ -50,16 +49,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           >
             Edit
           </button>
-        </div>
-
-        <div className="px-5 pb-8">
-          <div className="flex flex-wrap gap-2 justify-center items-center">
-            <span className={tagStyle}>tag1</span>
-            <span className={tagStyle}>tag2</span>
-            <span className={tagStyle}>tag3</span>
-            <span className={tagStyle}>tag4</span>
-            <span className={tagStyle}>tag5</span>
-          </div>
         </div>
       </div>
     </div>

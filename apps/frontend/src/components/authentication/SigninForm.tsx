@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { useAuthStore } from "../../store/authentication";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -26,7 +25,6 @@ export const SignInForm: React.FC = () => {
   } = form;
 
   const navigate = useNavigate();
-  const setToken = useAuthStore((state) => state.setToken);
 
   const onSubmit = async (data: FormData) => {
     setBackendError(null);
@@ -38,6 +36,7 @@ export const SignInForm: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        credentials: "include",
       });
 
       const result = await response.json();
@@ -47,7 +46,6 @@ export const SignInForm: React.FC = () => {
       }
       console.log("Login successful:", result);
       navigate("/");
-      setToken(result.token);
     } catch (error) {
       if (error instanceof Error) {
         setBackendError(error.message);

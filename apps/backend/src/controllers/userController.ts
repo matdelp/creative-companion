@@ -6,6 +6,7 @@ import {
   encryptPasword,
   validatePassword,
 } from "../utils/utilsAuth";
+import { AuthenticatedRequest } from "../middleware/authenticate";
 
 export const userController = {
   getUsers: async (req: Request, res: Response) => {
@@ -13,10 +14,10 @@ export const userController = {
     res.json(users);
   },
 
-  getUserById: async (req: Request, res: Response) => {
-    const userId = req.params.id;
+  getUserById: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId;
     const user = await DBClient.user.findUnique({
-      where: { id: Number(userId) },
+      where: { id: userId },
       include: { artwork: true },
     });
     if (!user) {
@@ -79,10 +80,15 @@ export const userController = {
       if (!isMatching) throw new Error("Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);
-      res.status(200).json({
-        message: `${user.username} logged in successfully`,
-        token: token,
-      });
+      res
+        .status(200)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict", // or "lax" for dev?
+          maxAge: 3600000,
+        })
+        .json({ message: "Login successful" });
     } catch (error: any) {
       res.status(400).json({
         message: error.message,
@@ -90,12 +96,12 @@ export const userController = {
     }
   },
 
-  deleteUser: async (req: Request, res: Response) => {
-    const { userid } = req.body;
+  deleteUser: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId;
     const user = await DBClient.user.findUnique({
-      where: { id: userid },
+      where: { id: userId },
     });
     if (!user) throw new Error("404 User not found");
-    await DBClient.user.delete({ where: { id: userid } });
+    await DBClient.user.delete({ where: { id: userId } });
   },
 };

@@ -23,7 +23,6 @@ export const createToken = (id: string, email: string) => {
   });
   return jwtToken;
 };
-
 // TODO maybe later //
 
 // export const createTokenForRegistration = (id: string, role: string) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import PromptContainer from "../components/home/PromptContainer";
-import { UploadButton } from "../components/home/UploadButton";
+import { UploadModal } from "../components/home/UploadModal";
 import { NavBar } from "../components/NavBar";
 
 export const HomePage: React.FC = () => {
@@ -9,7 +9,7 @@ export const HomePage: React.FC = () => {
       <NavBar />
       <main className="flex flex-col justify-center items-center w-full gap-10 pt-6">
         <PromptContainer />
-        <UploadButton />
+        <UploadModal />
       </main>
     </div>
   );

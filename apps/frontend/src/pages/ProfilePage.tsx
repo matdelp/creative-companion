@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import type { UserProfile } from "@creative-companion/common";
 import { ArtworkCard } from "../components/profile/ArtworkCard";
 import { ProfileCard } from "../components/profile/ProfileCard";
+import { useNavigate } from "react-router-dom";
 
 export const ProfilePage: React.FC = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<UserProfile | null>(null);
 
   useEffect(() => {
@@ -22,7 +24,10 @@ export const ProfilePage: React.FC = () => {
         console.error("Fetch error:", error);
       });
   }, []);
-  if (user == null) return <div>Loading</div>;
+  if (user == null) {
+    navigate("/");
+    return;
+  }
 
   return (
     <body>

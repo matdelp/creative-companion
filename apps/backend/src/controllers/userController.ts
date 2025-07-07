@@ -112,4 +112,8 @@ export const userController = {
     if (!user) throw new Error("404 User not found");
     await DBClient.user.delete({ where: { id: userId } });
   },
+
+  checkUser: async (req: AuthenticatedRequest, res: Response) => {
+    res.json({ login: true });
+  },
 };

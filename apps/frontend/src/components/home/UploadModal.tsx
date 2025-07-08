@@ -4,19 +4,18 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 
 const formSchema = z.object({
-  title: z
-    .string()
-    .min(2, { message: "Field must contain at least 2 characters" })
-    .optional(),
-  description: z
-    .string()
-    .min(2, { message: "Field must contain at least 2 characters" })
-    .optional(),
-  art: z.instanceof(File).refine((file) => file.type.startsWith("image/"), {
-    message: "Only image files are allowed",
-  }),
+  title: z.string().nonempty({ message: "Title is required" }),
+  description: z.string().optional(),
+  art: z
+    .custom<FileList>()
+    .refine((files) => files.length === 1, {
+      message: "Please upload a single file",
+    })
+    .refine((files) => files[0]?.type.startsWith("image/"), {
+      message: "Only image files are allowed",
+    }),
 });
-type FormData = z.infer<typeof formSchema>;
+
 export const UploadModal: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [backendError, setBackendError] = React.useState<string | null>(null);
@@ -29,25 +28,30 @@ export const UploadModal: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = form;
-
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setBackendError(null);
 
     try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      if (data.description) {
+        formData.append("description", data.description);
+      }
+      const file = data.art[0];
+      formData.append("art", file);
+
       const response = await fetch("/api/artwork/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.message || "Registration failed");
+        throw new Error(result.message || "Art upload failed");
       }
-      alert("Thank you, you are now registered!");
+
+      alert("Thank you, art uploaded successfully");
+      setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
         setBackendError(error.message);
@@ -56,6 +60,7 @@ export const UploadModal: React.FC = () => {
       }
     }
   };
+
   return (
     <>
       <button
@@ -134,6 +139,8 @@ export const UploadModal: React.FC = () => {
                     <input
                       {...register("art")}
                       type="file"
+                      accept="image/*"
+                      multiple={false}
                       className={`cursor-pointer text-blackText-primary ${
                         errors.art ? "border border-red-500" : ""
                       }`}

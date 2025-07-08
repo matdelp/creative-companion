@@ -1,13 +1,12 @@
-import React from "react";
+import React, { type PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
 
-interface FormCardProps {
-  children: React.ReactNode;
+type FormCardProps = PropsWithChildren<{
   linkText: string;
   linkMessage: string;
   title: string;
   path: string;
-}
+}>;
 
 export const FormCard: React.FC<FormCardProps> = ({
   children,

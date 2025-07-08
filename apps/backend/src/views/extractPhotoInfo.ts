@@ -2,7 +2,7 @@ import { PhotoData } from "../types/photoData";
 
 export const extractPhotoInfo = (photo: PhotoData) => {
   return {
-    url: photo.urls.thumb, //TODO change format if another one needed in the front
+    url: photo.urls.small, //TODO change format if another one needed in the front
     author: photo.user.name,
     promo: photo.user.instagram_username,
   };

@@ -1,5 +1,4 @@
 export type Artwork = {
-  created_at: Date;
   title?: string | null;
   description?: string | null;
   content: string;

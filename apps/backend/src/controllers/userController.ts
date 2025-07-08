@@ -12,7 +12,15 @@ import { AuthenticatedRequest } from "../middleware/authenticate";
 export const userController = {
   getUsers: async (req: Request, res: Response<UserProfile[]>) => {
     const users = await DBClient.user.findMany({ include: { artwork: true } });
-    res.json(users);
+    const userProfiles = users.map((user) => {
+      const userProfile: UserProfile = {
+        ...user,
+        picture: user.picture ? user.picture : undefined,
+        description: user.description ? user.description : undefined,
+      };
+      return userProfile;
+    });
+    res.json(userProfiles);
   },
 
   getUserById: async (
@@ -32,7 +40,12 @@ export const userController = {
       res.status(404).json({ error: "User not found" });
       return;
     }
-    res.status(200).json(user);
+    const userProfile: UserProfile = {
+      ...user,
+      picture: user.picture ? user.picture : undefined,
+      description: user.description ? user.description : undefined,
+    };
+    res.status(200).json(userProfile);
   },
 
   createUser: async (req: Request, res: Response) => {

@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { DBClient } from "@creative-companion/database";
 import { supabase } from "../services/supabaseClient/client";
+import { AuthenticatedRequest } from "../middleware/authenticate";
+import { Artwork } from "@creative-companion/common";
+import { getTodayPrompt } from "../utils/utilsLimitPrompt";
 
 export const artworkController = {
   getArtworksByUser: async (req: Request, res: Response) => {
@@ -21,7 +24,29 @@ export const artworkController = {
     const artworks = await DBClient.artwork.findMany({ where: {} });
     res.status(200).json(artworks);
   },
-  submitArtwork: async (req: Request, res: Response) => {
+
+  submitArtwork: async (
+    req: AuthenticatedRequest,
+    res: Response<Artwork | { error: string } | { message: string }>
+  ) => {
+    if (!req.body) {
+      res.status(400).json({ error: "Body required" });
+      return;
+    }
+    const userId = req.userId;
+    const user = await DBClient.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      res.status(404).json({ error: "Please login to upload your art" });
+      return;
+    }
+    const todayPrompt = await getTodayPrompt();
+    if (!todayPrompt) {
+      res.status(404).json({ error: "Prompt not found" });
+      return;
+    }
+    const { title, description } = req.body;
     const submittedFile = req.file!;
 
     const { originalname, mimetype } = submittedFile;
@@ -32,12 +57,23 @@ export const artworkController = {
         contentType: mimetype,
       });
     if (error) {
-      res.json(error);
+      res.json({ error: "Error uploading file" });
       return;
     }
     const url = supabase.storage.from("artwork").getPublicUrl(data.path)
       .data.publicUrl;
-    
-    res.json({ ...data, url });
+
+    const newArt: Artwork = {
+      title: title,
+      description: description,
+      content: url,
+      user_id: user.id,
+      prompt_id: todayPrompt.id,
+    };
+    await DBClient.artwork.create({ data: newArt });
+
+    res.json({
+      message: `New art created successfully`,
+    });
   },
 };

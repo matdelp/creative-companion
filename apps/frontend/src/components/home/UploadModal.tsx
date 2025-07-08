@@ -12,7 +12,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Field must contain at least 2 characters" })
     .optional(),
-  image: z.instanceof(File).refine((file) => file.type.startsWith("image/"), {
+  art: z.instanceof(File).refine((file) => file.type.startsWith("image/"), {
     message: "Only image files are allowed",
   }),
 });
@@ -132,10 +132,10 @@ export const UploadModal: React.FC = () => {
 
                   <div className="col-span-2">
                     <input
-                      {...register("image")}
+                      {...register("art")}
                       type="file"
                       className={`cursor-pointer text-blackText-primary ${
-                        errors.image ? "border border-red-500" : ""
+                        errors.art ? "border border-red-500" : ""
                       }`}
                       placeholder="Write a description here (optionnal)"
                     ></input>

@@ -9,11 +9,13 @@
   "dependencies": {
     "@creative-companion/common": "*",
     "@creative-companion/database": "*",
+    "@supabase/supabase-js": "^2.50.3",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -21,6 +23,7 @@
     "dotenv": "^17.0.0",
     "express": "4",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
     "nodemon": "^3.1.10"
   }
 }

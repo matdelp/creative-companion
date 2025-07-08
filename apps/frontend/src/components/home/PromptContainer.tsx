@@ -12,7 +12,7 @@ const PromptContainer: React.FC = () => {
   const [photoPromo, setPhotoPromo] = useState<string>("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/prompt/")
+    fetch("/api/prompt/")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

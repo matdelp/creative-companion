@@ -34,7 +34,7 @@ export const UploadModal: React.FC = () => {
     setBackendError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/artwork/submit", {
+      const response = await fetch("/api/artwork/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export const UploadModal: React.FC = () => {
             <FormProvider {...form}>
               <form
                 className="p-4"
-                action="http://localhost:5000/artwork/submit"
+                action="/api/artwork/submit"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="grid gap-4 mb-4 grid-cols-2">

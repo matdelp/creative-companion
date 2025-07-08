@@ -39,7 +39,7 @@ export const SignUpForm: React.FC = () => {
     setBackendError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/artist/register", {
+      const response = await fetch("/api/artist/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const SignUpForm: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         className="flex flex-col items-center justify-center gap-3 w-full"
-        action="http://localhost:5000/artist/register"
+        action="/api/artist/register"
         method="POST"
       >
         <div className="w-full">

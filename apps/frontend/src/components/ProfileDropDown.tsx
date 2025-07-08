@@ -11,7 +11,7 @@ export const ProfileDropdown = () => {
   const buttonStyle =
     "w-full px-4 py-2 text-left text-white hover:bg-black cursor-pointer rounded-md";
   useEffect(() => {
-    fetch("http://localhost:5000/artist/islogin", { credentials: "include" })
+    fetch("/api/artist/islogin", { credentials: "include" })
       .then((response) => {
         console.log(response);
 

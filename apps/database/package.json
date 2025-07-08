@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "prisma": {
-    "seed": "ts-node seed_database/seed.ts"
+    "seed": "ts-node dbSeeding/seeder.ts"
   },
   "scripts": {
     "seed": "prisma db seed",

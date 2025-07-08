@@ -3,7 +3,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import { getColorPalette } from "../services/getColorPalette";
 import { getPhoto } from "../services/getPhoto";
 import { getInspiration } from "../services/getPrompt";
-import { PromptRes } from "../types/prompt";
+import { PromptRes } from "@creative-companion/common";
 import { extractColorsFromPalette } from "../views/extractColorsFromPalette";
 import { extractPhotoInfo } from "../views/extractPhotoInfo";
 import { createColorfulPalette } from "./utilsColorfulPalette";

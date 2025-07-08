@@ -1,4 +1,4 @@
-import { PhotoData } from "../types/photoData";
+import { PhotoData } from "@creative-companion/common";
 
 export const extractPhotoInfo = (photo: PhotoData) => {
   return {

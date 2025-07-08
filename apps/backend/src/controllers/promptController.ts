@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PromptRes } from "../types/prompt";
+import { PromptRes } from "@creative-companion/common";
 import {
   createNewPrompt,
   getTodayPrompt,
@@ -7,7 +7,10 @@ import {
 } from "../utils/utilsLimitPrompt";
 
 export const promptController = {
-  getPrompt: async (req: Request, res: Response) => {
+  getPrompt: async (
+    req: Request,
+    res: Response<PromptRes | { error: string }>
+  ) => {
     try {
       const todayPrompt = await getTodayPrompt();
       if (todayPrompt) {

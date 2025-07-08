@@ -2,7 +2,7 @@ import React, { useState } from "react";
 type PhotoCardProps = {
   url: string;
   author: string;
-  promo: string;
+  promo: string | null | undefined;
 };
 export const PhotoCard: React.FC<PhotoCardProps> = ({ url, author, promo }) => {
   const [isOpen, setIsOpen] = useState(false);

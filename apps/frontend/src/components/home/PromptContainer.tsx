@@ -1,15 +1,11 @@
+import type { PromptRes } from "@creative-companion/common";
 import React, { useEffect, useState } from "react";
-import { PhotoCard } from "./PhotoCard";
-import Palettecard, { type Color } from "./Palettecard";
 import { InspirationCard } from "./InspirationCard";
+import Palettecard from "./Palettecard";
+import { PhotoCard } from "./PhotoCard";
 
 const PromptContainer: React.FC = () => {
-  const [inspiration, setInspiration] = useState<string>("");
-  const [theme, setTheme] = useState<string>("");
-  const [palette, setPalette] = useState<Color[]>([]);
-  const [photo, setPhoto] = useState<string>("");
-  const [photoAuthor, setPhotoAuthor] = useState<string>("");
-  const [photoPromo, setPhotoPromo] = useState<string>("");
+  const [prompt, setPrompt] = useState<PromptRes | null>(null);
 
   useEffect(() => {
     fetch("/api/prompt/")
@@ -19,18 +15,14 @@ const PromptContainer: React.FC = () => {
         }
         return response.json();
       })
-      .then((data) => {
-        setInspiration(data.inspiration.name);
-        setTheme(data.inspiration.category);
-        setPalette(data.palette);
-        setPhoto(data.photo.url);
-        setPhotoAuthor(data.photo.author);
-        setPhotoPromo(data.photo.promo);
+      .then((data: PromptRes) => {
+        setPrompt(data);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   }, []);
+  if (prompt == null) return <div>Loading</div>;
 
   return (
     <div className="bg-whiteText-accent rounded-4xl w-4/5 max-w-3xl mx-auto flex flex-col gap-2 shadow-lg">
@@ -40,16 +32,20 @@ const PromptContainer: React.FC = () => {
             Today's Inspiration
           </h1>
           <span className="text-myblue-400 font-semibold text-5xl">
-            {theme}
+            {prompt.inspiration.category}
           </span>
-          <InspirationCard inspiration={inspiration} />
+          <InspirationCard inspiration={prompt.inspiration.name} />
         </div>
         <div className="flex justify-center">
-          <Palettecard colors={palette} />
+          <Palettecard colors={prompt.palette} />
         </div>
       </div>
       <div className="flex justify-center">
-        <PhotoCard url={photo} author={photoAuthor} promo={photoPromo} />
+        <PhotoCard
+          url={prompt.photo.url}
+          author={prompt.photo.author}
+          promo={prompt.photo.promo}
+        />
       </div>
     </div>
   );

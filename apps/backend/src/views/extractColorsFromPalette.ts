@@ -1,5 +1,5 @@
-import { PaletteRes } from "../types/colorPalette";
-import { ColorsList } from "../types/colors";
+import { PaletteRes } from "@creative-companion/common";
+import { ColorsList } from "@creative-companion/common";
 
 export const extractColorsFromPalette = (palette: PaletteRes): ColorsList => {
   const colors = palette.colors;

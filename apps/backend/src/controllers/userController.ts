@@ -1,7 +1,7 @@
 import { DBClient } from "@creative-companion/database";
 import { UserProfile } from "@creative-companion/common";
 import { Request, Response } from "express";
-import { User } from "../types/user";
+import { User } from "@creative-companion/common";
 import {
   createToken,
   encryptPasword,

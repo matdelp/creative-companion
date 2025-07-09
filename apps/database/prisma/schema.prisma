@@ -13,7 +13,7 @@ model user {
   last_name   String    @db.VarChar
   username    String    @unique(map: "user_unique") @db.VarChar
   email       String    @unique(map: "user_unique_1") @db.VarChar
-  password    String    @db.VarChar
+  password    String?   @db.VarChar
   created_at  DateTime  @default(now()) @db.Timestamptz(6)
   description String?   @db.VarChar
   picture     String?   @db.VarChar

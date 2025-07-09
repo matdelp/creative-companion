@@ -6,6 +6,7 @@ type FormCardProps = PropsWithChildren<{
   linkMessage: string;
   title: string;
   path: string;
+  google: boolean;
 }>;
 
 export const FormCard: React.FC<FormCardProps> = ({
@@ -14,6 +15,7 @@ export const FormCard: React.FC<FormCardProps> = ({
   linkMessage,
   title,
   path,
+  google,
 }) => {
   return (
     <div className="flex flex-col items-center justify-center p-10 rounded-2xl w-4/5 max-w-md bg-myblue-100 shadow-lg gap-8">
@@ -27,6 +29,11 @@ export const FormCard: React.FC<FormCardProps> = ({
           {linkText}
         </NavLink>
       </p>
+      {google && (
+        <a className="font-semibold" href="http://localhost:5000/artist/google">
+          Sign in with Google
+        </a>
+      )}
     </div>
   );
 };

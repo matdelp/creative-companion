@@ -3,5 +3,10 @@ export type User = {
   last_name: string;
   username: string;
   email: string;
-  password: string;
+  password?: string;
+};
+
+export type UserGoogle = {
+  id: string;
+  email: string;
 };

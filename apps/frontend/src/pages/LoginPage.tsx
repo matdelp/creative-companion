@@ -11,6 +11,7 @@ export const LoginPage: React.FC = () => {
         linkMessage="Don't have an account?"
         linkText="Register"
         path="/register"
+        google={true}
       />
     </div>
   );

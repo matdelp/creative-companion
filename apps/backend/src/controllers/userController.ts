@@ -1,5 +1,5 @@
 import { DBClient } from "@creative-companion/database";
-import { UserProfile } from "@creative-companion/common";
+import { UserGoogle, UserProfile } from "@creative-companion/common";
 import { Request, Response } from "express";
 import { User } from "@creative-companion/common";
 import {
@@ -8,6 +8,7 @@ import {
   validatePassword,
 } from "../utils/utilsAuth";
 import { AuthenticatedRequest } from "../middleware/authenticate";
+import { checkUsernameExists } from "../utils/utilsUsername";
 
 export const userController = {
   getUsers: async (req: Request, res: Response<UserProfile[]>) => {
@@ -62,9 +63,7 @@ export const userController = {
       res.status(400).json({ message: "email already used to register" });
       return;
     }
-    const checkUsername = await DBClient.user.findUnique({
-      where: { username: username },
-    });
+    const checkUsername = await checkUsernameExists(username);
     if (checkUsername) {
       res.status(400).json({ message: "username already in used" });
       return;
@@ -97,6 +96,7 @@ export const userController = {
       });
       if (!user) throw new Error("Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
+      if (!user.password) throw new Error("Invalid Credentials");
       const isMatching = await validatePassword(password, user.password);
       if (!isMatching) throw new Error("Invalid Credentials");
 
@@ -114,6 +114,30 @@ export const userController = {
       res.status(400).json({
         message: error.message,
       });
+    }
+  },
+
+  googleLoginUser: async (req: Request, res: Response) => {
+    try {
+      const user = req.user as UserGoogle; //TODO change that type
+      if (!user) {
+        throw new Error("Invalid Google user data");
+      }
+
+      // Same token creation logic as your regular login
+      const token = createToken(user.id.toString(), user.email);
+
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict",
+          maxAge: 3600000, // 1 hour
+        })
+        .redirect("http://localhost:5173");
+    } catch (error: any) {
+      console.error(error);
+      res.redirect("http://localhost:5173/login?auth=failed");
     }
   },
 

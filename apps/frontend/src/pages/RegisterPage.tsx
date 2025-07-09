@@ -11,6 +11,7 @@ export const RegisterPage: React.FC = () => {
         linkMessage="Already have an account?"
         linkText="Login"
         path="/login"
+        google={false}
       />
     </div>
   );

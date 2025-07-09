@@ -5,10 +5,21 @@ import cookieParser from "cookie-parser";
 import { promptRouter } from "./routes/promptRouter";
 import { userRouter } from "./routes/userRouter";
 import { artworkRouter } from "./routes/artworkRouter";
+import passport from "./services/passeport/googleAuth";
+import session from "express-session";
 
 const PORT = process.env.PORT || 5001;
 
 const app = express();
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 app.use(
   express.urlencoded({

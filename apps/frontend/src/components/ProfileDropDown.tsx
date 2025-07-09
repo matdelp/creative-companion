@@ -5,30 +5,37 @@ import { useAuthStore } from "../store/authentication";
 
 export const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { logout, authProvider, setIsLoggedIn, isLoggedIn } = useAuthStore();
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
   const buttonStyle =
     "w-full px-4 py-2 text-left text-white hover:bg-black cursor-pointer rounded-md";
   useEffect(() => {
     fetch("/api/artist/islogin", { credentials: "include" })
       .then((response) => {
-        console.log(response);
-
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-
         setIsLoggedIn(data.login);
+        console.log("data.login is", data.login);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   }, []);
+
+  const handleLogout = async () => {
+    if (authProvider === "local") {
+      await fetch("/artist/logout", { credentials: "include" });
+    } else {
+      await fetch("/artist/google/logout", { credentials: "include" });
+    }
+    logout();
+    alert("Logged out successfully");
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="relative inline-block text-left">
@@ -59,11 +66,8 @@ export const ProfileDropdown = () => {
           )}
           {isLoggedIn && (
             <button
-              onClick={() => {
-                logout();
-                alert("log out successfuly");
-                setIsOpen(!isOpen);
-                setIsLoggedIn(!isLoggedIn);
+              onClick={async () => {
+                await handleLogout();
               }}
               className={buttonStyle}
             >

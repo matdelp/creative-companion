@@ -30,7 +30,7 @@ export const FormCard: React.FC<FormCardProps> = ({
         </NavLink>
       </p>
       {google && (
-        <a className="font-semibold" href="http://localhost:5000/artist/google">
+        <a className="font-semibold" href="/api/artist/google">
           Sign in with Google
         </a>
       )}

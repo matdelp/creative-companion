@@ -116,6 +116,12 @@ export const userController = {
       });
     }
   },
+  logoutUser: (req: Request, res: Response) => {
+    res.clearCookie("token", {
+      httpOnly: true,
+    });
+    res.status(200).json({ message: "User logged out successfully" });
+  },
 
   googleLoginUser: async (req: Request, res: Response) => {
     try {
@@ -126,7 +132,6 @@ export const userController = {
 
       // Same token creation logic as your regular login
       const token = createToken(user.id.toString(), user.email);
-
       res
         .cookie("token", token, {
           httpOnly: true,
@@ -134,12 +139,20 @@ export const userController = {
           sameSite: "strict",
           maxAge: 3600000, // 1 hour
         })
-        .redirect("http://localhost:5173");
+        .redirect("http://localhost:5173"); //TODO before deploiement
     } catch (error: any) {
-      console.error(error);
-      res.redirect("http://localhost:5173/login?auth=failed");
+      res.redirect(`${req.baseUrl}/login?auth=failed`);
     }
   },
+
+  googleLogoutUser: async (req: Request, res: Response) => {
+    req.logout(() => {
+      req.session.destroy(() => {
+        res.clearCookie("token");
+        res.json({ message: "Google user logged out successfully" });
+      });
+    });
+  }, //TODO
 
   deleteUser: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.userId;

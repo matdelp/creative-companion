@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAuthStore } from "../../store/authentication";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -14,6 +15,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export const SignInForm: React.FC = () => {
   const [backendError, setBackendError] = React.useState<string | null>(null);
+  const { setIsLoggedIn, setAuthProvider } = useAuthStore();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -42,9 +44,11 @@ export const SignInForm: React.FC = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Login failed");
+        throw new Error(result.message || "Invalid email or password");
       }
-      console.log("Login successful:", result);
+      console.log("Login successful:");
+      setAuthProvider("local");
+      setIsLoggedIn(true);
       navigate("/");
     } catch (error) {
       if (error instanceof Error) {
@@ -61,8 +65,6 @@ export const SignInForm: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         className="flex flex-col items-center justify-center gap-3 w-full"
-        action="/api/artist/login"
-        method="POST"
       >
         <div className="w-full">
           <input

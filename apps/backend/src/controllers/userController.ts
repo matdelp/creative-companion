@@ -290,6 +290,15 @@ export const userController = {
     });
     if (!user) throw new Error("404 User not found");
     await DBClient.user.delete({ where: { id: userId } });
+    res;
+    res
+      .clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        path: "/",
+      })
+      .redirect("http://localhost:5173");
   },
 
   checkUser: async (req: AuthenticatedRequest, res: Response) => {

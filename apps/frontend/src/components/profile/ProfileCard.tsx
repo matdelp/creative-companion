@@ -99,6 +99,23 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       else setBackendError("An unknown error occurred");
     }
   };
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      try {
+        const response = await fetch("/api/artist/delete", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.message || "Deletion failed");
+        }
+      } catch (error) {
+        if (error instanceof Error) setBackendError(error.message);
+        setBackendError("An unknown error occurred");
+      }
+    }
+  };
 
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -173,6 +190,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 type="submit"
               >
                 Save
+              </button>
+              <button
+                className=" text-red-600 text-lg rounded-2xl cursor-pointer w-full max-w-60"
+                type="button"
+                onClick={handleDelete}
+              >
+                Delete my account
               </button>
             </form>
           </FormProvider>

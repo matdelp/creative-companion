@@ -26,7 +26,7 @@ export const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
       <ProfileCard
         picture={user.picture}
         firstName={user.first_name}
@@ -36,6 +36,6 @@ export const ProfilePage: React.FC = () => {
         projects={user.artwork.length}
       />
       <ArtworkCard artworks={user.artwork} />
-    </div>
+    </>
   );
 };

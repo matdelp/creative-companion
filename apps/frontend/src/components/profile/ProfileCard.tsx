@@ -1,9 +1,10 @@
+import type { UserInfo } from "@creative-companion/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
+import { NavHomeButton } from "../NavHomeButton";
 import { Picture } from "./Picture";
-import type { UserInfo } from "@creative-companion/common";
 
 type ProfileCardProps = {
   firstName: string;
@@ -101,7 +102,10 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
-      <div className="h-40 bg-gradient-to-r from-mypink-400 to-myorange-400 relative">
+      <div className="h-40 bg-gradient-to-r from-mypink-400 to-myorange-400 relative p-5">
+        <div className="absolute right-5">
+          <NavHomeButton />
+        </div>
         <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
           <Picture image={picture!} isEditing={isEditing} />
         </div>

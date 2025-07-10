@@ -23,12 +23,18 @@ export const FormCard: React.FC<FormCardProps> = ({
         {title}
       </h2>
       {children}
-      <p className="text-blackText-secondary">
-        {linkMessage}{" "}
-        <NavLink className="font-semibold" to={path}>
-          {linkText}
-        </NavLink>
-      </p>
+      <div className="flex gap-3">
+        <p className="text-blackText-secondary">
+          {linkMessage}{" "}
+          <NavLink className="font-semibold" to={path}>
+            {linkText}
+          </NavLink>
+          , or back to{" "}
+          <NavLink className="font-semibold" to="/">
+            home
+          </NavLink>
+        </p>
+      </div>
       {google && (
         <a className="font-semibold" href="/api/artist/google">
           Sign in with Google

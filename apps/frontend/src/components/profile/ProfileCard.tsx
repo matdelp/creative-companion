@@ -1,4 +1,6 @@
 import React from "react";
+import { EditModal } from "./EditModal";
+import { Picture } from "./Picture";
 type ProfileCardProps = {
   firstName: string;
   lastName: string;
@@ -20,11 +22,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="h-42 bg-gradient-to-r from-mypink-400 to-myorange-400 relative">
         <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-          <img
-            className="h-32 w-32 rounded-full border-4 border-white object-cover"
-            src={picture!}
-            alt="Profile picture"
-          />
+          <Picture image={picture!} />
         </div>
       </div>
 
@@ -41,14 +39,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             <p className="text-sm text-gray-500">Projects</p>
           </div>
         </div>
-
-        <div className="flex justify-center space-x-3 pb-5">
-          <button
-            onClick={() => alert("not implemented yet")}
-            className="flex-1 cursor-pointer bg-myblue-400 hover:bg-myblue-800 text-whiteText-accent font-semibold max-w-1/2 py-2 px-4 rounded-lg transition duration-150 ease-in-out"
-          >
-            Edit
-          </button>
+        <div className="flex items-center justify-center w-full">
+          <EditModal />
         </div>
       </div>
     </div>

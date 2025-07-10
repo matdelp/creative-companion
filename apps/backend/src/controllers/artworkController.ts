@@ -71,7 +71,6 @@ export const artworkController = {
       prompt_id: todayPrompt.id,
     };
     const dbnewArt = await DBClient.artwork.create({ data: newArt });
-    console.log(JSON.stringify(dbnewArt, null, 2));
 
     res.json({
       message: `New art created successfully`,

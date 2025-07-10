@@ -1,5 +1,10 @@
 import { DBClient } from "@creative-companion/database";
-import { UserGoogle, UserProfile } from "@creative-companion/common";
+import {
+  UserGoogle,
+  UserInfo,
+  UserPhoto,
+  UserProfile,
+} from "@creative-companion/common";
 import { Request, Response } from "express";
 import { User } from "@creative-companion/common";
 import {
@@ -9,6 +14,7 @@ import {
 } from "../utils/utilsAuth";
 import { AuthenticatedRequest } from "../middleware/authenticate";
 import { checkUsernameExists } from "../utils/utilsUsername";
+import { supabase } from "../services/supabaseClient/client";
 
 export const userController = {
   getUsers: async (req: Request, res: Response<UserProfile[]>) => {
@@ -79,6 +85,98 @@ export const userController = {
     await DBClient.user.create({ data: newUser });
     res.json({
       message: `User ${newUser.username} created successfully`,
+    });
+  },
+
+  editUserProfile: async (
+    req: AuthenticatedRequest,
+    res: Response<UserInfo | { error: string } | { message: string }>
+  ) => {
+    if (!req.body) {
+      res.status(400).json({ error: "Body required" });
+    }
+    const { first_name, last_name, username, description } = req.body;
+    // TODO: add validation schema (JOI?)
+    const userId = req.userId;
+    if (!userId) {
+      res.status(404).json({ error: "User not found" });
+    }
+
+    const checkUsername = await checkUsernameExists(username);
+    if (checkUsername) {
+      res.status(400).json({ message: "username already in used" });
+      return;
+    }
+    const updatedUser: UserInfo = {
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      description: description,
+    };
+    await DBClient.user.update({ where: { id: userId }, data: updatedUser });
+    res.json({
+      message: `User ${updatedUser.username} created successfully`,
+    });
+  },
+
+  submitProfilePhoto: async (
+    req: AuthenticatedRequest,
+    res: Response<
+      UserPhoto | { error: string } | { message: string; url: string }
+    >
+  ) => {
+    if (!req.file) {
+      res.status(400).json({ error: "No file uploaded" });
+      return;
+    }
+
+    const userId = req.userId;
+    const user = await DBClient.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const submittedFile = req.file;
+    const { originalname, mimetype, buffer } = submittedFile;
+
+    const fileExt = originalname.split(".").pop();
+    const filePath = `user-${userId}/avatar.${fileExt}`;
+
+    const { data, error } = await supabase.storage
+      .from("profilepicture")
+      .upload(filePath, buffer, {
+        upsert: true,
+        contentType: mimetype,
+      });
+
+    if (error) {
+      res.status(500).json({ error: "Error uploading file" });
+      return;
+    }
+
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from("profilepicture")
+      .createSignedUrl(filePath, 3600);
+
+    if (signedError || !signedData) {
+      res.status(500).json({ error: "Error generating signed URL" });
+      return;
+    }
+
+    const signedUrl = signedData.signedUrl;
+
+    await DBClient.user.update({
+      where: { id: userId },
+      data: {
+        picture: filePath,
+      },
+    });
+
+    res.json({
+      message: "New photo uploaded successfully",
+      url: signedUrl,
     });
   },
 

@@ -47,9 +47,20 @@ export const userController = {
       res.status(404).json({ error: "User not found" });
       return;
     }
+
+    let pictureUrl: string | undefined = undefined;
+    if (user.picture) {
+      const { data, error } = await supabase.storage
+        .from("profilepicture")
+        .createSignedUrl(user.picture, 3600);
+
+      if (!error && data?.signedUrl) {
+        pictureUrl = data.signedUrl;
+      }
+    }
     const userProfile: UserProfile = {
       ...user,
-      picture: user.picture ? user.picture : undefined,
+      picture: user.picture ? pictureUrl : undefined,
       description: user.description ? user.description : undefined,
     };
     res.status(200).json(userProfile);

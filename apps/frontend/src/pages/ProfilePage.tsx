@@ -22,7 +22,7 @@ export const ProfilePage: React.FC = () => {
       });
   }, []);
   if (user == null) {
-    return;
+    return null;
   }
 
   return (

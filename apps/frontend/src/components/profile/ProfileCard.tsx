@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { Picture } from "./Picture";
@@ -36,7 +36,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   projects,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [backendError, setBackendError] = useState<string | null>(null);
+  useEffect(() => {
+    console.log({ isEditing });
+  });
+
+  // const [backendError, setBackendError] = useState<string | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -50,41 +54,44 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   const {
     register,
-    handleSubmit,
+    // handleSubmit,
     formState: { errors },
-    reset,
+    // reset,
   } = form;
 
   const handleToggle = () => {
-    if (!isEditing) {
-      reset({
-        first_name: firstName,
-        last_name: lastName,
-        username,
-        description: description ?? "",
-      });
-    }
-    setIsEditing(!isEditing);
+    setIsEditing((prev) => !prev);
   };
 
-  const onSubmit = async (data: FormData) => {
-    setBackendError(null);
-    try {
-      const response = await fetch("/api/artist/edit", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || "Edit failed");
-      }
-      setIsEditing(false); // exit edit mode on success
-    } catch (error) {
-      if (error instanceof Error) setBackendError(error.message);
-      else setBackendError("An unknown error occurred");
-    }
-  };
+  // useEffect(() => {
+  //   if (!isEditing) {
+  //     reset({
+  //       first_name: firstName,
+  //       last_name: lastName,
+  //       username,
+  //       description: description ?? "",
+  //     });
+  //   }
+  // }, [isEditing, firstName, lastName, username, description, reset]);
+
+  // const onSubmit = async (data: FormData) => {
+  //   setBackendError(null);
+  //   try {
+  //     const response = await fetch("/api/artist/edit", {
+  //       method: "PATCH",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     });
+  //     const result = await response.json();
+  //     if (!response.ok) {
+  //       throw new Error(result.message || "Edit failed");
+  //     }
+  //     setIsEditing(false); // exit edit mode on success
+  //   } catch (error) {
+  //     if (error instanceof Error) setBackendError(error.message);
+  //     else setBackendError("An unknown error occurred");
+  //   }
+  // };
 
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -99,7 +106,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           <FormProvider {...form}>
             <form
               className="flex flex-col items-center w-full justify-center gap-3"
-              onSubmit={handleSubmit(onSubmit)}
+              // onSubmit={handleSubmit(onSubmit)}
               noValidate
             >
               <input
@@ -147,9 +154,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 </p>
               )}
 
-              {backendError && (
+              {/* {backendError && (
                 <p className="text-red-600 font-semibold">{backendError}</p>
-              )}
+              )} */}
 
               <button
                 className="bg-mypink-400 p-2 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"

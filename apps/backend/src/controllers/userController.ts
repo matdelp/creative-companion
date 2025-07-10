@@ -94,11 +94,11 @@ export const userController = {
       const user = await DBClient.user.findUnique({
         where: { email: email },
       });
-      if (!user) throw new Error("Invalid Credentials");
+      if (!user) throw new Error("1Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
-      if (!user.password) throw new Error("Invalid Credentials");
+      if (!user.password) throw new Error("2Invalid Credentials");
       const isMatching = await validatePassword(password, user.password);
-      if (!isMatching) throw new Error("Invalid Credentials");
+      if (!isMatching) throw new Error("3Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);
       res
@@ -106,7 +106,7 @@ export const userController = {
         .cookie("token", token, {
           httpOnly: true,
           secure: true,
-          sameSite: "strict", // or "lax" for dev?
+          sameSite: "strict",
           maxAge: 3600000,
         })
         .json({ message: "Login successful" });
@@ -119,6 +119,9 @@ export const userController = {
   logoutUser: (req: Request, res: Response) => {
     res.clearCookie("token", {
       httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
     });
     res.status(200).json({ message: "User logged out successfully" });
   },
@@ -130,7 +133,6 @@ export const userController = {
         throw new Error("Invalid Google user data");
       }
 
-      // Same token creation logic as your regular login
       const token = createToken(user.id.toString(), user.email);
       res
         .cookie("token", token, {
@@ -148,7 +150,12 @@ export const userController = {
   googleLogoutUser: async (req: Request, res: Response) => {
     req.logout(() => {
       req.session.destroy(() => {
-        res.clearCookie("token");
+        res.clearCookie("token", {
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict",
+          path: "/",
+        });
         res.json({ message: "Google user logged out successfully" });
       });
     });

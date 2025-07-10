@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { Picture } from "./Picture";
+import type { UserInfo } from "@creative-companion/common";
 
 type ProfileCardProps = {
   firstName: string;
@@ -14,15 +15,9 @@ type ProfileCardProps = {
 };
 
 const formSchema = z.object({
-  first_name: z
-    .string()
-    .min(2, { message: "Field must contain at least 2 characters" }),
-  last_name: z
-    .string()
-    .min(2, { message: "Field must contain at least 2 characters" }),
-  username: z
-    .string()
-    .min(2, { message: "Username must contain at least 2 characters" }),
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
+  username: z.string().optional(),
   description: z.string().optional(),
 });
 type FormData = z.infer<typeof formSchema>;
@@ -35,15 +30,15 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   description = "Write here about your art and yourself !",
   projects,
 }) => {
-  console.log({
-    firstName,
-    lastName,
-    username,
-    description,
-  });
   const [isEditing, setIsEditing] = useState(false);
-
-  // const [backendError, setBackendError] = useState<string | null>(null);
+  const [user, setUser] = useState<UserInfo>({
+    picture: picture || "/images/Portrait_Placeholder.png",
+    first_name: firstName,
+    last_name: lastName,
+    username: username,
+    description: description ?? "",
+  });
+  const [backendError, setBackendError] = useState<string | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -57,50 +52,58 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   const {
     register,
-    // handleSubmit,
-    // formState: { errors },
-    // reset,
+    handleSubmit,
+    formState: { errors },
+    reset,
   } = form;
 
   const handleToggle = () => {
     setIsEditing((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   if (!isEditing) {
-  //     reset({
-  //       first_name: firstName,
-  //       last_name: lastName,
-  //       username,
-  //       description: description ?? "",
-  //     });
-  //   }
-  // }, [isEditing, firstName, lastName, username, description, reset]);
+  useEffect(() => {
+    if (!isEditing) {
+      reset({
+        first_name: firstName,
+        last_name: lastName,
+        username,
+        description: description ?? "",
+      });
+    }
+  }, [isEditing, firstName, lastName, username, description, reset]);
 
-  // const onSubmit = async (data: FormData) => {
-  //   setBackendError(null);
-  //   try {
-  //     const response = await fetch("/api/artist/edit", {
-  //       method: "PATCH",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     });
-  //     const result = await response.json();
-  //     if (!response.ok) {
-  //       throw new Error(result.message || "Edit failed");
-  //     }
-  //     setIsEditing(false); // exit edit mode on success
-  //   } catch (error) {
-  //     if (error instanceof Error) setBackendError(error.message);
-  //     else setBackendError("An unknown error occurred");
-  //   }
-  // };
+  const onSubmit = async (data: FormData) => {
+    setBackendError(null);
+    try {
+      const response = await fetch("/api/artist/edit", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || "Edit failed");
+      }
+      setIsEditing(false);
+      setUser((prevUser) => ({
+        ...prevUser,
+        first_name: data.first_name ?? prevUser.first_name,
+        last_name: data.last_name ?? prevUser.last_name,
+        username: data.username ?? prevUser.username,
+        description: data.description ?? prevUser.description,
+        picture: prevUser.picture,
+      }));
+    } catch (error) {
+      if (error instanceof Error) setBackendError(error.message);
+      else setBackendError("An unknown error occurred");
+    }
+  };
 
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="h-40 bg-gradient-to-r from-mypink-400 to-myorange-400 relative">
         <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-          <Picture image={picture!} />
+          <Picture image={picture!} isEditing={isEditing} />
         </div>
       </div>
 
@@ -109,7 +112,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           <FormProvider {...form}>
             <form
               className="flex flex-col items-center w-full justify-center gap-3"
-              // onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(onSubmit)}
               noValidate
             >
               <input
@@ -117,33 +120,33 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 placeholder="First name"
                 {...register("first_name")}
               />
-              {/* {errors.first_name && (
+              {errors.first_name && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.first_name.message}
                 </p>
-              )} */}
+              )}
 
               <input
                 className="text-xl font-thin text-blackText-primary border border-mypink-400 rounded-xl text-center w-auto px-2"
                 placeholder="Last name"
                 {...register("last_name")}
               />
-              {/* {errors.last_name && (
+              {errors.last_name && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.last_name.message}
                 </p>
-              )} */}
+              )}
 
               <input
                 className="text-myblue-800 font-thin border border-myblue-800 rounded-xl text-center p-1"
                 placeholder="Username"
                 {...register("username")}
               />
-              {/* {errors.username && (
+              {errors.username && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.username.message}
                 </p>
-              )} */}
+              )}
 
               <textarea
                 className="text-gray-500 mt-2 font-thin text-center rounded-xl border border-mypink-400 p-2"
@@ -151,15 +154,15 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 placeholder="Description"
                 {...register("description")}
               />
-              {/* {errors.description && (
+              {errors.description && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.description.message}
                 </p>
-              )} */}
+              )}
 
-              {/* {backendError && (
+              {backendError && (
                 <p className="text-red-600 font-semibold">{backendError}</p>
-              )} */}
+              )}
 
               <button
                 className="bg-mypink-400 p-2 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
@@ -172,10 +175,12 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         ) : (
           <>
             <h2 className="text-xl font-bold text-blackText-primary">
-              {firstName} {lastName}
+              {user.first_name} {user.last_name}
             </h2>
-            <p className="text-myblue-800 font-medium">{username}</p>
-            <p className="text-gray-500 text-center max-w-xl">{description}</p>
+            <p className="text-myblue-800 font-medium">{user.username}</p>
+            <p className="text-gray-500 text-center max-w-xl">
+              {user.description}
+            </p>
           </>
         )}
 

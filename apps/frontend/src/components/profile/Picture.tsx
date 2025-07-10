@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { FaPen } from "react-icons/fa";
 
-type PictureProps = { image: string };
+type PictureProps = { image: string; isEditing: boolean };
 
-export const Picture: React.FC<PictureProps> = ({ image }) => {
+export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
   const [backendError, setBackendError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>(image);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -48,14 +48,16 @@ export const Picture: React.FC<PictureProps> = ({ image }) => {
           src={imageUrl}
           alt="User avatar"
         />
-        <button
-          onClick={handleEditClick}
-          type="button"
-          className="absolute bottom-1 right-1 p-1 cursor-pointer"
-          aria-label="Edit profile photo"
-        >
-          <FaPen className="w-4 h-4 text-mypink-400" />
-        </button>
+        {isEditing && (
+          <button
+            onClick={handleEditClick}
+            type="button"
+            className="absolute bottom-1 right-1 p-1 cursor-pointer"
+            aria-label="Edit profile photo"
+          >
+            <FaPen className="w-4 h-4 text-mypink-400" />
+          </button>
+        )}
         <input
           ref={fileInputRef}
           type="file"

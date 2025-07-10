@@ -105,19 +105,32 @@ export const userController = {
   ) => {
     if (!req.body) {
       res.status(400).json({ error: "Body required" });
+      return;
     }
     const { first_name, last_name, username, description } = req.body;
     // TODO: add validation schema (JOI?)
     const userId = req.userId;
     if (!userId) {
       res.status(404).json({ error: "User not found" });
-    }
-
-    const checkUsername = await checkUsernameExists(username);
-    if (checkUsername) {
-      res.status(400).json({ message: "username already in used" });
       return;
     }
+
+    const currentUser = await DBClient.user.findUnique({
+      where: { id: userId },
+    });
+    if (!currentUser) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    if (username !== currentUser.username) {
+      const checkUsername = await checkUsernameExists(username);
+      if (checkUsername) {
+        res.status(400).json({ message: "Username already in use" });
+        return;
+      }
+    }
+
     const updatedUser: UserInfo = {
       first_name: first_name,
       last_name: last_name,

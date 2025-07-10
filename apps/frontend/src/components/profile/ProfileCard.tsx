@@ -35,10 +35,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   description = "Write here about your art and yourself !",
   projects,
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  useEffect(() => {
-    console.log({ isEditing });
+  console.log({
+    firstName,
+    lastName,
+    username,
+    description,
   });
+  const [isEditing, setIsEditing] = useState(false);
 
   // const [backendError, setBackendError] = useState<string | null>(null);
 
@@ -55,7 +58,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const {
     register,
     // handleSubmit,
-    formState: { errors },
+    // formState: { errors },
     // reset,
   } = form;
 
@@ -114,33 +117,33 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 placeholder="First name"
                 {...register("first_name")}
               />
-              {errors.first_name && (
+              {/* {errors.first_name && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.first_name.message}
                 </p>
-              )}
+              )} */}
 
               <input
                 className="text-xl font-thin text-blackText-primary border border-mypink-400 rounded-xl text-center w-auto px-2"
                 placeholder="Last name"
                 {...register("last_name")}
               />
-              {errors.last_name && (
+              {/* {errors.last_name && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.last_name.message}
                 </p>
-              )}
+              )} */}
 
               <input
                 className="text-myblue-800 font-thin border border-myblue-800 rounded-xl text-center p-1"
                 placeholder="Username"
                 {...register("username")}
               />
-              {errors.username && (
+              {/* {errors.username && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.username.message}
                 </p>
-              )}
+              )} */}
 
               <textarea
                 className="text-gray-500 mt-2 font-thin text-center rounded-xl border border-mypink-400 p-2"
@@ -148,11 +151,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 placeholder="Description"
                 {...register("description")}
               />
-              {errors.description && (
+              {/* {errors.description && (
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.description.message}
                 </p>
-              )}
+              )} */}
 
               {/* {backendError && (
                 <p className="text-red-600 font-semibold">{backendError}</p>

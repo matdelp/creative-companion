@@ -35,10 +35,13 @@ export const userController = {
     res: Response<UserProfile | { error: string }>
   ) => {
     const userId = req.userId;
+    const { take } = req.query;
     const user = await DBClient.user.findUnique({
       where: { id: userId },
       include: {
         artwork: {
+          take: take ? Number(take) : undefined,
+          orderBy: { created_at: "desc" },
           include: { artwork_has_tag: { include: { tag: true } } },
         },
       },

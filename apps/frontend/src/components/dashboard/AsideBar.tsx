@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export const AsideBar: React.FC = () => {
   return (
-    <aside className="w-64 bg-myblue-800-lg p-4 flex flex-col">
+    <aside className="w-64 bg-myblue-800 p-4 flex flex-col">
       <div className="flex items-center mb-6">
         <Paintbrush className="text-myblue-400 mr-2" />
         <span className="text-xl text-whiteText-accent font-bold">

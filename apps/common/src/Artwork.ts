@@ -6,6 +6,11 @@ export type ArtworkCreate = {
   prompt_id: number;
 };
 
+export type ArtworkUpdate = {
+  title?: string | null;
+  description?: string | null;
+};
+
 export type Artwork = ArtworkCreate & {
   id: number;
   created_at: Date;

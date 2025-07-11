@@ -1,8 +1,12 @@
-import { Request, Response } from "express";
+import {
+  Artwork,
+  ArtworkCreate,
+  ArtworkUpdate,
+} from "@creative-companion/common";
 import { DBClient } from "@creative-companion/database";
-import { supabase } from "../services/supabaseClient/client";
+import { Request, Response } from "express";
 import { AuthenticatedRequest } from "../middleware/authenticate";
-import { Artwork, ArtworkCreate } from "@creative-companion/common";
+import { supabase } from "../services/supabaseClient/client";
 import { getTodayPrompt } from "../utils/utilsLimitPrompt";
 
 export const artworkController = {
@@ -92,7 +96,44 @@ export const artworkController = {
     });
   },
 
-  deleteArtwork: async (req: Request, res: Response) => {
+  editArtwork: async (
+    req: AuthenticatedRequest,
+    res: Response<ArtworkUpdate | { error: string } | { message: string }>
+  ) => {
+    if (!req.body) {
+      res.status(400).json({ error: "Body required" });
+      return;
+    }
+    const { title, description } = req.body;
+    // TODO: add validation schema (JOI?)
+    const artworkId = Number(req.params.id);
+    if (!artworkId) {
+      res.status(404).json({ error: "Art not found" });
+      return;
+    }
+
+    const artwork = await DBClient.artwork.findUnique({
+      where: { id: artworkId },
+    });
+    if (!artwork) {
+      res.status(404).json({ error: "Art not found" });
+      return;
+    }
+
+    const updatedArt: ArtworkUpdate = {
+      title,
+      description,
+    };
+    await DBClient.artwork.update({
+      where: { id: artworkId },
+      data: updatedArt,
+    });
+    res.json({
+      message: `Art updated successfully`,
+    });
+  },
+
+  deleteArtwork: async (req: AuthenticatedRequest, res: Response) => {
     const artworkId = Number(req.params.id);
     const artwork = await DBClient.artwork.findUnique({
       where: { id: artworkId },

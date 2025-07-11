@@ -72,6 +72,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       });
     }
   }, [isEditing, firstName, lastName, username, description, reset]);
+  //TODO remove reset?
 
   const onSubmit = async (data: FormData) => {
     setBackendError(null);

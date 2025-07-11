@@ -245,8 +245,6 @@ export const userController = {
       sameSite: "strict",
       path: "/",
     });
-    console.log("here");
-
     res.status(200).json({ message: "User logged out successfully" });
   },
 

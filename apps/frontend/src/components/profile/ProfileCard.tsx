@@ -31,7 +31,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   description = "Write here about your art and yourself !",
   projects,
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [user, setUser] = useState<UserInfo>({
     picture: picture || "/images/Portrait_Placeholder.png",
     first_name: firstName,

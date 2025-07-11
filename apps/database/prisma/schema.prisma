@@ -31,6 +31,8 @@ model artwork {
   prompt          prompt            @relation(fields: [prompt_id], references: [id], map: "artwork_prompt_fk")
   user            user              @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "artwork_user_fk")
   artwork_has_tag artwork_has_tag[]
+
+  @@unique([user_id, prompt_id], map: "artwork_unique_by_user_prompt")
 }
 
 model artwork_has_tag {

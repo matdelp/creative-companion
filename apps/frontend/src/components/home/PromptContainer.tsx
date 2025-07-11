@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { InspirationCard } from "./InspirationCard";
 import Palettecard from "./Palettecard";
 import { PhotoCard } from "./PhotoCard";
+import { usePromptStore } from "../../store/promptStorage";
 
 const PromptContainer: React.FC = () => {
   const [prompt, setPrompt] = useState<PromptRes | null>(null);
+  const { setPromptId } = usePromptStore();
 
   useEffect(() => {
     fetch("/api/prompt/")
@@ -17,11 +19,13 @@ const PromptContainer: React.FC = () => {
       })
       .then((data: PromptRes) => {
         setPrompt(data);
+        setPromptId(data.id);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   }, []);
+
   if (prompt == null) return <div>Loading</div>;
 
   return (

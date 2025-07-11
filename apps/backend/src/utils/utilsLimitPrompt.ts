@@ -34,6 +34,7 @@ export const parseFetchedPrompt = (
   todayPrompt: NonNullable<FetchedPrompt>
 ): PromptRes => {
   return {
+    id: todayPrompt.id,
     inspiration: {
       name: todayPrompt.inspiration.name,
       category: todayPrompt.inspiration.category,
@@ -67,6 +68,7 @@ export const createNewPrompt = async () => {
   const promptRecord = await DBClient.prompt.create({ data: dbPrompt });
   await createColorfulPalette(promptRecord.id, palette);
   return {
+    id: promptRecord.id,
     inspiration: inspirationRes,
     palette: palette,
     photo: photo,

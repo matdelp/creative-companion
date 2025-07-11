@@ -70,7 +70,23 @@ export const artworkController = {
       user_id: user.id,
       prompt_id: todayPrompt.id,
     };
-    const dbnewArt = await DBClient.artwork.create({ data: newArt });
+
+    const userArt = await DBClient.artwork.findUnique({
+      where: {
+        user_id_prompt_id: { user_id: user.id, prompt_id: todayPrompt.id },
+      },
+    });
+    if (userArt) {
+      await DBClient.artwork.update({
+        where: { id: userArt.id },
+        data: { title: title, description: description, content: url },
+      });
+      res.json({
+        message: `Art updated successfully`,
+      });
+      return;
+    }
+    await DBClient.artwork.create({ data: newArt });
 
     res.json({
       message: `New art created successfully`,

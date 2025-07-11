@@ -2,6 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
+import { useAuthStore } from "../../store/authentication";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required" }),
@@ -19,6 +21,8 @@ const formSchema = z.object({
 export const UploadModal: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [backendError, setBackendError] = React.useState<string | null>(null);
+  const { isLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -63,15 +67,27 @@ export const UploadModal: React.FC = () => {
 
   return (
     <>
-      <button
-        className="bg-mypink-400 p-5 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer"
-        type="button"
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-      >
-        Upload your art
-      </button>
+      {isLoggedIn ? (
+        <button
+          className="bg-mypink-400 p-5 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer"
+          type="button"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          Upload your art
+        </button>
+      ) : (
+        <button
+          className="bg-myblue-400 p-5 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer"
+          type="button"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
+      )}
       {isOpen && (
         <div
           tabIndex={-1}

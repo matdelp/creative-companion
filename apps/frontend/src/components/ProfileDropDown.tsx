@@ -65,9 +65,20 @@ export const ProfileDropdown = () => {
             </button>
           )}
           {!isLoggedIn && (
-            <button onClick={() => navigate("/login")} className={buttonStyle}>
-              Login
-            </button>
+            <>
+              <button
+                onClick={() => navigate("/login")}
+                className={buttonStyle}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => navigate("/register")}
+                className={buttonStyle}
+              >
+                Register
+              </button>
+            </>
           )}
           {isLoggedIn && (
             <button

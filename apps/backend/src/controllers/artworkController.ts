@@ -24,7 +24,6 @@ export const artworkController = {
     const artworks = await DBClient.artwork.findMany({ where: {} });
     res.status(200).json(artworks);
   },
-
   submitArtwork: async (
     req: AuthenticatedRequest,
     res: Response<Artwork | { error: string } | { message: string }>
@@ -52,7 +51,7 @@ export const artworkController = {
     const { originalname, mimetype } = submittedFile;
     const { data, error } = await supabase.storage
       .from("artwork")
-      .upload(originalname, submittedFile.buffer, {
+      .upload(Date.now() + "_" + originalname, submittedFile.buffer, {
         upsert: false,
         contentType: mimetype,
       });

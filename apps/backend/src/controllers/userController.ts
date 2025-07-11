@@ -216,11 +216,11 @@ export const userController = {
       const user = await DBClient.user.findUnique({
         where: { email: email },
       });
-      if (!user) throw new Error("1Invalid Credentials");
+      if (!user) throw new Error("Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
-      if (!user.password) throw new Error("2Invalid Credentials");
+      if (!user.password) throw new Error("Invalid Credentials");
       const isMatching = await validatePassword(password, user.password);
-      if (!isMatching) throw new Error("3Invalid Credentials");
+      if (!isMatching) throw new Error("Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);
       res
@@ -245,6 +245,8 @@ export const userController = {
       sameSite: "strict",
       path: "/",
     });
+    console.log("here");
+
     res.status(200).json({ message: "User logged out successfully" });
   },
 
@@ -281,7 +283,7 @@ export const userController = {
         res.json({ message: "Google user logged out successfully" });
       });
     });
-  }, //TODO
+  },
 
   deleteUser: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.userId;

@@ -30,6 +30,6 @@ userRouter.get(
   passport.authenticate("google", { failureRedirect: "/" }),
   userController.googleLoginUser
 );
-userRouter.get("google/logout", userController.googleLogoutUser);
+userRouter.post("/google/logout", userController.googleLogoutUser);
 userRouter.delete("/delete", auth, userController.deleteUser);
 userRouter.get("/", userController.getUsers);

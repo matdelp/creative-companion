@@ -1,12 +1,50 @@
 import type { Artwork } from "@creative-companion/common";
-import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import z from "zod";
 
 type ArtworkCardProps = {
   artworks: Artwork[];
 };
 
+const formSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+});
+type FormData = z.infer<typeof formSchema>;
+
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
+  const [isEditing, setIsEditting] = useState<boolean>(false);
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await fetch("/api/artist/edit", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || "Edit failed");
+      }
+      setIsEditing(false);
+    } catch (error) {
+      if (error instanceof Error) setBackendError(error.message);
+      else setBackendError("An unknown error occurred");
+    }
+  };
+
   const formatDate = (date: Date) => {
     return date.toString().split("T")[0];
   };

@@ -28,12 +28,17 @@ export const ProfileDropdown = () => {
 
   const handleLogout = async () => {
     if (authProvider === "local") {
-      await fetch("/artist/logout", { credentials: "include" });
+      await fetch("api/artist/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     } else {
-      await fetch("/artist/google/logout", { credentials: "include" });
+      await fetch("api/artist/google/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     }
     logout();
-    alert("Logged out successfully");
     setIsOpen(!isOpen);
   };
 

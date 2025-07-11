@@ -56,7 +56,7 @@ export const artworkController = {
         contentType: mimetype,
       });
     if (error) {
-      res.json({ error: "Error uploading file" });
+      res.status(500).json({ error: "Error uploading file" });
       return;
     }
     const url = supabase.storage.from("artwork").getPublicUrl(data.path)

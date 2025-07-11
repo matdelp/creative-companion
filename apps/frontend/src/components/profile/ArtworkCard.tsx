@@ -1,7 +1,7 @@
-import type { Artwork } from "@creative-companion/common";
+import type { Artwork, ArtworkUpdate } from "@creative-companion/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import z from "zod";
 
@@ -16,20 +16,32 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
-  const [isEditing, setIsEditting] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [backendError, setBackendError] = useState<string | null>(null);
+  const [artworksState, setArtworksState] = useState<Artwork[]>(artworks);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = form;
 
-  const onSubmit = async (data: FormData) => {
+  const handleToggle = (artwork: ArtworkUpdate) => {
+    reset({
+      title: artwork.title ?? "",
+      description: artwork.description ?? "",
+    });
+    setIsEditing((prev) => !prev);
+  };
+  const onSubmit = async (id: number, data: FormData) => {
+    setBackendError(null);
     try {
-      const response = await fetch("/api/artist/edit", {
+      const response = await fetch(`/api/artwork/edit/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -38,6 +50,9 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
       if (!response.ok) {
         throw new Error(result.message || "Edit failed");
       }
+      setArtworksState((prev) =>
+        prev.map((art) => (art.id === id ? { ...art, ...data } : art))
+      );
       setIsEditing(false);
     } catch (error) {
       if (error instanceof Error) setBackendError(error.message);

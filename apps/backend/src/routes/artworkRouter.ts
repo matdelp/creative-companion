@@ -12,4 +12,5 @@ artworkRouter.post(
   multer().single("art"),
   artworkController.submitArtwork
 );
+artworkRouter.delete("/delete/:id", artworkController.deleteArtwork);
 artworkRouter.get("/", artworkController.getAllArtworks);

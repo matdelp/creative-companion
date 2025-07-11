@@ -2,7 +2,6 @@
   "name": "@creative-companion/database",
   "private": "true",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "prisma": {
     "seed": "ts-node dbSeeding/seeder.ts"

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DBClient } from "@creative-companion/database";
 import { supabase } from "../services/supabaseClient/client";
 import { AuthenticatedRequest } from "../middleware/authenticate";
-import { Artwork } from "@creative-companion/common";
+import { Artwork, ArtworkCreate } from "@creative-companion/common";
 import { getTodayPrompt } from "../utils/utilsLimitPrompt";
 
 export const artworkController = {
@@ -62,7 +62,7 @@ export const artworkController = {
     const url = supabase.storage.from("artwork").getPublicUrl(data.path)
       .data.publicUrl;
 
-    const newArt: Artwork = {
+    const newArt: ArtworkCreate = {
       title: title,
       description: description,
       content: url,
@@ -89,6 +89,18 @@ export const artworkController = {
 
     res.json({
       message: `New art created successfully`,
+    });
+  },
+
+  deleteArtwork: async (req: Request, res: Response) => {
+    const artworkId = Number(req.params.id);
+    const artwork = await DBClient.artwork.findUnique({
+      where: { id: artworkId },
+    });
+    if (!artwork) throw new Error("404 Art not found");
+    await DBClient.artwork.delete({ where: { id: artworkId } });
+    res.json({
+      message: `Art deleted successfully`,
     });
   },
 };

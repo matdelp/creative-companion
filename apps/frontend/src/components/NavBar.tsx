@@ -1,7 +1,9 @@
 import React from "react";
 import { ProfileDropdown } from "./ProfileDropDown";
+import { useAuthStore } from "../store/authentication";
 
 export const NavBar: React.FC = () => {
+  const { isLoggedIn } = useAuthStore();
   return (
     <nav className="w-full text-whiteText-accent flex items-center justify-between px-4 py-3">
       <div className="flex flex-col items-start text-lg font-bold">
@@ -9,9 +11,15 @@ export const NavBar: React.FC = () => {
         <span>Companion</span>
       </div>
       <ul className="flex items-center space-x-4">
-        <li>
-          <a href="/dashboard">Dashboard</a>
-        </li>
+        {isLoggedIn ? (
+          <li>
+            <a href="/dashboard">Dashboard</a>
+          </li>
+        ) : (
+          <li>
+            <a href="/login">Dashboard</a>
+          </li>
+        )}
         <li>
           <a href="/collection">Collections</a>
         </li>

@@ -5,7 +5,7 @@ import { auth } from "../middleware/authenticate";
 
 export const artworkRouter = express.Router();
 
-artworkRouter.get("/collection/:id", artworkController.getArtworksByUser);
+artworkRouter.get("/collection", artworkController.getAllArtworks);
 artworkRouter.post(
   "/submit",
   auth,
@@ -14,4 +14,5 @@ artworkRouter.post(
 );
 artworkRouter.delete("/delete/:id", auth, artworkController.deleteArtwork);
 artworkRouter.patch("/edit/:id", auth, artworkController.editArtwork);
-artworkRouter.get("/", artworkController.getAllArtworks);
+artworkRouter.get("/dates", auth, artworkController.getArtworkDatesByUser);
+artworkRouter.get("/", auth, artworkController.getArtworksByUser);

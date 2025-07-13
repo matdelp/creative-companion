@@ -10,8 +10,8 @@ import { supabase } from "../services/supabaseClient/client";
 import { getTodayPrompt } from "../utils/utilsLimitPrompt";
 
 export const artworkController = {
-  getArtworksByUser: async (req: Request, res: Response) => {
-    const userId = req.params.id;
+  getArtworksByUser: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId;
     const user = await DBClient.user.findUnique({
       where: { id: Number(userId) },
       include: { artwork: true },
@@ -22,12 +22,34 @@ export const artworkController = {
     }
     res.status(200).json(user.artwork);
   },
+
+  getArtworkDatesByUser: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId;
+    const user = await DBClient.user.findUnique({
+      where: { id: Number(userId) },
+      include: {
+        artwork: {
+          select: { created_at: true },
+        },
+      },
+    });
+    console.log(user);
+
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    res.status(200).json(user.artwork);
+  },
+
   getAllArtworks: async (req: Request, res: Response) => {
     // TODO later on : Add some queries to search through the artwork and make it user friendly
     // const { prompt, tag, date, user, colors } = req.query;
     const artworks = await DBClient.artwork.findMany({ where: {} });
     res.status(200).json(artworks);
   },
+
   submitArtwork: async (
     req: AuthenticatedRequest,
     res: Response<Artwork | { error: string } | { message: string }>
@@ -120,6 +142,12 @@ export const artworkController = {
       return;
     }
 
+    const userId = req.userId;
+    if (userId !== artwork.user_id) {
+      res.status(400).json({ error: "Wrong user" });
+      return;
+    }
+
     const updatedArt: ArtworkUpdate = {
       title,
       description,
@@ -139,6 +167,12 @@ export const artworkController = {
       where: { id: artworkId },
     });
     if (!artwork) throw new Error("404 Art not found");
+
+    const userId = req.userId;
+    if (userId !== artwork.user_id) {
+      res.status(400).json({ error: "Wrong user" });
+      return;
+    }
     await DBClient.artwork.delete({ where: { id: artworkId } });
     res.json({
       message: `Art deleted successfully`,

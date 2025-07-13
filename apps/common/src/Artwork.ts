@@ -15,3 +15,7 @@ export type Artwork = ArtworkCreate & {
   id: number;
   created_at: Date;
 };
+
+export type ArtworkDates = {
+  created_at: string;
+};

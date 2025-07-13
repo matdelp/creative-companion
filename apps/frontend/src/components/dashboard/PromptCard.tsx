@@ -2,7 +2,7 @@ import React from "react";
 import { useGetPrompt } from "../../hooks/useGetPrompt";
 import Palettecard from "../home/Palettecard";
 
-export const PromptCard = () => {
+export const PromptCard: React.FC = () => {
   const { data, isLoading, error } = useGetPrompt();
   if (isLoading) {
     return <div>loading</div>;

@@ -2,6 +2,7 @@ import React from "react";
 import { AsideBar } from "../components/dashboard/AsideBar";
 import { ProjectsCard } from "../components/dashboard/ProjectsCard";
 import { PromptCard } from "../components/dashboard/PromptCard";
+import { StatsCard } from "../components/dashboard/StatsCard";
 
 export const Dashboard: React.FC = () => {
   return (
@@ -13,13 +14,8 @@ export const Dashboard: React.FC = () => {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ProjectsCard />
-          <div className="bg-white rounded-xl shadow p-4">
-            <h2 className="text-lg font-semibold">Drawing Time Stats</h2>
-            <p className="text-sm text-gray-500">
-              Track your creative streaks.
-            </p>
-          </div>
           <PromptCard />
+          <StatsCard />
         </div>
       </main>
     </div>

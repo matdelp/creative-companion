@@ -25,7 +25,7 @@ export const artworkController = {
 
   getArtworkDatesByUser: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.userId;
-    const user = await DBClient.user.findUnique({
+    const dates = await DBClient.user.findUnique({
       where: { id: Number(userId) },
       include: {
         artwork: {
@@ -33,14 +33,13 @@ export const artworkController = {
         },
       },
     });
-    console.log(user);
 
-    if (!user) {
+    if (!dates) {
       res.status(404).json({ error: "User not found" });
       return;
     }
 
-    res.status(200).json(user.artwork);
+    res.status(200).json(dates.artwork);
   },
 
   getAllArtworks: async (req: Request, res: Response) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { AsideBar } from "../components/dashboard/AsideBar";
 import { ProjectsCard } from "../components/dashboard/ProjectsCard";
+import { PromptCard } from "../components/dashboard/PromptCard";
 
 export const Dashboard: React.FC = () => {
   return (
@@ -18,12 +19,7 @@ export const Dashboard: React.FC = () => {
               Track your creative streaks.
             </p>
           </div>
-          <div className="bg-white rounded-xl shadow p-4">
-            <h2 className="text-lg font-semibold">Daily Challenge</h2>
-            <p className="text-sm text-gray-500">
-              Today's prompt: "Draw a mountain"
-            </p>
-          </div>
+          <PromptCard />
         </div>
       </main>
     </div>

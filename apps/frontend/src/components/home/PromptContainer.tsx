@@ -25,8 +25,11 @@ export const PromptContainer: React.FC = () => {
           </span>
           <InspirationCard inspiration={data!.inspiration.name} />
         </div>
-        <div className="flex justify-center">
-          <Palettecard colors={data!.palette} />
+        <div className="flex justify-center pt-8">
+          <Palettecard
+            colors={data!.palette}
+            style={`w-14 h-14 rounded-full shadow-md`}
+          />
         </div>
       </div>
       <div className="flex justify-center">

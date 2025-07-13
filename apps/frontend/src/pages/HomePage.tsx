@@ -1,7 +1,8 @@
 import React from "react";
-import PromptContainer from "../components/home/PromptContainer";
+
 import { UploadModal } from "../components/home/UploadModal";
 import { NavBar } from "../components/NavBar";
+import { PromptContainer } from "../components/home/PromptContainer";
 
 export const HomePage: React.FC = () => {
   return (

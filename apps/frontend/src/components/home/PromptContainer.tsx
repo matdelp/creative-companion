@@ -1,32 +1,17 @@
-import type { PromptRes } from "@creative-companion/common";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useGetPrompt } from "../../hooks/useGetPrompt";
 import { InspirationCard } from "./InspirationCard";
 import Palettecard from "./Palettecard";
 import { PhotoCard } from "./PhotoCard";
-import { usePromptStore } from "../../store/promptStorage";
 
-const PromptContainer: React.FC = () => {
-  const [prompt, setPrompt] = useState<PromptRes | null>(null);
-  const { setPromptId } = usePromptStore();
-
-  useEffect(() => {
-    fetch("/api/prompt/")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data: PromptRes) => {
-        setPrompt(data);
-        setPromptId(data.id);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  }, []);
-
-  if (prompt == null) return <div>Loading</div>;
+export const PromptContainer: React.FC = () => {
+  const { data, isLoading, error } = useGetPrompt();
+  if (isLoading) {
+    return <div>loading</div>;
+  }
+  if (error) {
+    return <div>error</div>;
+  }
 
   return (
     <div className="bg-whiteText-accent rounded-4xl w-4/5 max-w-3xl mx-auto flex flex-col gap-2 shadow-lg">
@@ -36,23 +21,21 @@ const PromptContainer: React.FC = () => {
             Today's Inspiration
           </h1>
           <span className="text-myblue-400 font-semibold text-5xl">
-            {prompt.inspiration.category}
+            {data!.inspiration.category}
           </span>
-          <InspirationCard inspiration={prompt.inspiration.name} />
+          <InspirationCard inspiration={data!.inspiration.name} />
         </div>
         <div className="flex justify-center">
-          <Palettecard colors={prompt.palette} />
+          <Palettecard colors={data!.palette} />
         </div>
       </div>
       <div className="flex justify-center">
         <PhotoCard
-          url={prompt.photo.url}
-          author={prompt.photo.author}
-          promo={prompt.photo.promo}
+          url={data!.photo.url}
+          author={data!.photo.author}
+          promo={data!.photo.promo}
         />
       </div>
     </div>
   );
 };
-
-export default PromptContainer;

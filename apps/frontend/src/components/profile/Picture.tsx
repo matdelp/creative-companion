@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import { FaPen } from "react-icons/fa";
+import { useModifyProfilePicture } from "../../hooks/useModifyProfilePicture";
 
 type PictureProps = { image: string; isEditing: boolean };
 
 export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
-  const [, setBackendError] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>(image);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { mutate, isPending, error: mutationError } = useModifyProfilePicture();
 
   const handleEditClick = () => {
     fileInputRef.current?.click();
@@ -18,25 +18,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
 
     const formData = new FormData();
     formData.append("picture", file);
-
-    try {
-      const response = await fetch("/api/artist/editPhoto", {
-        method: "PATCH",
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.url) {
-        setImageUrl(result.url);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setBackendError(error.message);
-      } else {
-        setBackendError("An unknown error occurred");
-      }
-    }
+    mutate(formData);
   };
 
   return (
@@ -44,7 +26,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
       <div className="relative h-32 w-32">
         <img
           className="rounded-full border-4 border-white object-cover h-full w-full"
-          src={imageUrl}
+          src={image}
           alt="User avatar"
         />
         {isEditing && (
@@ -65,6 +47,8 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
           style={{ display: "none" }}
         />
       </div>
+      {isPending && <div>Update pending...</div>}
+      {mutationError && <div className="text-red-600">Update failed</div>}
     </div>
   );
 };

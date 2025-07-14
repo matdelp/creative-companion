@@ -16,4 +16,5 @@ artworkRouter.delete("/delete/:id", auth, artworkController.deleteArtwork);
 artworkRouter.patch("/edit/:id", auth, artworkController.editArtwork);
 artworkRouter.get("/dates", auth, artworkController.getArtworkDatesByUser);
 artworkRouter.get("/amount", auth, artworkController.getArtworkDatesByUser);
+artworkRouter.get("/daily", auth, artworkController.getArtworksOfTheDay);
 artworkRouter.get("/", auth, artworkController.getArtworksByUser);

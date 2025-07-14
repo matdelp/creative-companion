@@ -14,6 +14,7 @@
   --color-mypink-100: #f7b3cd;
   --color-mypink-400: #ff70a6;
   --color-mypink-800: #5a2539;
+  --color-myorange-200: #fdb198;
   --color-myorange-400: #ff8359;
   --color-myyellow-700: #f5c842;
   --color-myyellow-400: #cde86c;
@@ -31,7 +32,7 @@
   font-weight: 400;
   width: 100vw;
   height: 100vh;
-  /* color: #5a2539 */
+  /* color: #fdb198 */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

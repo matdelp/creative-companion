@@ -1,5 +1,8 @@
 import React from "react";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import {
+  buildStyles,
+  CircularProgressbarWithChildren,
+} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useGetTotalArtworks } from "../../hooks/useGetTotalArtworks";
 import { useGetTotalPrompts } from "../../hooks/useGetTotalPrompts";
@@ -31,14 +34,24 @@ export const CompletedPromptDiagram: React.FC = () => {
       : 0;
 
   return (
-    <CircularProgressbar
+    <CircularProgressbarWithChildren
       value={percentage}
-      text={`${percentage}%`}
+      background
+      backgroundPadding={6}
       styles={buildStyles({
-        pathColor: "#4ade80",
-        textColor: "#111",
-        trailColor: "#e5e7eb",
+        backgroundColor: "#12475c",
+        textColor: "#fff",
+        pathColor: "#fff",
+        trailColor: "transparent",
       })}
-    />
+    >
+      {
+        <div className="text-whiteText-accent font-bold flex flex-col items-center">
+          <p className="text-2xl">{percentage}%</p>
+          <p className="text-xl">completed </p>
+          <p className="text-xl">prompts!</p>
+        </div>
+      }
+    </CircularProgressbarWithChildren>
   );
 };

@@ -8,6 +8,7 @@ import { Request, Response } from "express";
 import { AuthenticatedRequest } from "../middleware/authenticate";
 import { supabase } from "../services/supabaseClient/client";
 import { getTodayPrompt } from "../utils/utilsLimitPrompt";
+import { endOfDay, isToday, startOfDay } from "date-fns";
 
 export const artworkController = {
   getArtworksByUser: async (req: AuthenticatedRequest, res: Response) => {
@@ -21,6 +22,28 @@ export const artworkController = {
       return;
     }
     res.status(200).json(user.artwork);
+  },
+  getArtworksOfTheDay: async (
+    req: AuthenticatedRequest,
+    res: Response<Artwork | { error: string } | null>
+  ) => {
+    const todayStart = startOfDay(new Date());
+    const todayEnd = endOfDay(new Date());
+    const userId = req.userId;
+    const art = await DBClient.artwork.findMany({
+      where: {
+        user_id: Number(userId),
+        created_at: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    });
+    if (art.length === 0) {
+      res.status(200).json(null);
+      return;
+    }
+    res.status(200).json(art[0]);
   },
 
   getArtworkDatesByUser: async (req: AuthenticatedRequest, res: Response) => {
@@ -54,6 +77,7 @@ export const artworkController = {
     const artworks = await DBClient.artwork.findMany({ where: {} });
     res.status(200).json(artworks);
   },
+
   getAmountOfArtwork: async (
     req: AuthenticatedRequest,
     res: Response<number | { error: string }>
@@ -78,6 +102,7 @@ export const artworkController = {
     const artworkNumber = artworks.length;
     res.status(200).json(artworkNumber);
   },
+
   submitArtwork: async (
     req: AuthenticatedRequest,
     res: Response<Artwork | { error: string } | { message: string }>

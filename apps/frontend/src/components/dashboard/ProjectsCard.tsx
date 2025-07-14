@@ -13,14 +13,12 @@ export const ProjectsCard: React.FC = () => {
   }
 
   return (
-    <div className="bg-myblue-800 rounded-xl shadow p-4">
-      <h2 className="text-lg text-whiteText-accent font-semibold">
-        Recent Projects
-      </h2>
-      <p className="text-sm text-whiteText-accent pb-2">
+    <>
+      <h2 className="text-lg text-mypink-800 font-semibold">Recent Projects</h2>
+      <p className="text-sm text-mypink-800 pb-2">
         See your latest drawings here.
       </p>
       <ArtworkCard artworks={data!.artwork} />
-    </div>
+    </>
   );
 };

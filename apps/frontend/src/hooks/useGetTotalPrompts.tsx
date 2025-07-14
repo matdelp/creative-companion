@@ -1,25 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 const FETCH_URL = "/api/prompt/number";
 
 export const useGetTotalPrompts = (creationDate?: Date) => {
-  const from = creationDate?.toISOString();
-  const to = new Date().toISOString();
-  console.log(
-    "creationDate:",
-    creationDate,
-    "is Date?",
-    creationDate instanceof Date
-  );
-
-  console.log({ from, to });
-  console.log(`${FETCH_URL}?from=${from}&to=${to}`);
+  const from = useMemo(() => {
+    if (!creationDate) return undefined;
+    const date = new Date(creationDate);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
+  }, [creationDate]);
+  const to = useMemo(() => new Date().toISOString(), []);
 
   return useQuery({
     queryKey: ["TotalPrompts", from, to],
     queryFn: async () => {
-      console.log("here");
-
       const response = await fetch(`${FETCH_URL}?from=${from}&to=${to}`, {
         method: "GET",
         credentials: "include",
@@ -29,10 +24,10 @@ export const useGetTotalPrompts = (creationDate?: Date) => {
         const errorText = (await response.text()) || response.statusText;
         throw new Error(errorText);
       }
-      const data: number = await response.json();
-      console.log({ data });
 
+      const data: number = await response.json();
       return data;
     },
+    enabled: !!creationDate,
   });
 };

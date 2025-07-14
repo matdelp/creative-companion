@@ -3,5 +3,5 @@ import { promptController } from "../controllers/promptController";
 
 export const promptRouter = express.Router();
 
-promptRouter.get("/", promptController.getPrompt);
 promptRouter.get("/number", promptController.getAmountOfPrompt);
+promptRouter.get("/", promptController.getPrompt);

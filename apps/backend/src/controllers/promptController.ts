@@ -30,7 +30,6 @@ export const promptController = {
     res: Response<number | { error: string } | number>
   ) => {
     const { from, to } = req.query;
-    console.log("backend");
 
     const datesFilter: any = {};
     if (from || to) {

@@ -15,8 +15,9 @@ export const useGetTotalArtworks = () => {
         const errorText = (await response.text()) || response.statusText;
         throw new Error(errorText);
       }
-      const data: number = await response.json();
-      return data;
+      const data: { created_at: string }[] = await response.json();
+      const dataNbr = data.length;
+      return dataNbr;
     },
   });
 };

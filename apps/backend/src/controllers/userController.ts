@@ -219,11 +219,11 @@ export const userController = {
       const user = await DBClient.user.findUnique({
         where: { email: email },
       });
-      if (!user) throw new Error("Invalid Credentials");
+      if (!user) throw new Error("1Invalid Credentials");
       // if (!user.is_verified) throw new Error("Email has not been verified");
-      if (!user.password) throw new Error("Invalid Credentials");
+      if (!user.password) throw new Error("2Invalid Credentials");
       const isMatching = await validatePassword(password, user.password);
-      if (!isMatching) throw new Error("Invalid Credentials");
+      if (!isMatching) throw new Error("3Invalid Credentials");
 
       const token = createToken(user.id.toString(), email);
       res
@@ -295,14 +295,13 @@ export const userController = {
     if (!user) throw new Error("404 User not found");
     await DBClient.user.delete({ where: { id: userId } });
     res;
-    res
-      .clearCookie("token", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        path: "/",
-      })
-      .redirect("http://localhost:5173");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+    });
+    res.status(204).end();
   },
 
   checkUser: async (req: AuthenticatedRequest, res: Response) => {

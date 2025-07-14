@@ -1,18 +1,15 @@
-import type { UserInfo } from "@creative-companion/common";
+import type { UserInfo, UserProfile } from "@creative-companion/common";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
+import { useDeleteUser } from "../../hooks/useDeleteUser";
+import { useModifyUserProfile } from "../../hooks/useModifyUserProfile";
 import { NavHomeButton } from "../NavHomeButton";
 import { Picture } from "./Picture";
 
 type ProfileCardProps = {
-  firstName: string;
-  lastName: string;
-  username: string;
-  description?: string | null;
-  picture?: string | null;
-  projects: number;
+  data: UserProfile;
 };
 
 const formSchema = z.object({
@@ -23,23 +20,18 @@ const formSchema = z.object({
 });
 type FormData = z.infer<typeof formSchema>;
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({
-  picture = "/images/Portrait_Placeholder.png",
-  firstName,
-  lastName,
-  username,
-  description = "Write here about your art and yourself !",
-  projects,
-}) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [user, setUser] = useState<UserInfo>({
-    picture: picture || "/images/Portrait_Placeholder.png",
+export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
+  const {
+    picture = "/images/Portrait_Placeholder.png",
     first_name: firstName,
     last_name: lastName,
-    username: username,
-    description: description ?? "",
-  });
-  const [backendError, setBackendError] = useState<string | null>(null);
+    username,
+    description = "Write here about your art and yourself !",
+    projects = 0,
+  } = data;
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [user, setUser] = useState<UserInfo>({ ...data });
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -55,68 +47,49 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = form;
 
   const handleToggle = () => {
     setIsEditing((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (!isEditing) {
-      reset({
-        first_name: firstName,
-        last_name: lastName,
-        username,
-        description: description ?? "",
-      });
-    }
-  }, [isEditing, firstName, lastName, username, description, reset]);
-  //TODO remove reset?
+  const { mutate, isPending, error: mutationError } = useModifyUserProfile();
+  const {
+    mutate: todelete,
+    isPending: isDeleting,
+    error: deletingError,
+  } = useDeleteUser();
 
-  const onSubmit = async (data: FormData) => {
-    setBackendError(null);
-    try {
-      const response = await fetch("/api/artist/edit", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || "Edit failed");
-      }
-      setIsEditing(false);
-      setUser((prevUser) => ({
-        ...prevUser,
-        first_name: data.first_name ?? prevUser.first_name,
-        last_name: data.last_name ?? prevUser.last_name,
-        username: data.username ?? prevUser.username,
-        description: data.description ?? prevUser.description,
-        picture: prevUser.picture,
-      }));
-    } catch (error) {
-      if (error instanceof Error) setBackendError(error.message);
-      else setBackendError("An unknown error occurred");
-    }
+  const onSubmit = (formData: FormData) => {
+    mutate(formData, {
+      onSuccess: () => {
+        setIsEditing(false);
+        setUser((prev) => ({
+          ...prev,
+          ...formData,
+          picture: prev.picture,
+        }));
+      },
+    });
   };
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
-      try {
-        const response = await fetch("/api/artist/delete", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        });
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.message || "Deletion failed");
-        }
-      } catch (error) {
-        if (error instanceof Error) setBackendError(error.message);
-        setBackendError("An unknown error occurred");
-      }
+      todelete();
     }
   };
+
+  if (isPending) {
+    return <div>Update pending</div>;
+  }
+  if (mutationError) {
+    return <div>Update failed</div>;
+  }
+  if (isDeleting) {
+    return <div>Delete pending</div>;
+  }
+  if (deletingError) {
+    return <div>Delete failed</div>;
+  }
 
   return (
     <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -182,8 +155,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 </p>
               )}
 
-              {backendError && (
-                <p className="text-red-600 font-semibold">{backendError}</p>
+              {isPending && <p className="text-blue-600">Updating...</p>}
+              {mutationError && (
+                <p className="text-red-600">Update failed: {mutationError}</p>
+              )}
+
+              {isDeleting && <p className="text-blue-600">Deleting...</p>}
+              {deletingError && (
+                <p className="text-red-600">Delete failed: {deletingError}</p>
               )}
 
               <button
@@ -196,8 +175,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                 className=" text-red-600 text-lg rounded-2xl cursor-pointer w-full max-w-60"
                 type="button"
                 onClick={handleDelete}
+                disabled={isDeleting}
               >
-                Delete my account
+                {isDeleting ? "Deleting..." : "Delete Account"}
               </button>
             </form>
           </FormProvider>

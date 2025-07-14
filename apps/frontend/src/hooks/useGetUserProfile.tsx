@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import type { UserProfile } from "@creative-companion/common";
+
 const FETCH_URL = "/api/artist/profile";
+
 export const useGetUserProfile = (take?: number) => {
   return useQuery({
     queryKey: ["profileById"],

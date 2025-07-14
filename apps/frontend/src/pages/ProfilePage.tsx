@@ -1,5 +1,4 @@
 import React from "react";
-import { ArtworkCard } from "../components/profile/ArtworkCard";
 import { ProfileCard } from "../components/profile/ProfileCard";
 import { useGetUserProfile } from "../hooks/useGetUserProfile";
 
@@ -15,15 +14,8 @@ export const ProfilePage: React.FC = () => {
 
   return (
     <>
-      <ProfileCard
-        picture={data!.picture}
-        firstName={data!.first_name}
-        lastName={data!.last_name}
-        username={data!.username}
-        description={data!.description}
-        projects={data!.artwork.length}
-      />
-      <ArtworkCard artworks={data!.artwork} />
+      <ProfileCard data={data!} />
+      {/* <ArtworkCard artworks={data!.artwork} /> */}
     </>
   );
 };

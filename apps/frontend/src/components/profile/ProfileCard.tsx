@@ -27,7 +27,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
     last_name: lastName,
     username,
     description = "Write here about your art and yourself !",
-    projects = 0,
+    projects = data.artwork.length,
   } = data;
 
   const [isEditing, setIsEditing] = useState<boolean>(false);

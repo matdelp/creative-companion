@@ -1,16 +1,26 @@
-import type { ArtworkUpdate } from "@creative-companion/common";
+import type { ArtworkModification } from "@creative-companion/common";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const FETCH_URL = "/api/artwork/edit/";
+const FETCH_URL = "/api/artwork/edit";
 
-export const updateArtwork = async (id: number, data: ArtworkUpdate) => {
-  const res = await fetch(`${FETCH_URL}${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+export const useModifyArtwork = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, ArtworkModification>({
+    mutationFn: async (data) => {
+      const response = await fetch(`${FETCH_URL}/${data.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Update failed");
+      }
+      return;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profileById"] });
+    },
   });
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.message || "Failed to update artwork");
-  }
-  return res.json();
 };

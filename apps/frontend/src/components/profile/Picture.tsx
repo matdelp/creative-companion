@@ -4,7 +4,7 @@ import { FaPen } from "react-icons/fa";
 type PictureProps = { image: string; isEditing: boolean };
 
 export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
-  const [backendError, setBackendError] = useState<string | null>(null);
+  const [, setBackendError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>(image);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -38,7 +38,6 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
       }
     }
   };
-  console.log(backendError);
 
   return (
     <div className="flex justify-between">

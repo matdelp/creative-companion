@@ -1,6 +1,7 @@
 import React from "react";
 import { ProfileCard } from "../components/profile/ProfileCard";
 import { useGetUserProfile } from "../hooks/useGetUserProfile";
+import { ArtworkCard } from "../components/profile/ArtworkCard";
 
 export const ProfilePage: React.FC = () => {
   const { data, isLoading, error } = useGetUserProfile();
@@ -15,7 +16,7 @@ export const ProfilePage: React.FC = () => {
   return (
     <>
       <ProfileCard data={data!} />
-      {/* <ArtworkCard artworks={data!.artwork} /> */}
+      <ArtworkCard artworks={data!.artwork} />
     </>
   );
 };

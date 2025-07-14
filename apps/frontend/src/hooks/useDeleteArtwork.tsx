@@ -1,12 +1,26 @@
-const FETCH_URL = "/api/artwork/delete/";
+import type { ArtworkModification } from "@creative-companion/common";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export async function deleteArtwork(id: number) {
-  const res = await fetch(`${FETCH_URL}${id}`, {
-    method: "DELETE",
+const FETCH_URL = "/api/artwork/delete";
+
+export const useDeleteArtwork = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, ArtworkModification>({
+    mutationFn: async (data) => {
+      const response = await fetch(`${FETCH_URL}/${data.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Delete failed: ${response.status} ${response.statusText}`
+        );
+      }
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profileById"] });
+    },
   });
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.message || "Failed to delete artwork");
-  }
-  return res.json();
-}
+};

@@ -19,3 +19,9 @@ export type Artwork = ArtworkCreate & {
 export type ArtworkDates = {
   created_at: string;
 };
+
+export type ArtworkModification = {
+  id: number;
+  title?: string | null;
+  description?: string | null;
+};

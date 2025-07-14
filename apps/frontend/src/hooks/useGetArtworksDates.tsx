@@ -1,13 +1,16 @@
 import type { ArtworkDates } from "@creative-companion/common";
 import { useQuery } from "@tanstack/react-query";
+import { startOfMonth, endOfMonth } from "date-fns";
 
 const FETCH_URL = "/api/artwork/dates";
 
-export const useGetArtworksDates = () => {
+export const useGetArtworksDates = (date: Date) => {
+  const from = startOfMonth(date).toISOString();
+  const to = endOfMonth(date).toISOString();
   return useQuery({
-    queryKey: ["ArtworksDates"],
+    queryKey: ["ArtworksDates", from, to],
     queryFn: async () => {
-      const response = await fetch(`${FETCH_URL}`, {
+      const response = await fetch(`${FETCH_URL}?from=${from}&to=${to}`, {
         method: "GET",
         credentials: "include",
       });

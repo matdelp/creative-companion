@@ -1,5 +1,5 @@
 import type { ArtworkDates } from "@creative-companion/common";
-import { differenceInCalendarDays, parseISO } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 
 export const parseCompletedDates = (data: ArtworkDates[]) => {
   return data.map((item) => {

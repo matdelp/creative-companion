@@ -10,7 +10,7 @@ userRouter.use(passport.initialize());
 userRouter.use(passport.session());
 
 userRouter.get("/profile", auth, userController.getUserById);
-userRouter.get("/islogin", auth, userController.checkUser);
+userRouter.get("/islogin", userController.checkUser);
 userRouter.get("/creationDate", auth, userController.getCreationDate);
 userRouter.patch("/edit", auth, userController.editUserProfile);
 userRouter.patch(

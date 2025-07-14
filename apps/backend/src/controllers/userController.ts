@@ -15,6 +15,7 @@ import {
 import { AuthenticatedRequest } from "../middleware/authenticate";
 import { checkUsernameExists } from "../utils/utilsUsername";
 import { supabase } from "../services/supabaseClient/client";
+import jwt from "jsonwebtoken";
 
 export const userController = {
   getUsers: async (req: Request, res: Response<UserProfile[]>) => {
@@ -304,8 +305,22 @@ export const userController = {
     res.status(204).end();
   },
 
-  checkUser: async (req: AuthenticatedRequest, res: Response) => {
-    res.json({ login: true });
+  checkUser: (req: Request, res: Response) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+      res.json({ login: false });
+      return;
+    }
+
+    try {
+      jwt.verify(token, process.env.JWT_SECRET!);
+      res.json({ login: true });
+      return;
+    } catch (err) {
+      res.json({ login: false });
+      return;
+    }
   },
 
   getCreationDate: async (

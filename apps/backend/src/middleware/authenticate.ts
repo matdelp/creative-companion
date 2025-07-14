@@ -22,6 +22,7 @@ export const auth = (
 
   if (!token) {
     res.status(401).json({ message: "No token provided" });
+    return;
   }
 
   try {

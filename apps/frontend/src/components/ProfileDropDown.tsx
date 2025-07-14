@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { useGetLoginStatus } from "../hooks/useGetLoginStatus";
 import { useAuthStore } from "../store/authentication";
 
 export const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { logout, authProvider, setIsLoggedIn, isLoggedIn } = useAuthStore();
+  const { isLoggedIn, authProvider, logout } = useAuthStore();
   const navigate = useNavigate();
   const buttonStyle =
     "w-full px-4 py-2 text-left text-white hover:bg-black cursor-pointer rounded-md";
-  useEffect(() => {
-    fetch("/api/artist/islogin", { credentials: "include" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setIsLoggedIn(data.login);
-        console.log("data.login is", data.login);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  }, []);
+  const { isLoading, error } = useGetLoginStatus();
+  if (isLoading) {
+    return <div>loading</div>;
+  }
+  if (error) {
+    return <div>error</div>;
+  }
+  console.log("logIn?", isLoggedIn);
 
   const handleLogout = async () => {
     if (authProvider === "local") {

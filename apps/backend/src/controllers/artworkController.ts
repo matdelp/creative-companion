@@ -25,12 +25,18 @@ export const artworkController = {
 
   getArtworkDatesByUser: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.userId;
-    const dates = await DBClient.user.findUnique({
-      where: { id: Number(userId) },
-      include: {
-        artwork: {
-          select: { created_at: true },
-        },
+    const { from, to } = req.query;
+    const dateFilter: any = {};
+    if (from) dateFilter.gte = new Date(from as string);
+    if (to) dateFilter.lte = new Date(to as string);
+
+    const dates = await DBClient.artwork.findMany({
+      where: {
+        user_id: Number(userId),
+        ...(from || to ? { created_at: dateFilter } : {}),
+      },
+      select: {
+        created_at: true,
       },
     });
 
@@ -39,7 +45,7 @@ export const artworkController = {
       return;
     }
 
-    res.status(200).json(dates.artwork);
+    res.status(200).json(dates);
   },
 
   getAllArtworks: async (req: Request, res: Response) => {

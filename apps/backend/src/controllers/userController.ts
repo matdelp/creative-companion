@@ -241,6 +241,7 @@ export const userController = {
       });
     }
   },
+
   logoutUser: (req: Request, res: Response) => {
     res.clearCookie("token", {
       httpOnly: true,
@@ -306,5 +307,28 @@ export const userController = {
 
   checkUser: async (req: AuthenticatedRequest, res: Response) => {
     res.json({ login: true });
+  },
+
+  getCreationDate: async (
+    req: AuthenticatedRequest,
+    res: Response<
+      | {
+          created_at: Date;
+        }
+      | { error: string }
+    >
+  ) => {
+    const userId = req.userId;
+    const creationDate = await DBClient.user.findUnique({
+      where: { id: userId },
+      select: {
+        created_at: true,
+      },
+    });
+    if (!creationDate) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+    res.status(200).json(creationDate);
   },
 };

@@ -7,10 +7,10 @@ import {
   parseCompletedDates,
 } from "../../utils/parseDatesForCalendar";
 import { LongestStreak } from "./LongestStreak";
+import { CompletedPromptDiagram } from "./CompletedPromptDiagram";
 
 export const DashboardCalendar: React.FC = () => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
-
   const { data, isLoading, error } = useGetArtworksDates(activeStartDate);
 
   if (isLoading) {
@@ -31,7 +31,6 @@ export const DashboardCalendar: React.FC = () => {
     <div className="py-4 flex gap-4">
       <Calendar
         onActiveStartDateChange={handleActiveStartDateChange}
-        value={activeStartDate}
         className="!bg-myblue-100 !rounded-xl"
         tileClassName={({ date, view }) =>
           view === "month" && isPromptCompleted(date, completedDates)
@@ -40,6 +39,7 @@ export const DashboardCalendar: React.FC = () => {
         }
       />
       <LongestStreak dates={data!} />
+      <CompletedPromptDiagram />
     </div>
   );
 };

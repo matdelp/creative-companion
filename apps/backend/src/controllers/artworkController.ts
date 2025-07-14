@@ -54,7 +54,30 @@ export const artworkController = {
     const artworks = await DBClient.artwork.findMany({ where: {} });
     res.status(200).json(artworks);
   },
-
+  getAmountOfArtwork: async (
+    req: AuthenticatedRequest,
+    res: Response<number | { error: string }>
+  ) => {
+    const userId = req.userId;
+    const user = await DBClient.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      res.status(404).json({ error: "Must login to get art" });
+      return;
+    }
+    const artworks = await DBClient.prompt.findMany({
+      select: {
+        id: true,
+      },
+    });
+    if (!artworks) {
+      res.status(404).json({ error: "Artworks not found" });
+      return;
+    }
+    const artworkNumber = artworks.length;
+    res.status(200).json(artworkNumber);
+  },
   submitArtwork: async (
     req: AuthenticatedRequest,
     res: Response<Artwork | { error: string } | { message: string }>
@@ -68,7 +91,7 @@ export const artworkController = {
       where: { id: userId },
     });
     if (!user) {
-      res.status(404).json({ error: "Please login to upload your art" });
+      res.status(404).json({ error: "Must login to upload art" });
       return;
     }
     const todayPrompt = await getTodayPrompt();

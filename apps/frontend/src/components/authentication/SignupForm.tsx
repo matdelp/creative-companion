@@ -77,7 +77,7 @@ export const SignUpForm: React.FC = () => {
             type="text"
             placeholder="First Name"
             {...register("first_name")}
-            className={`p-3 w-full rounded-md bg-myblue-400  ${
+            className={`p-3 w-full rounded-md bg-myblue-100  ${
               errors.first_name ? "border border-red-500" : ""
             } `}
           />
@@ -92,7 +92,7 @@ export const SignUpForm: React.FC = () => {
             type="text"
             placeholder="Last Name"
             {...register("last_name")}
-            className={`p-3 w-full rounded-md bg-myblue-400  ${
+            className={`p-3 w-full rounded-md bg-myblue-100  ${
               errors.last_name ? "border border-red-500" : ""
             } `}
           />
@@ -107,7 +107,7 @@ export const SignUpForm: React.FC = () => {
             type="text"
             placeholder="Username"
             {...register("username")}
-            className={`p-3 w-full rounded-md bg-myblue-400  ${
+            className={`p-3 w-full rounded-md bg-myblue-100  ${
               errors.username ? "border border-red-500" : ""
             } `}
           />
@@ -122,7 +122,7 @@ export const SignUpForm: React.FC = () => {
             type="email"
             placeholder="Email"
             {...register("email")}
-            className={`p-3 w-full rounded-md bg-myblue-400  ${
+            className={`p-3 w-full rounded-md bg-myblue-100  ${
               errors.email ? "border border-red-500" : ""
             } `}
           />
@@ -138,7 +138,7 @@ export const SignUpForm: React.FC = () => {
             type="password"
             placeholder="Password"
             {...register("password")}
-            className={`p-3 w-full rounded-md bg-myblue-400  ${
+            className={`p-3 w-full rounded-md bg-myblue-100  ${
               errors.password ? "border border-red-500" : ""
             } `}
           />
@@ -153,7 +153,7 @@ export const SignUpForm: React.FC = () => {
         </div>
 
         <button
-          className="px-2 py-1 bg-myblue-800 rounded-md text-whiteText-primary font-semibold w-full cursor-pointer"
+          className="px-2 py-2 bg-myblue-400 rounded-2xl text-whiteText-primary font-semibold w-full cursor-pointer"
           type="submit"
         >
           Sign Up

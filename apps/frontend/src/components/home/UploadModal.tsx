@@ -47,7 +47,7 @@ export const UploadModal: React.FC = () => {
       const response = await fetch("/api/artwork/submit", {
         method: "POST",
         body: formData,
-      });
+      }); //TODO
 
       const result = await response.json();
       if (!response.ok) {
@@ -66,10 +66,10 @@ export const UploadModal: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="flex justify-center items-center">
       {isLoggedIn ? (
         <button
-          className="bg-mypink-400 p-5 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer"
+          className="bg-linear-to-r from-mypink-100 to-mypink-400 w-sm p-4 text-whiteText-primary font-bold text-2xl rounded-4xl cursor-pointer text-mytext-dark"
           type="button"
           onClick={() => {
             setIsOpen(!isOpen);
@@ -79,7 +79,7 @@ export const UploadModal: React.FC = () => {
         </button>
       ) : (
         <button
-          className="bg-myblue-400 p-5 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer"
+          className="bg-linear-to-r from-myblue-100 to-myblue-400 w-sm p-4 text-whiteText-primary font-bold text-2xl rounded-4xl cursor-pointer text-mytext-dark"
           type="button"
           onClick={() => {
             navigate("/login");
@@ -180,6 +180,6 @@ export const UploadModal: React.FC = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };

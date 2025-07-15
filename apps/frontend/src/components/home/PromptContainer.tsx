@@ -14,29 +14,19 @@ export const PromptContainer: React.FC = () => {
   }
 
   return (
-    <div className="bg-whiteText-accent rounded-4xl w-4/5 max-w-3xl mx-auto flex flex-col gap-2 shadow-lg">
-      <div className="p-10 flex flex-col gap-4 w-full">
-        <div className="flex flex-col gap-6 items-center w-full">
-          <h1 className="text-4xl text-myblue-500 text-center font-bold pt-4 pb-2">
-            Today's Inspiration
-          </h1>
-          <span className="text-myblue-400 font-semibold text-5xl">
-            {data!.inspiration.category}
-          </span>
-          <InspirationCard inspiration={data!.inspiration.name} />
-        </div>
-        <div className="flex justify-center pt-8">
-          <Palettecard
-            colors={data!.palette}
-            style={`w-14 h-14 rounded-full shadow-md`}
-          />
-        </div>
-      </div>
-      <div className="flex justify-center">
+    <div className="flex w-full">
+      <div className="flex w-1/2 ">
         <PhotoCard
           url={data!.photo.url}
           author={data!.photo.author}
           promo={data!.photo.promo}
+        />
+      </div>
+      <div className="flex flex-col gap-5 justify-center w-1/2 ">
+        <InspirationCard inspiration={data!.inspiration.name} />
+        <Palettecard
+          colors={data!.palette}
+          style={`w-20 h-20 rounded-full shadow-md`}
         />
       </div>
     </div>

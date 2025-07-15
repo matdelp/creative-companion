@@ -1,29 +1,36 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  /* 
-  --color-mypink-400: #ff70a6;
-  --color-myorange-400: #ff9770;
-  --color-myyellow-700: #ffd670;
-  --color-myyellow-400: #ecf8a4; */
-
   --color-myblue-100: #b3e8fd;
-  --color-myblue-300: #70d6ff;
   --color-myblue-400: #56c4ec;
-  --color-myblue-800: #12475c;
+  --color-myblue-700: #12475c;
+
   --color-mypink-100: #f7b3cd;
   --color-mypink-400: #ff70a6;
-  --color-mypink-800: #5a2539;
-  --color-myorange-200: #fdb198;
-  --color-myorange-400: #ff8359;
-  --color-myyellow-700: #f5c842;
-  --color-myyellow-400: #cde86c;
-  --color-blackText-primary: #2c2c2c;
+  --color-mypink-700: #5a2539;
 
-  --color-darkBackground-700: #141414;
-  --color-darkBackground-400: #1f1f1f;
-  --color-whiteText-primary: #f9f9f9;
-  --color-whiteText-accent: #eaeaea;
+  --color-mypurple-100: #e0cffe;
+  --color-mypurple-400: #a270f9;
+  --color-mypurple-700: #472a78;
+
+  --color-myorange-100: #fdb198;
+  --color-myorange-400: #ff8359;
+  --color-myorange-700: #a3472f;
+
+  --color-myyellow-100: #ecf8a4;
+  --color-myyellow-400: #cde86c;
+  --color-myyellow-700: #f5c842;
+
+  --color-mytext-light: #f9f9f9;
+  --color-mytext-dark: #2c2c2c;
+
+  --color-mybackground-light-100: #ffffff;
+  --color-mybackground-light-400: #f5f5f5;
+  --color-mybackground-light-700: #e0e0e0;
+
+  --color-mybackground-dark-100: #1f1f1f;
+  --color-mybackground-dark-400: #141414;
+  --color-mybackground-dark-700: #0f0f0f;
 }
 
 :root {

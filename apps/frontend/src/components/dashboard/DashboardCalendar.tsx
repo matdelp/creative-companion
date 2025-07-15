@@ -28,7 +28,7 @@ export const DashboardCalendar: React.FC = () => {
     };
 
   return (
-    <div className="py-4 flex gap-20 w-full items-center justify-center">
+    <div className="py-4 flex xl:flex-row flex-col gap-2 xl:gap-20 w-full items-center justify-center">
       <Calendar
         onActiveStartDateChange={handleActiveStartDateChange}
         className="!bg-mypurple-100 !rounded-xl"

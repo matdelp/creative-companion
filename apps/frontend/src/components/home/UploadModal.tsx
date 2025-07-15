@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { useAuthStore } from "../../store/authentication";
 import { useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required" }),
@@ -108,7 +109,7 @@ export const UploadModal: React.FC = () => {
                 onClick={() => setIsOpen(false)}
                 className="text-mypink-400 bg-transparent text-2xl w-8 h-8 justify-center items-center cursor-pointer"
               >
-                x
+                <X />
               </button>
             </div>
             <FormProvider {...form}>

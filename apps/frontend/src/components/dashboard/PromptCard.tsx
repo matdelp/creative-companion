@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetPrompt } from "../../hooks/useGetPrompt";
-import Palettecard from "../home/Palettecard";
 import { useGetTodaysArt } from "../../hooks/useGetTodaysArt";
+import Palettecard from "../home/Palettecard";
 import { ArtworkCard } from "./ArtworkCard";
 // import { UploadModal } from "../home/UploadModal";
 
@@ -23,11 +23,11 @@ export const PromptCard: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-2xl text-mytext-dark font-semibold pb-4 overflow-hidden">
+      <h2 className="xl:text-2xl text-xl text-mytext-dark font-semibold xl:pb-4 pb-2 overflow-hidden text-center">
         Daily Challenge
       </h2>{" "}
-      <div className="flex gap-4 w-full">
-        <div className="flex w-72 h-72 aspect-square">
+      <div className="flex xl:flex-row flex-col xl:gap-4 gap-2 w-full items-center">
+        <div className="flex xl:w-72 w-56 aspect-square">
           <img
             src={data?.photo.url}
             alt="photo of the day"
@@ -37,7 +37,9 @@ export const PromptCard: React.FC = () => {
         <div className="flex flex-col grow gap-4 justify-center items-center">
           <p className="text-mytext-dark">
             Today's inspiration:{" "}
-            <span className="font-bold">{data?.inspiration.category}</span>
+            <span className="font-bold text-mypink-400">
+              {data?.inspiration.category}
+            </span>
           </p>
           <p className="text-mytext-dark text-center">
             "{data?.inspiration.name}"
@@ -50,7 +52,7 @@ export const PromptCard: React.FC = () => {
           </div>
         </div>
       </div>
-      <h2 className="text-2xl text-mytext-dark font-semibold pt-8 pb-2 text-center">
+      <h2 className="xl:text-2xl text-xl text-mytext-dark font-semibold pt-8 pb-2 text-center">
         Your Work
       </h2>
       {art ? (
@@ -62,7 +64,7 @@ export const PromptCard: React.FC = () => {
           />
         </div>
       ) : (
-        <div className="flex flex-col gap-4 items-center justify-center rounded-xl border border-mypurple-400 bg-mypurple-100 text-mytext-dark text-xl font-semibold p-6 text-center">
+        <div className="flex flex-col xl:gap-4 gap-1 items-center justify-center rounded-xl border border-mypurple-400 bg-mypurple-100 text-mytext-dark xl:text-xl font-semibold xl:p-6 p-2 text-center">
           <span>No masterpiece today yet...</span>{" "}
           <span>your canvas is waiting! 🎨</span>
           {/* <div className="max-w-20">

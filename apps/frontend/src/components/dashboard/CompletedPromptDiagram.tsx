@@ -34,7 +34,7 @@ export const CompletedPromptDiagram: React.FC = () => {
       : 0;
 
   return (
-    <div className="w-48">
+    <div className="xl:w-48 w-40">
       <CircularProgressbarWithChildren
         value={percentage}
         background
@@ -47,9 +47,9 @@ export const CompletedPromptDiagram: React.FC = () => {
       >
         {
           <div className="text-mytext-light font-bold flex flex-col items-center">
-            <p className="text-2xl">{percentage}%</p>
-            <p className="text-xl">completed </p>
-            <p className="text-xl">prompts!</p>
+            <p className="xl:text-2xl test-xl">{percentage}%</p>
+            <p className="xl:text-xl text-md">completed </p>
+            <p className="xl:text-xl text-md">prompts!</p>
           </div>
         }
       </CircularProgressbarWithChildren>

@@ -7,8 +7,8 @@ type PhotoCardProps = {
 export const PhotoCard: React.FC<PhotoCardProps> = ({ url, author, promo }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="w-full flex flex-col items-center justify-center p-8">
-      <div className="w-sm aspect-square relative ">
+    <div className="w-full flex flex-col items-center justify-center xl:p-8 p-4">
+      <div className="xl:w-sm w-3xs aspect-square relative ">
         <img
           src={url}
           alt="photo"
@@ -19,7 +19,7 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({ url, author, promo }) => {
           <p>{author}</p>
           {promo && (
             <button
-              className="cursor-pointer w-4 h-4"
+              className="cursor-pointer xl:w-4 xl:h-4 w-2 h-2"
               onClick={() => setIsOpen(!isOpen)}
             >
               <img src="/images/instagram.png"></img>

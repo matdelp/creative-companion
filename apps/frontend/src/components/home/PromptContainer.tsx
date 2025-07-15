@@ -14,19 +14,19 @@ export const PromptContainer: React.FC = () => {
   }
 
   return (
-    <div className="flex w-full">
-      <div className="flex w-1/2 ">
+    <div className="flex xl:flex-row flex-col w-full">
+      <div className="flex xl:w-1/2 w-full">
         <PhotoCard
           url={data!.photo.url}
           author={data!.photo.author}
           promo={data!.photo.promo}
         />
       </div>
-      <div className="flex flex-col gap-4 justify-center w-1/2 ">
+      <div className="flex flex-col gap-4 justify-center xl:w-1/2 w-full pb-2 ">
         <InspirationCard inspiration={data!.inspiration.name} />
         <Palettecard
           colors={data!.palette}
-          style={`w-20 h-20 rounded-full shadow-md`}
+          style={`xl:w-20 xl:h-20 w-12 h-12 rounded-full shadow-md`}
         />
       </div>
     </div>

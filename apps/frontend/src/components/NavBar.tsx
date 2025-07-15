@@ -9,14 +9,14 @@ export const NavBar: React.FC = () => {
   const { isLoggedIn } = useAuthStore();
   const { toggleTheme } = useThemeStore();
   return (
-    <nav className="w-full text-mytext-dark flex items-center justify-between px-4 py-3">
+    <nav className="w-full text-mytext-dark flex items-center justify-between xl:px-4 xl:py-3">
       <Logo
-        paintbrushStyle="text-myblue-400 w-12 h-12"
-        divStyle="flex flex-col font-semibold"
+        paintbrushStyle="text-myblue-400 xl:w-12 xl:h-12 w-6 h-6"
+        divStyle="flex flex-col font-semibold xl:text-md text-xs"
       />
 
-      <div className="flex items-center justify-center gap-10">
-        <ul className="flex items-center space-x-10 text-2xl text-mytext-dark ">
+      <div className="flex items-center justify-center xl:gap-10 gap-4">
+        <ul className="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-dark ">
           {isLoggedIn ? (
             <li>
               <a href="/dashboard">Dashboard</a>
@@ -30,14 +30,15 @@ export const NavBar: React.FC = () => {
             <a href="/collection">Collections</a>
           </li>
         </ul>
-
-        <ProfileDropdown />
-        <button
-          onClick={toggleTheme}
-          className="cursor-pointer text-2xl text-mypink-400"
-        >
-          <MdLightMode />
-        </button>
+        <div className="flex items-center xl:gap-2 gap-1">
+          <ProfileDropdown />
+          <button
+            onClick={toggleTheme}
+            className="cursor-pointer xl:text-2xl text-sm text-mypink-400 text-center p-1"
+          >
+            <MdLightMode />
+          </button>
+        </div>
       </div>
     </nav>
   );

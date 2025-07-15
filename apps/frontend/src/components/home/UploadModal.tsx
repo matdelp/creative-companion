@@ -67,10 +67,10 @@ export const UploadModal: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center xl:p-2 p-4">
       {isLoggedIn ? (
         <button
-          className="bg-linear-to-r from-mypink-100 to-mypink-400 w-sm p-4 text-whiteText-primary font-bold text-2xl rounded-4xl cursor-pointer text-mytext-dark"
+          className="bg-linear-to-r from-mypink-100 to-mypink-400 xl:w-sm w-48 xl:p-4 p-2 text-whiteText-primary font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-dark"
           type="button"
           onClick={() => {
             setIsOpen(!isOpen);
@@ -80,7 +80,7 @@ export const UploadModal: React.FC = () => {
         </button>
       ) : (
         <button
-          className="bg-linear-to-r from-myblue-100 to-myblue-400 w-sm p-4 text-whiteText-primary font-bold text-2xl rounded-4xl cursor-pointer text-mytext-dark"
+          className="bg-linear-to-r from-myblue-100 to-myblue-400 xl:w-sm w-48 xl:p-4 p-2 text-whiteText-primary font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-dark"
           type="button"
           onClick={() => {
             navigate("/login");

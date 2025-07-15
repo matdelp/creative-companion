@@ -22,7 +22,7 @@ export const PromptContainer: React.FC = () => {
           promo={data!.photo.promo}
         />
       </div>
-      <div className="flex flex-col gap-5 justify-center w-1/2 ">
+      <div className="flex flex-col gap-4 justify-center w-1/2 ">
         <InspirationCard inspiration={data!.inspiration.name} />
         <Palettecard
           colors={data!.palette}

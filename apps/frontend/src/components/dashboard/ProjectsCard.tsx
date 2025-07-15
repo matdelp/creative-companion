@@ -14,10 +14,13 @@ export const ProjectsCard: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-lg text-mypink-800 font-semibold">Recent Projects</h2>
-      <p className="text-sm text-mypink-800 pb-2">
+      <h2 className="text-2xl text-mytext-dark font-semibold pb-4">
+        Recent Projects
+      </h2>
+      <p className="text-lg text-mytext-dark pb-1">
         See your latest drawings here.
       </p>
+
       <ArtworkCard artworks={data!.artwork} />
     </>
   );

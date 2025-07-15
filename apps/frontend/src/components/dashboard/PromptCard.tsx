@@ -3,6 +3,7 @@ import { useGetPrompt } from "../../hooks/useGetPrompt";
 import Palettecard from "../home/Palettecard";
 import { useGetTodaysArt } from "../../hooks/useGetTodaysArt";
 import { ArtworkCard } from "./ArtworkCard";
+// import { UploadModal } from "../home/UploadModal";
 
 export const PromptCard: React.FC = () => {
   const { data, isLoading, error } = useGetPrompt();
@@ -22,26 +23,26 @@ export const PromptCard: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-lg text-mypink-800 font-semibold pb-4">
+      <h2 className="text-2xl text-mytext-dark font-semibold pb-4 overflow-hidden">
         Daily Challenge
       </h2>{" "}
-      <div className="flex gap-4">
-        <div className="flex w-36 h-36 justify-center ">
+      <div className="flex gap-4 w-full">
+        <div className="flex w-72 h-72 aspect-square">
           <img
             src={data?.photo.url}
             alt="photo of the day"
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full rounded-xl border-4 border-mybackground-light-100"
           />
         </div>
-        <div className="flex flex-col gap-4">
-          <p className="text-mypink-800">
+        <div className="flex flex-col grow gap-4 justify-center items-center">
+          <p className="text-mytext-dark">
             Today's inspiration:{" "}
             <span className="font-bold">{data?.inspiration.category}</span>
           </p>
-          <p className="text-mypink-800 text-center">
+          <p className="text-mytext-dark text-center">
             "{data?.inspiration.name}"
           </p>
-          <div className="flex justify-center bg-myptext-mypink-800 rounded-2xl p-2 ">
+          <div className="flex justify-center bg-myptext-mytext-dark rounded-2xl p-2 ">
             <Palettecard
               colors={data!.palette}
               style={`w-10 h-10 rounded-full shadow-md`}
@@ -49,16 +50,24 @@ export const PromptCard: React.FC = () => {
           </div>
         </div>
       </div>
-      <h2 className="text-lg text-mypink-800 font-semibold py-4">Your Work</h2>
+      <h2 className="text-2xl text-mytext-dark font-semibold pt-8 pb-2 text-center">
+        Your Work
+      </h2>
       {art ? (
-        <ArtworkCard
-          art={art.content}
-          title={art.title}
-          description={art?.description}
-        />
+        <div className="flex items-center justify-center w-full pt-2">
+          <ArtworkCard
+            art={art.content}
+            title={art.title}
+            description={art?.description}
+          />
+        </div>
       ) : (
-        <div className="flex items-center justify-center rounded-xl border bg-mypink-400 text-whiteText-accent text-lg font-semibold p-6 text-center">
-          No masterpiece today yet — your canvas is waiting! 🎨
+        <div className="flex flex-col gap-4 items-center justify-center rounded-xl border border-mypurple-400 bg-mypurple-100 text-mytext-dark text-xl font-semibold p-6 text-center">
+          <span>No masterpiece today yet...</span>{" "}
+          <span>your canvas is waiting! 🎨</span>
+          {/* <div className="max-w-20">
+            <UploadModal />
+          </div> */}
         </div>
       )}
     </>

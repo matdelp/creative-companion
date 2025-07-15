@@ -9,7 +9,7 @@ type LongestStreakProps = {
 export const LongestStreak: React.FC<LongestStreakProps> = ({ dates }) => {
   const longestStreak = calculateLongestStreak(dates);
   return (
-    <div className="flex h-fit items-center gap-4 p-4 bg-gradient-to-r from-green-500 to-green-700 rounded-xl shadow-lg">
+    <div className="flex h-fit items-center gap-4 p-4 bg-gradient-to-r from-mypink-100 to-mypink-400 rounded-xl shadow-lg">
       <PartyPopper className="text-white w-10 h-10" />
       <div>
         <p className="text-white text-sm">Longest Streak</p>

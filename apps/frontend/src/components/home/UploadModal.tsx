@@ -22,6 +22,7 @@ export const UploadModal: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [backendError, setBackendError] = React.useState<string | null>(null);
   const { isLoggedIn } = useAuthStore();
+
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

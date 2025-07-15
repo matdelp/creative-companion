@@ -10,17 +10,15 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
   description = "Add a description to your art",
 }) => {
   return (
-    <div className="bg-myblue-800 rounded-xl shadow-lg overflow-hidden max-w-lg">
+    <div className="bg-myblue-800 rounded-xl shadow-lg w-xs aspect-square">
       <img
         src={art}
         alt="Artwork title"
-        className="w-full h-auto object-contain"
+        className="w-full object-contain rounded-t-xl"
       />
       <div className="p-4 text-center">
-        <h2 className="text-whiteText-accent text-xl font-bold mb-2">
-          {title}
-        </h2>
-        <p className="text-whiteText-primary text-sm">{description}</p>
+        <h2 className="text-mytext-dark text-xl font-bold mb-2">{title}</h2>
+        <p className="text-mytext-dark text-sm">{description}</p>
       </div>
     </div>
   );

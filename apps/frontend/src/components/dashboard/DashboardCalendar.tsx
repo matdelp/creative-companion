@@ -28,18 +28,20 @@ export const DashboardCalendar: React.FC = () => {
     };
 
   return (
-    <div className="py-4 flex gap-4">
+    <div className="py-4 flex gap-20 w-full items-center justify-center">
       <Calendar
         onActiveStartDateChange={handleActiveStartDateChange}
-        className="!bg-myblue-100 !rounded-xl"
+        className="!bg-mypurple-100 !rounded-xl"
         tileClassName={({ date, view }) =>
           view === "month" && isPromptCompleted(date, completedDates)
-            ? "!bg-green-400 !rounded-full !text-black !font-bold"
+            ? "!bg-mypink-400 !rounded-full !text-black !font-bold"
             : null
         }
       />
-      <LongestStreak dates={data!} />
-      <CompletedPromptDiagram />
+      <div className="flex flex-col gap-2">
+        <LongestStreak dates={data!} />
+        <CompletedPromptDiagram />
+      </div>
     </div>
   );
 };

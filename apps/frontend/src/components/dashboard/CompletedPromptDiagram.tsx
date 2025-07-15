@@ -34,24 +34,25 @@ export const CompletedPromptDiagram: React.FC = () => {
       : 0;
 
   return (
-    <CircularProgressbarWithChildren
-      value={percentage}
-      background
-      backgroundPadding={6}
-      styles={buildStyles({
-        backgroundColor: "#12475c",
-        textColor: "#fff",
-        pathColor: "#fff",
-        trailColor: "transparent",
-      })}
-    >
-      {
-        <div className="text-whiteText-accent font-bold flex flex-col items-center">
-          <p className="text-2xl">{percentage}%</p>
-          <p className="text-xl">completed </p>
-          <p className="text-xl">prompts!</p>
-        </div>
-      }
-    </CircularProgressbarWithChildren>
+    <div className="w-48">
+      <CircularProgressbarWithChildren
+        value={percentage}
+        background
+        backgroundPadding={6}
+        styles={buildStyles({
+          backgroundColor: "#a270f9",
+          pathColor: "#f9f9f9",
+          trailColor: "transparent",
+        })}
+      >
+        {
+          <div className="text-mytext-light font-bold flex flex-col items-center">
+            <p className="text-2xl">{percentage}%</p>
+            <p className="text-xl">completed </p>
+            <p className="text-xl">prompts!</p>
+          </div>
+        }
+      </CircularProgressbarWithChildren>
+    </div>
   );
 };

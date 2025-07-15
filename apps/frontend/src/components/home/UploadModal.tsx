@@ -71,7 +71,7 @@ export const UploadModal: React.FC = () => {
     <div className="flex justify-center items-center xl:p-2 p-4">
       {isLoggedIn ? (
         <button
-          className="bg-linear-to-r from-mypink-100 to-mypink-400 xl:w-sm w-48 xl:p-4 p-2 text-whiteText-primary font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-dark"
+          className="bg-linear-to-r from-mypink-100 to-mypink-400 dark:from-myorange-400 dark:to-mypink-400 xl:w-sm w-48 xl:p-4 p-2 font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-light dark:text-mytext-dark"
           type="button"
           onClick={() => {
             setIsOpen(!isOpen);
@@ -81,7 +81,7 @@ export const UploadModal: React.FC = () => {
         </button>
       ) : (
         <button
-          className="bg-linear-to-r from-myblue-100 to-myblue-400 xl:w-sm w-48 xl:p-4 p-2 text-whiteText-primary font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-dark"
+          className="bg-linear-to-r from-myblue-100 to-myblue-400 dark:from-myblue-400 dark:to-mypurple-400  xl:w-sm w-48 xl:p-4 p-2 font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer  text-mytext-light dark:text-mytext-dark"
           type="button"
           onClick={() => {
             navigate("/login");
@@ -97,11 +97,11 @@ export const UploadModal: React.FC = () => {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="relative p-4 w-full max-w-md max-h-full bg-mybackground-light-400 rounded-lg shadow-sm"
+            className="relative p-4 w-full max-w-md max-h-full bg-mybackground-light-400 dark:bg-mybackground-dark-100 rounded-lg shadow-sm dark:border dark:border-my"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-mypink-400">
-              <h3 className="text-lg font-semibold text-blackText-primary ">
+              <h3 className="text-lg font-semibold text-mytext-dark dark:text-mytext-light ">
                 Your inspiration for the day
               </h3>
               <button
@@ -122,7 +122,7 @@ export const UploadModal: React.FC = () => {
                   <div className="col-span-2">
                     <label
                       htmlFor="title"
-                      className="block mb-2 text-xl font-medium text-blackText-primary"
+                      className="block mb-2 text-xl font-medium text-mytext-dark dark:text-mytext-light"
                     >
                       Title
                     </label>
@@ -130,7 +130,7 @@ export const UploadModal: React.FC = () => {
                       type="text"
                       {...register("title")}
                       id="title"
-                      className={`bg-mypink-100 border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
+                      className={`bg-mypink-100 dark:bg-mypink-700 dark:text-mytext-light border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.title ? "border border-red-500" : ""
                       } `}
                       placeholder="Give your creation a title"
@@ -140,7 +140,7 @@ export const UploadModal: React.FC = () => {
                   <div className="col-span-2">
                     <label
                       htmlFor="description"
-                      className="block mb-2 text-xl font-medium text-mytext-dark"
+                      className="block mb-2 text-xl font-medium text-mytext-dark dark:text-mytext-light"
                     >
                       Art Description
                     </label>
@@ -148,7 +148,7 @@ export const UploadModal: React.FC = () => {
                       {...register("description")}
                       id="description"
                       rows={4}
-                      className={`bg-mypink-100 border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
+                      className={`bg-mypink-100 dark:bg-mypink-700 dark:text-mytext-light border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.description ? "border border-red-500" : ""
                       } `}
                       placeholder="Write a description here (optionnal)"
@@ -161,7 +161,7 @@ export const UploadModal: React.FC = () => {
                       type="file"
                       accept="image/*"
                       multiple={false}
-                      className={`cursor-pointer text-blackText-primary ${
+                      className={`cursor-pointer text-mytext-dark dark:text-mytext-light ${
                         errors.art ? "border border-red-500" : ""
                       }`}
                       placeholder="Write a description here (optionnal)"
@@ -175,7 +175,7 @@ export const UploadModal: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="text-mytext-dark bg-myblue-400 rounded-lg px-5 py-2.5 text-center cursor-pointer"
+                  className="text-mytext-dark dark:text-mytext-light bg-myblue-400 dark:bg-myblue-700 rounded-lg px-5 py-2.5 text-center cursor-pointer"
                 >
                   Submit your creation
                 </button>

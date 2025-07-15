@@ -9,14 +9,14 @@ export const NavBar: React.FC = () => {
   const { isLoggedIn } = useAuthStore();
   const { toggleTheme } = useThemeStore();
   return (
-    <nav className="w-full text-mytext-dark flex items-center justify-between xl:px-4 xl:py-3">
+    <nav className="w-full text-mytext-dark dark:text-mytext-light flex items-center justify-between xl:px-4 xl:py-3">
       <Logo
-        paintbrushStyle="text-myblue-400 xl:w-12 xl:h-12 w-6 h-6"
+        paintbrushStyle="text-myblue-400 dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
         divStyle="flex flex-col font-semibold xl:text-md text-xs"
       />
 
       <div className="flex items-center justify-center xl:gap-10 gap-4">
-        <ul className="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-dark ">
+        <ul className="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-dark dark:text-mytext-light">
           {isLoggedIn ? (
             <li>
               <a href="/dashboard">Dashboard</a>
@@ -34,7 +34,7 @@ export const NavBar: React.FC = () => {
           <ProfileDropdown />
           <button
             onClick={toggleTheme}
-            className="cursor-pointer xl:text-2xl text-sm text-mypink-400 text-center p-1"
+            className="cursor-pointer xl:text-2xl text-sm dark:text-mypink-100 text-mypink-400 text-center p-1"
           >
             <MdLightMode />
           </button>

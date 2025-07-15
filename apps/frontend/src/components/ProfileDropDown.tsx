@@ -9,7 +9,7 @@ export const ProfileDropdown = () => {
   const { isLoggedIn, authProvider, logout } = useAuthStore();
   const navigate = useNavigate();
   const buttonStyle =
-    "w-full xl:px-4 xl:py-2 px-2 py-1 xl:text-md text-sm  text-left text-mypink-400 cursor-pointer rounded-md";
+    "w-full xl:px-4 xl:py-2 px-2 py-1 xl:text-md text-sm  text-left text-mypink-400 dark:text-mytext-light cursor-pointer rounded-md";
   const { isLoading, error } = useGetLoginStatus();
   if (isLoading) {
     return <div>loading</div>;
@@ -44,11 +44,11 @@ export const ProfileDropdown = () => {
         aria-expanded={isOpen}
         aria-label="Profile actions"
       >
-        <CgProfile className="xl:w-8 xl:h-8 w-6 h-6 text-mypink-400" />
+        <CgProfile className="xl:w-8 xl:h-8 w-6 h-6 text-mypink-400 dark:text-mypink-100" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg z-50 bg-mybackground-light-400 border border-mypink-100">
+        <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg z-50 bg-mybackground-light-400 dark:bg-mypink-700 border border-mypink-100 dark:border-mypink-400">
           {isLoggedIn && (
             <button
               onClick={() => navigate("/profile")}

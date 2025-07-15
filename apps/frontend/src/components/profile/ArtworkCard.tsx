@@ -83,12 +83,12 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
       {isDeleting && <div>Deleting pending...</div>}
       {mutationError && <div className="text-red-600">Update failed</div>}
       {deletingError && <div className="text-red-600">Delete failed</div>}
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1 bg-mybackground-light-400 dark:bg-mybackground-dark-400 min-h-screen">
         {artworksState.map(
           ({ content, title, created_at, description, id }) => (
             <div
               key={id}
-              className="w-[32%] sm:w-[24%] md:w-[19%] aspect-square relative group overflow-hidden"
+              className="w-[32%] sm:w-[24%] md:w-[19%] h-full aspect-square relative group overflow-hidden"
             >
               <img
                 src={content}

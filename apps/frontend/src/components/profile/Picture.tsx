@@ -25,7 +25,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
     <div className="flex justify-between">
       <div className="relative xl:h-44 xl:w-44 w-32 h-32">
         <img
-          className="rounded-full border-4 border-white object-cover h-full w-full"
+          className="rounded-full border-4 border-mytext-light dark:border-mybackground-dark-700 object-cover h-full w-full"
           src={image}
           alt="User avatar"
         />

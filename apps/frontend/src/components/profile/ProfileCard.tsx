@@ -94,7 +94,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
 
   return (
     <div className="w-full">
-      <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 relative xl:p-5 p-2">
+      <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
         <div className="absolute xl:right-5 right-2">
           <NavHomeButton />
         </div>
@@ -109,7 +109,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 justify-center items-center w-full pt-20 pb-5">
+      <div className="flex flex-col gap-2 justify-center items-center w-full pt-20 pb-5 bg-mybackground-light-400 dark:bg-mybackground-dark-100">
         {isEditing ? (
           <FormProvider {...form}>
             <form
@@ -118,7 +118,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               noValidate
             >
               <input
-                className="text-xl font-thin text-mytext-dark border border-mypurple-400 rounded-xl text-center w-auto px-2"
+                className="text-xl font-thin text-mytext-dark dark:text-mytext-light border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="First name"
                 {...register("first_name")}
               />
@@ -129,7 +129,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <input
-                className="text-xl font-thin text-mytext-dark border border-mypurple-400 rounded-xl text-center w-auto px-2"
+                className="text-xl font-thin text-mytext-dark dark:text-mytext-light border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="Last name"
                 {...register("last_name")}
               />
@@ -140,7 +140,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <input
-                className="text-mytext-dark  font-thin border border-mypurple-400 rounded-xl text-center w-auto px-2"
+                className="text-mytext-dark dark:text-mytext-light font-thin border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="Username"
                 {...register("username")}
               />
@@ -151,7 +151,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <textarea
-                className="text-mytext-dark mt-2 font-thin text-center rounded-xl border border-mypurple-400 p-2"
+                className="text-mytext-dark dark:text-mytext-light mt-2 font-thin text-center rounded-xl border border-mypurple-400 p-2"
                 rows={2}
                 placeholder="Description"
                 {...register("description")}
@@ -173,13 +173,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <button
-                className="bg-linear-to-r from-myblue-400 to-mypurple-400 p-2 text-mytext-light font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
+                className="bg-linear-to-r from-myblue-400 to-mypurple-400 p-2 text-mytext-light dark:text-mytext-dark font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
                 type="submit"
               >
                 Save
               </button>
               <button
-                className=" text-red-600 text-lg rounded-2xl cursor-pointer w-full max-w-60"
+                className=" text-red-600 dark:text-red-400 text-lg rounded-2xl cursor-pointer w-full max-w-60"
                 type="button"
                 onClick={handleDelete}
                 disabled={isDeleting}
@@ -190,13 +190,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
           </FormProvider>
         ) : (
           <>
-            <h2 className="xl:text-4xl text-3xl font-bold text-myblue-400">
+            <h2 className="xl:text-4xl text-3xl font-bold text-myblue-400 dark:text-myblue-100">
               {user.first_name} {user.last_name}
             </h2>
-            <p className="text-mytext-dark xl:text-2xl text-xl">
+            <p className="text-mytext-dark dark:text-mytext-light xl:text-2xl text-xl">
               {user.username}
             </p>
-            <p className="text-mybackground-dark-100 text-center max-w-xl">
+            <p className="text-mybackground-dark-100 dark:text-mytext-light  text-center max-w-xl">
               {user.description}
             </p>
           </>
@@ -204,15 +204,17 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
 
         <div className="flex justify-center xl:space-x-4 xl:mt-2 space-x-2 mt-1">
           <div className="text-center">
-            <p className="xl:text-4xl text-2xl font-bold text-mypink-400">
+            <p className="xl:text-4xl text-2xl font-bold text-mypink-400 dark:text-mypink-100">
               {projects}
             </p>
-            <p className="xl:text-lg text-md text-mypink-700">Projects</p>
+            <p className="xl:text-lg text-md text-mypink-700 dark:text-mypink-100">
+              Projects
+            </p>
           </div>
         </div>
 
         <button
-          className="bg-linear-to-r from-mypink-400 to-myorange-400 xl:p-2 p-1 text-mytext-light font-bold xl:text-lg rounded-2xl cursor-pointer w-full xl:max-w-60 max-w-30 xl:mt-4 mt-2"
+          className="bg-linear-to-r from-mypink-400 to-myorange-400 dark:from-myblue-400 dark:to-mypurple-400 xl:p-2 p-1 text-mytext-light dark:text-mytext-dark font-bold xl:text-lg rounded-2xl cursor-pointer w-full xl:max-w-60 max-w-30 xl:mt-4 mt-2"
           type="button"
           onClick={handleToggle}
         >

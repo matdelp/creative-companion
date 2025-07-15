@@ -9,6 +9,8 @@ import { useDeleteArtwork } from "../../hooks/useDeleteArtwork";
 
 type ArtworkCardProps = {
   artworks: Artwork[];
+  background: string;
+  height: string;
 };
 
 const formSchema = z.object({
@@ -17,7 +19,11 @@ const formSchema = z.object({
 });
 type FormData = z.infer<typeof formSchema>;
 
-export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
+export const ArtworkCard: React.FC<ArtworkCardProps> = ({
+  artworks,
+  background,
+  height,
+}) => {
   const [artworksState, setArtworksState] = useState<Artwork[]>(artworks);
   const [editingId, setEditingId] = useState<number | null>(null);
   const { mutate, isPending, error: mutationError } = useModifyArtwork();
@@ -83,7 +89,9 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworks }) => {
       {isDeleting && <div>Deleting pending...</div>}
       {mutationError && <div className="text-red-600">Update failed</div>}
       {deletingError && <div className="text-red-600">Delete failed</div>}
-      <div className="flex flex-wrap gap-1 bg-mybackground-light-400 dark:bg-mybackground-dark-400 min-h-screen">
+      <div
+        className={`flex flex-wrap gap-1 bg-mybackground-light-400 ${background} ${height}`}
+      >
         {artworksState.map(
           ({ content, title, created_at, description, id }) => (
             <div

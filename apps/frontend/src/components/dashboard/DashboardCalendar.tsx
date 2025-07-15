@@ -31,10 +31,10 @@ export const DashboardCalendar: React.FC = () => {
     <div className="py-4 flex xl:flex-row flex-col gap-2 xl:gap-20 w-full items-center justify-center">
       <Calendar
         onActiveStartDateChange={handleActiveStartDateChange}
-        className="!bg-mypurple-100 !rounded-xl"
+        className="!bg-mypurple-100 dark:!bg-myblue-700 dark:!text-myblue-100 !rounded-xl !text-inherit"
         tileClassName={({ date, view }) =>
           view === "month" && isPromptCompleted(date, completedDates)
-            ? "!bg-mypink-400 !rounded-full !text-black !font-bold"
+            ? "!bg-mypink-400 dark:!bg-mypink-700 dark:!text-myblue-100 !rounded-full !text-black !font-bold"
             : null
         }
       />

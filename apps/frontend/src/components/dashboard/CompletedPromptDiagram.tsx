@@ -46,7 +46,7 @@ export const CompletedPromptDiagram: React.FC = () => {
         })}
       >
         {
-          <div className="text-mytext-light font-bold flex flex-col items-center">
+          <div className="text-mytext-light dark:text-mytext-dark font-bold flex flex-col items-center">
             <p className="xl:text-2xl test-xl">{percentage}%</p>
             <p className="xl:text-xl text-md">completed </p>
             <p className="xl:text-xl text-md">prompts!</p>

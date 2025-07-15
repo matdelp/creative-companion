@@ -14,14 +14,18 @@ export const ProjectsCard: React.FC = () => {
 
   return (
     <>
-      <h2 className="xl:text-2xl text-xl text-mytext-dark font-semibold xl:pb-4 pb-1">
+      <h2 className="xl:text-2xl text-xl text-mytext-dark dark:text-mytext-light font-semibold xl:pb-4 pb-1">
         Recent Projects
       </h2>
-      <p className="xl:text-lg text-mytext-dark pb-1">
+      <p className="xl:text-lg text-mytext-dark dark:text-mytext-light pb-1">
         See your latest drawings here.
       </p>
 
-      <ArtworkCard artworks={data!.artwork} />
+      <ArtworkCard
+        artworks={data!.artwork}
+        background={"dark:bg-mypink-700"}
+        height="h-fit"
+      />
     </>
   );
 };

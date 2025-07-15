@@ -16,7 +16,11 @@ export const ProfilePage: React.FC = () => {
   return (
     <>
       <ProfileCard data={data!} />
-      <ArtworkCard artworks={data!.artwork} />
+      <ArtworkCard
+        artworks={data!.artwork}
+        background="dark:bg-mybackground-dark-100"
+        height="min-h-screen"
+      />
     </>
   );
 };

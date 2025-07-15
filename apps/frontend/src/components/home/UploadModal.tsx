@@ -96,18 +96,20 @@ export const UploadModal: React.FC = () => {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="relative p-4 w-full max-w-md max-h-full bg-myblue-100 rounded-lg shadow-sm"
+            className="relative p-4 w-full max-w-md max-h-full bg-mybackground-light-400 rounded-lg shadow-sm"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-myblue-400">
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-mypink-400">
               <h3 className="text-lg font-semibold text-blackText-primary ">
                 Your inspiration for the day
               </h3>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-myblue-800 bg-transparent text-sm w-8 h-8 ms-auto inline-flex justify-center items-center cursor-pointer"
-              ></button>
+                className="text-mypink-400 bg-transparent text-2xl w-8 h-8 justify-center items-center cursor-pointer"
+              >
+                x
+              </button>
             </div>
             <FormProvider {...form}>
               <form
@@ -119,7 +121,7 @@ export const UploadModal: React.FC = () => {
                   <div className="col-span-2">
                     <label
                       htmlFor="title"
-                      className="block mb-2 text-sm font-medium text-blackText-primary"
+                      className="block mb-2 text-xl font-medium text-blackText-primary"
                     >
                       Title
                     </label>
@@ -127,7 +129,7 @@ export const UploadModal: React.FC = () => {
                       type="text"
                       {...register("title")}
                       id="title"
-                      className={`bg-myblue-300 border border-myblue-800 text-blackText-primary text-sm rounded-lg focus:ring-myblue-800 block w-full p-2.5 ${
+                      className={`bg-mypink-100 border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.title ? "border border-red-500" : ""
                       } `}
                       placeholder="Give your creation a title"
@@ -137,7 +139,7 @@ export const UploadModal: React.FC = () => {
                   <div className="col-span-2">
                     <label
                       htmlFor="description"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-xl font-medium text-mytext-dark"
                     >
                       Art Description
                     </label>
@@ -145,7 +147,7 @@ export const UploadModal: React.FC = () => {
                       {...register("description")}
                       id="description"
                       rows={4}
-                      className={`bg-myblue-300 border border-myblue-800 text-blackText-primary text-sm rounded-lg focus:ring-myblue-800 block w-full p-2.5 ${
+                      className={`bg-mypink-100 border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.description ? "border border-red-500" : ""
                       } `}
                       placeholder="Write a description here (optionnal)"
@@ -172,7 +174,7 @@ export const UploadModal: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="text-white inline-flex items-center bg-myblue-800 hover:bg-blackText-primary focus:ring-4 focus:outline-none focus:ring-myblue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
+                  className="text-mytext-dark bg-myblue-400 rounded-lg px-5 py-2.5 text-center cursor-pointer"
                 >
                   Submit your creation
                 </button>

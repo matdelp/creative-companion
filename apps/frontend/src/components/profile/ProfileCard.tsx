@@ -94,14 +94,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
 
   return (
     <div className="w-full">
-      <div className="h-48 bg-gradient-to-r from-mypink-400 to-myorange-400 relative p-5">
-        <div className="absolute right-5">
+      <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 relative xl:p-5 p-2">
+        <div className="absolute xl:right-5 right-2">
           <NavHomeButton />
         </div>
-        <div className="absolute left-5">
+        <div className="absolute xl:left-5 lef-2">
           <Logo
-            paintbrushStyle="text-mytext-light w-12 h-12"
-            divStyle="flex flex-col font-semibold text-mytext-light"
+            paintbrushStyle="text-mytext-light xl:w-12 xl:h-12 w-8 h-8"
+            divStyle="flex flex-col font-semibold text-mytext-light xl:text-md text-xs"
           />
         </div>
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
@@ -190,25 +190,29 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
           </FormProvider>
         ) : (
           <>
-            <h2 className="text-4xl font-bold text-myblue-400">
+            <h2 className="xl:text-4xl text-3xl font-bold text-myblue-400">
               {user.first_name} {user.last_name}
             </h2>
-            <p className="text-mytext-dark text-2xl">{user.username}</p>
+            <p className="text-mytext-dark xl:text-2xl text-xl">
+              {user.username}
+            </p>
             <p className="text-mybackground-dark-100 text-center max-w-xl">
               {user.description}
             </p>
           </>
         )}
 
-        <div className="flex justify-center space-x-4 mt-2">
+        <div className="flex justify-center xl:space-x-4 xl:mt-2 space-x-2 mt-1">
           <div className="text-center">
-            <p className="text-4xl font-bold text-mypink-400">{projects}</p>
-            <p className="text-lg text-mypink-700">Projects</p>
+            <p className="xl:text-4xl text-2xl font-bold text-mypink-400">
+              {projects}
+            </p>
+            <p className="xl:text-lg text-md text-mypink-700">Projects</p>
           </div>
         </div>
 
         <button
-          className="bg-linear-to-r from-mypink-400 to-myorange-400 p-2 text-mytext-light font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
+          className="bg-linear-to-r from-mypink-400 to-myorange-400 xl:p-2 p-1 text-mytext-light font-bold xl:text-lg rounded-2xl cursor-pointer w-full xl:max-w-60 max-w-30 xl:mt-4 mt-2"
           type="button"
           onClick={handleToggle}
         >

@@ -6,7 +6,7 @@ export const NavHomeButton: React.FC = () => {
 
   return (
     <button onClick={() => navigate("/")} className="p-2">
-      <GoHome className="text-xl font-bold text-mytext-light w-10 h-10 cursor-pointer" />
+      <GoHome className="font-bold text-mytext-light xl:w-10 xl:h-10 w-6 h-6 cursor-pointer" />
     </button>
   );
 };

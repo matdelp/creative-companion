@@ -1,22 +1,19 @@
 import React from "react";
-import { ProfileDropdown } from "./ProfileDropDown";
-import { useAuthStore } from "../store/authentication";
-import { Paintbrush } from "lucide-react";
-import { useThemeStore } from "../store/useThemeStore";
 import { MdLightMode } from "react-icons/md";
+import { useAuthStore } from "../store/authentication";
+import { useThemeStore } from "../store/useThemeStore";
+import { Logo } from "./Logo";
+import { ProfileDropdown } from "./ProfileDropDown";
 
 export const NavBar: React.FC = () => {
   const { isLoggedIn } = useAuthStore();
   const { toggleTheme } = useThemeStore();
   return (
     <nav className="w-full text-mytext-dark flex items-center justify-between px-4 py-3">
-      <div className="flex items-center font-bold gap-2 text-xl">
-        <Paintbrush className="text-myblue-400 w-12 h-12" />
-        <div className="flex flex-col">
-          <span>Creative </span>
-          <span>Companion</span>
-        </div>
-      </div>
+      <Logo
+        paintbrushStyle="text-myblue-400 w-12 h-12"
+        divStyle="flex flex-col font-semibold"
+      />
 
       <div className="flex items-center justify-center gap-10">
         <ul className="flex items-center space-x-10 text-2xl text-mytext-dark ">

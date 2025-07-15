@@ -7,6 +7,7 @@ import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useModifyUserProfile } from "../../hooks/useModifyUserProfile";
 import { NavHomeButton } from "../NavHomeButton";
 import { Picture } from "./Picture";
+import { Logo } from "../Logo";
 
 type ProfileCardProps = {
   data: UserProfile;
@@ -92,12 +93,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
   }
 
   return (
-    <div className="w-full bg-whiteText-primary overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
-      <div className="h-40 bg-gradient-to-r from-mypink-400 to-myorange-400 relative p-5">
+    <div className="w-full">
+      <div className="h-48 bg-gradient-to-r from-mypink-400 to-myorange-400 relative p-5">
         <div className="absolute right-5">
           <NavHomeButton />
         </div>
-        <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
+        <div className="absolute left-5">
+          <Logo
+            paintbrushStyle="text-mytext-light w-12 h-12"
+            divStyle="flex flex-col font-semibold text-mytext-light"
+          />
+        </div>
+        <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
           <Picture image={picture!} isEditing={isEditing} />
         </div>
       </div>
@@ -111,7 +118,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               noValidate
             >
               <input
-                className="text-xl font-thin text-blackText-primary border border-mypink-400 rounded-xl text-center w-auto px-2"
+                className="text-xl font-thin text-mytext-dark border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="First name"
                 {...register("first_name")}
               />
@@ -122,7 +129,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <input
-                className="text-xl font-thin text-blackText-primary border border-mypink-400 rounded-xl text-center w-auto px-2"
+                className="text-xl font-thin text-mytext-dark border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="Last name"
                 {...register("last_name")}
               />
@@ -133,7 +140,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <input
-                className="text-myblue-800 font-thin border border-myblue-800 rounded-xl text-center p-1"
+                className="text-mytext-dark  font-thin border border-mypurple-400 rounded-xl text-center w-auto px-2"
                 placeholder="Username"
                 {...register("username")}
               />
@@ -144,7 +151,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
               )}
 
               <textarea
-                className="text-gray-500 mt-2 font-thin text-center rounded-xl border border-mypink-400 p-2"
+                className="text-mytext-dark mt-2 font-thin text-center rounded-xl border border-mypurple-400 p-2"
                 rows={2}
                 placeholder="Description"
                 {...register("description")}
@@ -155,18 +162,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
                 </p>
               )}
 
-              {isPending && <p className="text-blue-600">Updating...</p>}
+              {isPending && <p className="text-myblue-700">Updating...</p>}
               {mutationError && (
                 <p className="text-red-600">Update failed: {mutationError}</p>
               )}
 
-              {isDeleting && <p className="text-blue-600">Deleting...</p>}
+              {isDeleting && <p className="text-myblue-700">Deleting...</p>}
               {deletingError && (
                 <p className="text-red-600">Delete failed: {deletingError}</p>
               )}
 
               <button
-                className="bg-mypink-400 p-2 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
+                className="bg-linear-to-r from-myblue-400 to-mypurple-400 p-2 text-mytext-light font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
                 type="submit"
               >
                 Save
@@ -183,25 +190,25 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
           </FormProvider>
         ) : (
           <>
-            <h2 className="text-xl font-bold text-blackText-primary">
+            <h2 className="text-4xl font-bold text-myblue-400">
               {user.first_name} {user.last_name}
             </h2>
-            <p className="text-myblue-800 font-medium">{user.username}</p>
-            <p className="text-gray-500 text-center max-w-xl">
+            <p className="text-mytext-dark text-2xl">{user.username}</p>
+            <p className="text-mybackground-dark-100 text-center max-w-xl">
               {user.description}
             </p>
           </>
         )}
 
-        <div className="flex justify-center space-x-6 mt-6">
+        <div className="flex justify-center space-x-4 mt-2">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-800">{projects}</p>
-            <p className="text-sm text-gray-500">Projects</p>
+            <p className="text-4xl font-bold text-mypink-400">{projects}</p>
+            <p className="text-lg text-mypink-700">Projects</p>
           </div>
         </div>
 
         <button
-          className="bg-mypink-400 p-2 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
+          className="bg-linear-to-r from-mypink-400 to-myorange-400 p-2 text-mytext-light font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
           type="button"
           onClick={handleToggle}
         >

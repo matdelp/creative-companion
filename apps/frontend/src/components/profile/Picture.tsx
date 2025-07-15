@@ -23,7 +23,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
 
   return (
     <div className="flex justify-between">
-      <div className="relative h-32 w-32">
+      <div className="relative h-44 w-44">
         <img
           className="rounded-full border-4 border-white object-cover h-full w-full"
           src={image}
@@ -36,7 +36,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
             className="absolute bottom-1 right-1 p-1 cursor-pointer"
             aria-label="Edit profile photo"
           >
-            <FaPen className="w-4 h-4 text-mypink-400" />
+            <FaPen className="w-6 h-6 text-mypink-400" />
           </button>
         )}
         <input

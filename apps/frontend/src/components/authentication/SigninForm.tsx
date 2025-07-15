@@ -49,7 +49,7 @@ export const SignInForm: React.FC = () => {
       console.log("Login successful:");
       setAuthProvider("local");
       setIsLoggedIn(true);
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       if (error instanceof Error) {
         setBackendError(error.message);

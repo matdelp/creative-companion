@@ -102,7 +102,7 @@ export const SignInForm: React.FC = () => {
         </div>
 
         <button
-          className="px-2 py-2 bg-myblue-400 rounded-2xl text-whiteText-primary font-semibold w-full cursor-pointer"
+          className="px-2 py-2 bg-myblue-400 rounded-2xl text-mytext-light font-semibold w-full cursor-pointer"
           type="submit"
         >
           Login

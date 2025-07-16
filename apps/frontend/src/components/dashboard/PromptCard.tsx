@@ -12,7 +12,6 @@ export const PromptCard: React.FC = () => {
     isLoading: isLoadingArt,
     error: errorArt,
   } = useGetTodaysArt();
-  console.log(art);
 
   if (isLoading || isLoadingArt) {
     return <div>loading</div>;

@@ -8,7 +8,7 @@ interface ThemeState {
 }
 
 const useThemeStore = create<ThemeState>((set) => ({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () =>
     set((state) => {
       const newTheme: Theme = state.theme === "dark" ? "light" : "dark";

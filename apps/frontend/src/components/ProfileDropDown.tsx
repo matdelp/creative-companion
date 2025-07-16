@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { useGetLoginStatus } from "../hooks/useGetLoginStatus";
-import { useAuthStore } from "../store/authentication";
+import { useAuthStore } from "../store/useAuthenticationStore";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 export const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, authProvider, logout } = useAuthStore();
+  const { authProvider, logout } = useAuthStore();
   const navigate = useNavigate();
-  const buttonStyle =
-    "w-full xl:px-6 xl:py-4 hover:bg-myorange-100 dark:hover:bg-myblue-700 hover:text-mytext-light px-2 py-1 xl:text-3xl text-lg  text-left text-mypink-400 dark:text-mytext-light cursor-pointer rounded-md";
-  const { isLoading, error } = useGetLoginStatus();
+  const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
   if (isLoading) {
-    return <div>loading</div>;
+    return <div>Login pending</div>;
   }
   if (error) {
-    return <div>error</div>;
+    return <div>Login failed</div>;
   }
+  const buttonStyle =
+    "w-full xl:px-6 xl:py-4 hover:bg-myorange-100 dark:hover:bg-myblue-700 hover:text-mytext-light px-2 py-1 xl:text-3xl text-lg  text-left text-mypink-400 dark:text-mytext-light cursor-pointer rounded-md";
+
   console.log("logIn?", isLoggedIn);
 
   const handleLogout = async () => {

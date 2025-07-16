@@ -1,10 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { X } from "lucide-react";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import z from "zod";
-import { useAuthStore } from "../../store/authentication";
 import { useNavigate } from "react-router-dom";
-import { X } from "lucide-react";
+import z from "zod";
+import { useIsLoggedIn } from "../../hooks/useIsLoggedIn";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required" }),
@@ -22,12 +22,18 @@ const formSchema = z.object({
 export const UploadModal: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [backendError, setBackendError] = React.useState<string | null>(null);
-  const { isLoggedIn } = useAuthStore();
+  const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
 
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+  if (isLoading) {
+    return <div>Login pending</div>;
+  }
+  if (error) {
+    return <div>Login failed</div>;
+  }
 
   const {
     register,

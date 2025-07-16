@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "../store/authentication";
+import { useAuthStore } from "../store/useAuthenticationStore";
 import { useEffect } from "react";
 
 type LoginData = {

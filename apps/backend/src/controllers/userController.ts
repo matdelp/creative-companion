@@ -244,12 +244,7 @@ export const userController = {
   },
 
   logoutUser: (req: Request, res: Response) => {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      path: "/",
-    });
+    res.clearCookie("token");
     res.status(200).json({ message: "User logged out successfully" });
   },
 
@@ -344,5 +339,9 @@ export const userController = {
       return;
     }
     res.status(200).json(creationDate);
+  },
+  me: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.userId;
+    res.json({ userId });
   },
 };

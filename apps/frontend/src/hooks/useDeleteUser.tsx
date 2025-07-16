@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/authentication";
 
 const FETCH_URL = "/api/artist/delete";
 
 export const useDeleteUser = () => {
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuthStore();
 
   return useMutation<void, Error, void>({
     mutationFn: async () => {
@@ -23,7 +21,6 @@ export const useDeleteUser = () => {
     },
     onSuccess: () => {
       navigate("/");
-      setIsLoggedIn(false);
     },
   });
 };

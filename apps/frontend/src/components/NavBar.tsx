@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from "react";
 import { MdLightMode } from "react-icons/md";
-import { useAuthStore } from "../store/authentication";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import { useThemeStore } from "../store/useThemeStore";
 import { Logo } from "./Logo";
 
@@ -17,8 +17,14 @@ export const NavBar: React.FC<NavBarProps> = ({
   paintbrushStyle,
   linkStyle,
 }) => {
-  const { isLoggedIn } = useAuthStore();
+  const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
   const { toggleTheme } = useThemeStore();
+  if (isLoading) {
+    return <div>Login pending</div>;
+  }
+  if (error) {
+    return <div>Login failed</div>;
+  }
   return (
     <nav className={navStyle}>
       <Logo

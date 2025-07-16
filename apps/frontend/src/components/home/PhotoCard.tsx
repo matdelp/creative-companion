@@ -8,7 +8,7 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({ url, author, promo }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="w-full flex flex-col items-center justify-center xl:p-8 p-4">
-      <div className="xl:w-sm w-3xs aspect-square relative ">
+      <div className="w-full xl:max-w-[400px] max-w-[250px] aspect-square relative">
         <img
           src={url}
           alt="photo"

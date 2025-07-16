@@ -23,22 +23,22 @@ export const AsideBar: React.FC = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } xl:translate-x-0 xl:static xl:max-w-64 max-w-40`}
       >
-        <div className="pt-12 xl:pt-0">
+        <div className="pt-10 xl:pt-0">
           <Logo
-            paintbrushStyle="text-mypink-700 dark:text-myblue-100 xl:w-10 xl:h-10 w-2 h-2"
-            divStyle="text-xl text-mypink-700 dark:text-myblue-100 font-bold"
+            paintbrushStyle="text-mypink-700 dark:text-myblue-100 xl:w-10 xl:h-10 w-5 h-5"
+            divStyle="xl:text-xl text-xs text-mypink-700 dark:text-myblue-100 font-bold"
           />
           <nav className="flex flex-col gap-4">
             <NavLink
               to="/"
-              className="text-mypink-700 dark:text-myblue-100 text-xl font-semibold flex items-center gap-2 p-2"
+              className="text-mypink-700 dark:text-myblue-100 xl:text-xl text-lg font-semibold flex items-center gap-2 p-2"
             >
               <Menu className="mr-2 text-mypink-700 dark:text-myblue-100 font-semibold " />{" "}
               Home
             </NavLink>
             <NavLink
               to="/profile"
-              className="text-mypink-700 dark:text-myblue-100 text-xl font-semibold  flex items-center gap-2 p-2"
+              className="text-mypink-700 dark:text-myblue-100 xl:text-xl text-lg  font-semibold  flex items-center gap-2 p-2"
             >
               <User className="mr-2 text-mypink-700 dark:text-myblue-100 font-semibold " />{" "}
               Profile

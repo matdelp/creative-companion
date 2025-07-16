@@ -14,7 +14,7 @@ export const PromptContainer: React.FC = () => {
   }
 
   return (
-    <div className="flex xl:flex-row flex-col w-full">
+    <div className="flex xl:flex-row flex-col grow justify-around w-full">
       <div className="flex xl:w-1/2 w-full">
         <PhotoCard
           url={data!.photo.url}
@@ -22,7 +22,7 @@ export const PromptContainer: React.FC = () => {
           promo={data!.photo.promo}
         />
       </div>
-      <div className="flex flex-col gap-4 justify-center xl:w-1/2 w-full pb-2 ">
+      <div className="flex flex-col gap-4 xl:w-1/2 w-full justify-between xl:justify-center xl:pb-0 pb-2 ">
         <InspirationCard inspiration={data!.inspiration.name} />
         <Palettecard
           colors={data!.palette}

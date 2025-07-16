@@ -15,11 +15,13 @@ export const NavBar: React.FC = () => {
         divStyle="flex flex-col font-semibold xl:text-2xl text-xs"
       />
 
-      <div className="flex items-center justify-center xl:gap-10 gap-4">
+      <div className="flex items-center justify-center xl:gap-10 gap-3">
         <ul className="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-dark dark:text-mytext-light">
           {isLoggedIn ? (
             <li>
-              <a href="/dashboard">Dashboard</a>
+              <a href="/dashboard" className="">
+                Dashboard
+              </a>
             </li>
           ) : (
             <li>
@@ -34,7 +36,7 @@ export const NavBar: React.FC = () => {
           <ProfileDropdown />
           <button
             onClick={toggleTheme}
-            className="cursor-pointer xl:text-2xl text-sm dark:text-mypink-100 text-mypink-400 text-center p-1"
+            className="cursor-pointer xl:text-3xl text-xl dark:text-mypink-100 text-mypink-400 text-center p-1"
           >
             <MdLightMode />
           </button>

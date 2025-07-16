@@ -1,9 +1,8 @@
-import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { useAuthStore } from "../../store/authentication";
+import { useCreateLoginUser } from "../../hooks/useCreateLoginUser";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -14,8 +13,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const SignInForm: React.FC = () => {
-  const [backendError, setBackendError] = React.useState<string | null>(null);
-  const { setIsLoggedIn, setAuthProvider } = useAuthStore();
+  const { mutate, isPending, error: mutationError } = useCreateLoginUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -26,38 +24,15 @@ export const SignInForm: React.FC = () => {
     formState: { errors },
   } = form;
 
-  const navigate = useNavigate();
-
-  const onSubmit = async (data: FormData) => {
-    setBackendError(null);
-
-    try {
-      const response = await fetch("/api/artist/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      }); //TODO
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Invalid email or password");
-      }
-      console.log("Login successful:");
-      setAuthProvider("local");
-      setIsLoggedIn(true);
-      navigate("/profile");
-    } catch (error) {
-      if (error instanceof Error) {
-        setBackendError(error.message);
-      } else {
-        setBackendError("An unknown error occurred");
-      }
-    }
+  const onSubmit = (formData: FormData) => {
+    mutate(formData);
   };
+  if (isPending) {
+    return <div>Update pending</div>;
+  }
+  if (mutationError) {
+    return <div>Update failed</div>;
+  }
 
   return (
     <FormProvider {...form}>
@@ -95,9 +70,6 @@ export const SignInForm: React.FC = () => {
             <p className="text-red-500 text-sm font-semibold">
               {errors.password.message}
             </p>
-          )}
-          {backendError && (
-            <p className="text-red-600 text-sm text-center">{backendError}</p>
           )}
         </div>
 

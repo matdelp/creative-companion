@@ -1,8 +1,8 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
+import { useCreateUser } from "../../hooks/useCreateUser";
 
 const formSchema = z.object({
   first_name: z
@@ -22,7 +22,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const SignUpForm: React.FC = () => {
-  const [backendError, setBackendError] = useState<string | null>(null);
+  const { mutate, isPending, error: mutationError } = useCreateUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -33,35 +33,15 @@ export const SignUpForm: React.FC = () => {
     formState: { errors },
   } = form;
 
-  const navigate = useNavigate();
-
-  const onSubmit = async (data: FormData) => {
-    setBackendError(null);
-
-    try {
-      const response = await fetch("/api/artist/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Registration failed");
-      }
-      alert("Thank you, you are now registered!");
-      navigate("/login");
-    } catch (error) {
-      if (error instanceof Error) {
-        setBackendError(error.message);
-      } else {
-        setBackendError("An unknown error occurred");
-      }
-    }
+  const onSubmit = (formData: FormData) => {
+    mutate(formData);
   };
+  if (isPending) {
+    return <div>Update pending</div>;
+  }
+  if (mutationError) {
+    return <div>Update failed</div>;
+  }
 
   return (
     <FormProvider {...form}>
@@ -146,9 +126,6 @@ export const SignUpForm: React.FC = () => {
             <p className="text-red-500 text-sm font-semibold">
               {errors.password.message}
             </p>
-          )}
-          {backendError && (
-            <p className="text-red-600 text-sm text-center">{backendError}</p>
           )}
         </div>
 

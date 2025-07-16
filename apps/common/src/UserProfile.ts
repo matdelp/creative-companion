@@ -29,3 +29,8 @@ export type UserUpdate = {
   username?: string;
   description?: string;
 };
+
+export type UserLogin = {
+  email: string;
+  password: string;
+};

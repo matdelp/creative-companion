@@ -12,7 +12,7 @@ export const NavBar: React.FC = () => {
     <nav className="w-full text-mytext-dark dark:text-mytext-light flex items-center justify-between xl:px-4 xl:py-3">
       <Logo
         paintbrushStyle="text-myblue-400 dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
-        divStyle="flex flex-col font-semibold xl:text-md text-xs"
+        divStyle="flex flex-col font-semibold xl:text-2xl text-xs"
       />
 
       <div className="flex items-center justify-center xl:gap-10 gap-4">

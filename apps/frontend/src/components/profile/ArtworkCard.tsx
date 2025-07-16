@@ -6,6 +6,7 @@ import { MdDelete, MdModeEdit } from "react-icons/md";
 import z from "zod";
 import { useModifyArtwork } from "../../hooks/useModifyArtwork";
 import { useDeleteArtwork } from "../../hooks/useDeleteArtwork";
+import { X } from "lucide-react";
 
 type ArtworkCardProps = {
   artworks: Artwork[];
@@ -50,6 +51,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
       title: artwork.title ?? "",
       description: artwork.description ?? "",
     });
+    console.log({ artwork });
   };
 
   const onSubmit = (formData: FormData) => {
@@ -96,23 +98,41 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
           ({ content, title, created_at, description, id }) => (
             <div
               key={id}
-              className="w-[32%] sm:w-[24%] md:w-[19%] h-full aspect-square relative group overflow-hidden"
+              className="w-[32%] sm:w-[24%] md:w-[19%] h-full aspect-square relative group overflow-hidden cursor-pointer"
+              onClick={(e) => {
+                if (editingId === id) return;
+                e.stopPropagation();
+                handleToggle({
+                  id,
+                  title,
+                  description,
+                });
+              }}
             >
               <img
                 src={content}
                 alt={`Artwork ${id}`}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white p-2 flex flex-col justify-center items-center gap-2 text-center">
+              <div
+                className={`absolute inset-0 bg-black/60 text-white p-2 flex flex-col justify-center items-center gap-2 text-center transition-opacity duration-300 z-10
+    ${
+      editingId === id
+        ? "opacity-100 pointer-events-auto"
+        : "opacity-0 group-hover:opacity-100 pointer-events-none"
+    }
+  `}
+                onClick={(e) => e.stopPropagation()}
+              >
                 {editingId === id ? (
                   <FormProvider {...form}>
                     <form
-                      className="flex flex-col items-center w-full justify-center gap-3"
+                      className="flex flex-col items-center w-full justify-center xl:gap-3 gap-1"
                       onSubmit={handleSubmit(onSubmit)}
                       noValidate
                     >
                       <input
-                        className="text-whiteText-accent border border-mypink-400 rounded-xl text-center w-auto px-2"
+                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-[8px]"
                         placeholder="Title"
                         {...register("title")}
                       />
@@ -122,7 +142,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                         </p>
                       )}
                       <input
-                        className="text-whiteText-accent border border-mypink-400 rounded-xl text-center w-auto px-2"
+                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-[8px]"
                         placeholder="Description"
                         {...register("description")}
                       />
@@ -132,7 +152,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                         </p>
                       )}
                       <button
-                        className="bg-mypink-400 p-2 text-whiteText-primary font-bold text-lg rounded-2xl cursor-pointer w-full max-w-60 mt-4"
+                        className="bg-mypink-400 dark:bg-mypurple-700 xl:p-2 text-shadow-mytext-light font-bold xl:text-lg text-[8px] rounded-2xl cursor-pointer w-full xl:max-w-60 max-w-10 xl:mt-4 mt-1"
                         type="submit"
                         disabled={isPending}
                       >
@@ -141,7 +161,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                       <button
                         type="button"
                         onClick={() => setEditingId(null)}
-                        className="mt-1 text-sm underline"
+                        className="xl:mt-1 xl:text-sm text-[8px] underline cursor-pointer"
                         disabled={isPending}
                       >
                         Cancel
@@ -150,29 +170,54 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                   </FormProvider>
                 ) : (
                   <>
-                    <h3 className="font-bold">{title}</h3>
+                    <h3 className="font-bold">{title || "test"}</h3>
                     <p className="text-xs">{formatDate(created_at)}</p>
                     <p className="mt-1">{description}</p>
                   </>
                 )}
-                <div className="flex gap-2 absolute bottom-1 right-1">
-                  <MdDelete
-                    className="cursor-pointer"
-                    onClick={() => handleDelete(id)}
-                    title="Delete artwork"
-                  />
+              </div>
+
+              {/* Icons container separated with own visibility logic */}
+              <div
+                className={`flex xl:gap-2 gap-1 absolute bottom-1 right-1 items-center transition-opacity duration-300 z-20
+                ${
+                  editingId === id
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 group-hover:opacity-100 pointer-events-none"
+                }
+                `}
+              >
+                <MdDelete
+                  className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(id);
+                  }}
+                  title="Delete artwork"
+                />
+                {editingId !== id ? (
                   <MdModeEdit
-                    className="cursor-pointer"
-                    onClick={() =>
+                    className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("Edit icon clicked");
                       handleToggle({
                         id,
                         title,
                         description,
-                      })
-                    }
+                      });
+                    }}
                     title="Edit artwork"
                   />
-                </div>
+                ) : (
+                  <X
+                    className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingId(null);
+                    }}
+                  />
+                )}
               </div>
             </div>
           )

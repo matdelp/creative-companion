@@ -101,7 +101,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
         <div className="absolute xl:left-5 lef-2">
           <Logo
             paintbrushStyle="text-mytext-light xl:w-12 xl:h-12 w-8 h-8"
-            divStyle="flex flex-col font-semibold text-mytext-light xl:text-md text-xs"
+            divStyle="flex flex-col font-semibold text-mytext-light xl:text-xl text-xs"
           />
         </div>
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">

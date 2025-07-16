@@ -231,7 +231,7 @@ export const userController = {
         .status(200)
         .cookie("token", token, {
           httpOnly: true,
-          secure: true,
+          secure: false, //TODO change to true for prod
           sameSite: "strict",
           maxAge: 3600000,
         })

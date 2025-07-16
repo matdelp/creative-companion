@@ -92,7 +92,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
       {mutationError && <div className="text-red-600">Update failed</div>}
       {deletingError && <div className="text-red-600">Delete failed</div>}
       <div
-        className={`flex flex-wrap gap-1 bg-mybackground-light-400 ${background} ${height}`}
+        className={`flex flex-wrap gap-2 bg-mybackground-light-400 justify-center ${background} ${height}`}
       >
         {artworksState.map(
           ({ content, title, created_at, description, id }) => (

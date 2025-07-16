@@ -5,9 +5,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useModifyUserProfile } from "../../hooks/useModifyUserProfile";
-import { NavHomeButton } from "../NavHomeButton";
+import { NavBar } from "../NavBar";
 import { Picture } from "./Picture";
-import { Logo } from "../Logo";
+import { NavHomeButton } from "../NavHomeButton";
 
 type ProfileCardProps = {
   data: UserProfile;
@@ -95,13 +95,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
   return (
     <div className="w-full">
       <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
-        <div className="absolute xl:right-5 right-2">
-          <NavHomeButton />
-        </div>
-        <div className="absolute xl:left-5 lef-2">
-          <Logo
-            paintbrushStyle="text-mytext-light xl:w-12 xl:h-12 w-8 h-8"
-            divStyle="flex flex-col font-semibold text-mytext-light xl:text-xl text-xs"
+        <div className="absolute top-2 left-0 pr-5 pl-2 w-full">
+          <NavBar
+            navStyle="w-full text-mytext-light dark:text-mytext-light flex items-center justify-between xl:px-4 xl:py-3"
+            modeButtonStyle="cursor-pointer xl:text-3xl text-xl dark:text-mypink-100 dark:hover:text-mypink-400 text-mytext-light hover:text-myblue-700 text-center p-1"
+            children={<NavHomeButton />}
+            paintbrushStyle="text-mytext-light dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
+            linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-light font-bold"
           />
         </div>
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">

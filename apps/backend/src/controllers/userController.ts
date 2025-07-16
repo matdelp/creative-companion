@@ -235,6 +235,7 @@ export const userController = {
           sameSite: "strict",
           maxAge: 3600000,
         })
+        .status(200)
         .json({ message: "Login successful" });
     } catch (error: any) {
       res.status(400).json({
@@ -249,24 +250,21 @@ export const userController = {
   },
 
   googleLoginUser: async (req: Request, res: Response) => {
-    try {
-      const user = req.user as UserGoogle; //TODO change that type
-      if (!user) {
-        throw new Error("Invalid Google user data");
-      }
-
-      const token = createToken(user.id.toString(), user.email);
-      res
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "strict",
-          maxAge: 3600000, // 1 hour
-        })
-        .redirect("http://localhost:5173"); //TODO before deploiement
-    } catch (error: any) {
-      res.redirect(`${req.baseUrl}/login?auth=failed`);
+    const user = req.user as UserGoogle; //TODO change that type
+    if (!user) {
+      throw new Error("Invalid Google user data");
     }
+
+    const token = createToken(user.id.toString(), user.email);
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 3600000, // 1 hour
+      })
+      .status(200)
+      .json("Login successful");
   },
 
   googleLogoutUser: async (req: Request, res: Response) => {

@@ -11,7 +11,6 @@ import { X } from "lucide-react";
 type ArtworkCardProps = {
   artworks: Artwork[];
   background: string;
-  height: string;
 };
 
 const formSchema = z.object({
@@ -23,7 +22,6 @@ type FormData = z.infer<typeof formSchema>;
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artworks,
   background,
-  height,
 }) => {
   const [artworksState, setArtworksState] = useState<Artwork[]>(artworks);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -92,13 +90,13 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
       {mutationError && <div className="text-red-600">Update failed</div>}
       {deletingError && <div className="text-red-600">Delete failed</div>}
       <div
-        className={`flex flex-wrap gap-2 bg-mybackground-light-400 justify-center ${background} ${height}`}
+        className={`flex flex-wrap gap-2 bg-mybackground-light-400 ${background}`}
       >
         {artworksState.map(
           ({ content, title, created_at, description, id }) => (
             <div
               key={id}
-              className="w-[32%] sm:w-[24%] md:w-[19%] h-full aspect-square relative group overflow-hidden cursor-pointer"
+              className="xl:w-[calc(20%-0.4rem)] w-[calc(50%-0.4rem)] h-full aspect-square relative group overflow-hidden cursor-pointer"
               onClick={(e) => {
                 if (editingId === id) return;
                 e.stopPropagation();

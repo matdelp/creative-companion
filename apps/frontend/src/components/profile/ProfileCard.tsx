@@ -102,6 +102,10 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
             children={<NavHomeButton />}
             paintbrushStyle="text-mytext-light dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
             linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-light font-bold"
+            links={[
+              { path: "/dashboard", name: "Dashboard" },
+              { path: "/collection", name: "Collections" },
+            ]}
           />
         </div>
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">

@@ -3,11 +3,16 @@ import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import { Logo } from "./Logo";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 
+type Link = {
+  name: string;
+  path: string;
+};
 type NavBarProps = PropsWithChildren<{
   navStyle: string;
   modeButtonStyle: string;
   paintbrushStyle: string;
   linkStyle: string;
+  links: Link[];
 }>;
 export const NavBar: React.FC<NavBarProps> = ({
   navStyle,
@@ -15,6 +20,7 @@ export const NavBar: React.FC<NavBarProps> = ({
   children,
   paintbrushStyle,
   linkStyle,
+  links,
 }) => {
   const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
   if (isLoading) {
@@ -33,14 +39,11 @@ export const NavBar: React.FC<NavBarProps> = ({
       <div className="flex items-center justify-center xl:gap-10 gap-3">
         <ul className={linkStyle}>
           {isLoggedIn ? (
-            <>
-              <li>
-                <a href="/dashboard">Dashboard</a>
-              </li>{" "}
-              <li>
-                <a href="/collection">Collections</a>
+            links.map((link, index) => (
+              <li key={index}>
+                <a href={link.path}>{link.name}</a>
               </li>
-            </>
+            ))
           ) : (
             <li>
               <a href="/login">Login</a>

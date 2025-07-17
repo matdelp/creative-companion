@@ -15,6 +15,10 @@ export const HomePage: React.FC = () => {
           children={<ProfileDropdown />}
           paintbrushStyle="text-myblue-400 dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
           linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-myblue-700 dark:text-mytext-light"
+          links={[
+            { path: "/dashboard", name: "Dashboard" },
+            { path: "/collection", name: "Collections" },
+          ]}
         />
         <h1 className="xl:text-7xl text-3xl text-myblue-400 dark:text-mytext-light text-center font-bold xl:px-8 px-2 xl:pt-0 pt-6 xl:w-4xl w-xs leading-snug">
           Create something today!

@@ -5,6 +5,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { Dashboard } from "./pages/DashboardPage";
 import { useThemeStore } from "./store/useThemeStore";
+import { CollectionPage } from "./pages/CollectionPage";
 
 export const App = () => {
   const { theme } = useThemeStore();
@@ -24,6 +25,7 @@ export const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/collection" element={<CollectionPage />} />
       </Routes>
     </>
   );

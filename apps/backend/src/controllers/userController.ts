@@ -246,7 +246,7 @@ export const userController = {
 
   logoutUser: (req: Request, res: Response) => {
     res.clearCookie("token");
-    res.status(200).json({ message: "User logged out successfully" });
+    res.status(200).json({ message: "Successful Logout " });
   },
 
   googleLoginUser: async (req: Request, res: Response) => {

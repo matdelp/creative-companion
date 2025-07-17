@@ -1,39 +1,44 @@
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthenticationStore";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
+import { useLogout } from "../hooks/useLogout";
+import { useGoogleLogout } from "../hooks/useGoogleLogout";
+import { useAuthStore } from "../store/useAuthenticationStore";
 
 export const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { authProvider, logout } = useAuthStore();
+  const { authProvider } = useAuthStore();
   const navigate = useNavigate();
   const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
+  const {
+    mutate: logout,
+    isPending: isLoggingout,
+    error: LogoutError,
+  } = useLogout();
+  const {
+    mutate: googleLogout,
+    isPending: googleIsLoggingout,
+    error: googleLogoutError,
+  } = useGoogleLogout();
   if (isLoading) {
     return <div>Login pending</div>;
   }
   if (error) {
     return <div>Login failed</div>;
   }
+  if (isLoggingout || googleIsLoggingout) {
+    return <div>Logout pending</div>;
+  }
+  if (LogoutError || googleLogoutError) {
+    return <div>Logout failed</div>;
+  }
   const buttonStyle =
     "w-full xl:px-6 xl:py-4 hover:bg-myorange-100 dark:hover:bg-myblue-700 hover:text-mytext-light px-2 py-1 xl:text-3xl text-lg  text-left text-mypink-400 dark:text-mytext-light cursor-pointer rounded-md";
 
-  console.log("logIn?", isLoggedIn);
-
   const handleLogout = async () => {
-    if (authProvider === "local") {
-      await fetch("api/artist/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    } else {
-      await fetch("api/artist/google/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    }
-    logout();
-    setIsOpen(!isOpen);
+    setIsOpen(false);
+    return authProvider ? logout() : googleLogout();
   };
 
   return (

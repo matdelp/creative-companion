@@ -51,7 +51,7 @@ export const Album: React.FC = () => {
           setLightboxIndex(index);
         }}
       />
-      <div ref={ref} style={{ height: 1 }}></div> {/* sentinel */}
+      <div ref={ref} style={{ height: 1 }} />
       <Lightbox
         open={lightboxIndex !== null}
         close={() => setLightboxIndex(null)}

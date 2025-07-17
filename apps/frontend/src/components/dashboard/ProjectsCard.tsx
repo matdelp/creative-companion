@@ -24,7 +24,7 @@ export const ProjectsCard: React.FC = () => {
       <ArtworkCard
         artworks={data!.artwork}
         background={"dark:bg-mypink-700"}
-        height="h-fit"
+        isDashboard={true}
       />
     </>
   );

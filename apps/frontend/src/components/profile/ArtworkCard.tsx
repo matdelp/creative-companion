@@ -2,7 +2,7 @@ import type { Artwork, ArtworkModification } from "@creative-companion/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { MdDelete, MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import z from "zod";
 import { useModifyArtwork } from "../../hooks/useModifyArtwork";
 import { useDeleteArtwork } from "../../hooks/useDeleteArtwork";
@@ -11,6 +11,7 @@ import { X } from "lucide-react";
 type ArtworkCardProps = {
   artworks: Artwork[];
   background: string;
+  isDashboard: boolean;
 };
 
 const formSchema = z.object({
@@ -22,6 +23,7 @@ type FormData = z.infer<typeof formSchema>;
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artworks,
   background,
+  isDashboard,
 }) => {
   const [artworksState, setArtworksState] = useState<Artwork[]>(artworks);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -49,7 +51,6 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
       title: artwork.title ?? "",
       description: artwork.description ?? "",
     });
-    console.log({ artwork });
   };
 
   const onSubmit = (formData: FormData) => {
@@ -98,6 +99,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
               key={id}
               className="xl:w-[calc(20%-0.4rem)] w-[calc(50%-0.4rem)] h-full aspect-square relative group overflow-hidden cursor-pointer"
               onClick={(e) => {
+                if (isDashboard) return;
                 if (editingId === id) return;
                 e.stopPropagation();
                 handleToggle({
@@ -185,36 +187,26 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                 }
                 `}
               >
-                <MdDelete
-                  className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(id);
-                  }}
-                  title="Delete artwork"
-                />
                 {editingId !== id ? (
-                  <MdModeEdit
-                    className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Edit icon clicked");
-                      handleToggle({
-                        id,
-                        title,
-                        description,
-                      });
-                    }}
-                    title="Edit artwork"
-                  />
+                  <></>
                 ) : (
-                  <X
-                    className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditingId(null);
-                    }}
-                  />
+                  <>
+                    <MdDelete
+                      className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(id);
+                      }}
+                      title="Delete artwork"
+                    />
+                    <X
+                      className="cursor-pointer w-3 h-3 xl:w-8 xl:h-8 dark:text-mypurple-700 text-myblue-400"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingId(null);
+                      }}
+                    />
+                  </>
                 )}
               </div>
             </div>

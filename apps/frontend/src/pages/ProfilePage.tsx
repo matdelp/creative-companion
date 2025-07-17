@@ -19,6 +19,7 @@ export const ProfilePage: React.FC = () => {
       <ArtworkCard
         artworks={data!.artwork}
         background="dark:bg-mybackground-dark-100"
+        isDashboard={false}
       />
     </>
   );

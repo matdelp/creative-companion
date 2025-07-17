@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/columns.css";
 import { useGetArtworksWithSizes } from "../../hooks/useGetArtworksOriginalSizes";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import type { Slide } from "yet-another-react-lightbox";
+import { useInView } from "react-intersection-observer";
 
 type CustomSlide = Slide & {
   title?: string;
@@ -12,6 +13,8 @@ type CustomSlide = Slide & {
   artist?: string;
 };
 export const Album: React.FC = () => {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const { ref, inView } = useInView();
   const {
     data,
     isLoading,
@@ -20,7 +23,12 @@ export const Album: React.FC = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useGetArtworksWithSizes();
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading artworks</div>;
@@ -43,12 +51,7 @@ export const Album: React.FC = () => {
           setLightboxIndex(index);
         }}
       />
-      {hasNextPage && (
-        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
-          {isFetchingNextPage ? "Loading..." : "Load More"}
-        </button>
-      )}
-
+      <div ref={ref} style={{ height: 1 }}></div> {/* sentinel */}
       <Lightbox
         open={lightboxIndex !== null}
         close={() => setLightboxIndex(null)}

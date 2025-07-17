@@ -4,18 +4,9 @@ import { ProfileButton } from "../components/collection/ProfileButton";
 import { Album } from "../components/collection/Album";
 
 export const CollectionPage: React.FC = () => {
-  // const { data, isLoading, error } = useGetUserProfile();
-
-  // if (isLoading) {
-  //   return <div>loading</div>;
-  // }
-  // if (error) {
-  //   return <div>error</div>;
-  // }
-
   return (
-    <>
-      <div className="xl:h-36 h-28 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
+    <div className="bg-mybackground-light-100 dark:bg-mybackground-dark-100 w-screen">
+      <div className="xl:h-32 h-24 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
         <div className="absolute top-2 left-0 pr-5 pl-2 w-full">
           <NavBar
             navStyle="w-full text-mytext-light dark:text-mytext-light flex items-center justify-between xl:px-4 xl:py-3"
@@ -31,6 +22,6 @@ export const CollectionPage: React.FC = () => {
         </div>
       </div>
       <Album />
-    </>
+    </div>
   );
 };

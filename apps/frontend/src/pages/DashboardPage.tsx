@@ -3,6 +3,7 @@ import { AsideBar } from "../components/dashboard/AsideBar";
 import { ProjectsCard } from "../components/dashboard/ProjectsCard";
 import { PromptCard } from "../components/dashboard/PromptCard";
 import { StatsCard } from "../components/dashboard/StatsCard";
+import { ThemeToggleButton } from "../components/ThemeToggleButton";
 
 export const Dashboard: React.FC = () => {
   return (
@@ -10,9 +11,12 @@ export const Dashboard: React.FC = () => {
       <AsideBar />
 
       <main className="flex flex-col xl:p-6 p-4 overflow-y-auto w-full">
-        <h1 className="xl:text-3xl text-2xl text-mytext-dark dark:text-mytext-light font-bold mb-4 flex-shrink-0 pl-10 xl:pl-0">
-          Your Dashboard
-        </h1>
+        <div className="flex items-center py-3 gap-4">
+          <h1 className="xl:text-3xl text-2xl text-mytext-dark dark:text-mytext-light font-bold flex-shrink-0 pl-10 xl:pl-0">
+            Your Dashboard
+          </h1>
+          <ThemeToggleButton modeButtonStyle="cursor-pointer xl:text-3xl text-xl dark:text-myblue-100 text-myorange-700 hover:text-myorange-400 dark:hover:text-myblue-700 text-center p-1" />
+        </div>
 
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 xl:grid-rows-2 xl:gap-5 flex-grow">
           <div className="bg-mybackground-light-400 dark:bg-mypink-700 rounded-xl shadow-xl xl:p-4 p-2 xl:row-span-2">

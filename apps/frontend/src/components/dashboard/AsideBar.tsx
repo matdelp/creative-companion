@@ -31,16 +31,16 @@ export const AsideBar: React.FC = () => {
           <nav className="flex flex-col gap-4">
             <NavLink
               to="/"
-              className="text-mypink-700 dark:text-myblue-100 xl:text-xl text-lg font-semibold flex items-center gap-2 p-2"
+              className="text-mypink-700 hover:text-myorange-700 dark:text-myblue-100 dark:hover:text-myblue-400 xl:text-xl text-lg font-semibold flex items-center gap-2 p-2"
             >
-              <Menu className="mr-2 text-mypink-700 dark:text-myblue-100 font-semibold " />{" "}
+              <Menu className="mr-2 text-mypink-700  dark:text-myblue-100  font-semibold " />{" "}
               Home
             </NavLink>
             <NavLink
               to="/profile"
-              className="text-mypink-700 dark:text-myblue-100 xl:text-xl text-lg  font-semibold  flex items-center gap-2 p-2"
+              className="text-mypink-700 hover:text-myorange-700 dark:text-myblue-100 dark:hover:text-myblue-400 xl:text-xl text-lg  font-semibold  flex items-center gap-2 p-2"
             >
-              <User className="mr-2 text-mypink-700 dark:text-myblue-100 font-semibold " />{" "}
+              <User className="mr-2 text-mypink-700  dark:text-myblue-100  font-semibold " />{" "}
               Profile
             </NavLink>
           </nav>

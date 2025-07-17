@@ -3,6 +3,7 @@ import { useGetPrompt } from "../../hooks/useGetPrompt";
 import { useGetTodaysArt } from "../../hooks/useGetTodaysArt";
 import Palettecard from "../home/Palettecard";
 import { ArtworkCard } from "./ArtworkCard";
+import { UploadModal } from "../home/UploadModal";
 // import { UploadModal } from "../home/UploadModal";
 
 export const PromptCard: React.FC = () => {
@@ -23,9 +24,9 @@ export const PromptCard: React.FC = () => {
   return (
     <>
       <h2 className="xl:text-2xl text-xl text-mytext-dark dark:text-mytext-light font-semibold xl:pb-4 pb-2 overflow-hidden text-center">
-        Daily Challenge
+        Art Quest of the Day
       </h2>{" "}
-      <div className="flex xl:flex-row flex-col xl:gap-4 gap-2 w-full items-center">
+      <div className="flex xl:flex-row flex-col gap-2 w-full items-center ">
         <div className="flex xl:w-72 w-56 aspect-square">
           <img
             src={data?.photo.url}
@@ -66,9 +67,9 @@ export const PromptCard: React.FC = () => {
         <div className="flex flex-col xl:gap-4 gap-1 items-center justify-center rounded-xl border border-mypurple-400 dark:border-myblue-400 bg-mypurple-100 dark:bg-myblue-700 text-mytext-dark dark:text-mytext-light xl:text-xl font-semibold xl:p-6 p-2 text-center">
           <span>No masterpiece today yet...</span>{" "}
           <span>your canvas is waiting! 🎨</span>
-          {/* <div className="max-w-20">
+          <div className="max-w-72">
             <UploadModal />
-          </div> */}
+          </div>
         </div>
       )}
     </>

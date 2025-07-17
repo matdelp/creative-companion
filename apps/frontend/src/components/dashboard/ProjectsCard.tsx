@@ -1,9 +1,9 @@
 import React from "react";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
-import { ArtworkCard } from "../profile/ArtworkCard";
+import { ProjectCarousel } from "./Carousel";
 
 export const ProjectsCard: React.FC = () => {
-  const { data, isLoading, error } = useGetUserProfile(10);
+  const { data, isLoading, error } = useGetUserProfile(5);
 
   if (isLoading) {
     return <div>loading</div>;
@@ -15,17 +15,11 @@ export const ProjectsCard: React.FC = () => {
   return (
     <>
       <h2 className="xl:text-2xl text-xl text-mytext-dark dark:text-mytext-light font-semibold xl:pb-4 pb-1">
-        Recent Projects
+        Latest Sketchbook Pages
       </h2>
-      <p className="xl:text-lg text-mytext-dark dark:text-mytext-light pb-1">
-        See your latest drawings here.
-      </p>
-
-      <ArtworkCard
-        artworks={data!.artwork}
-        background={"dark:bg-mypink-700"}
-        isDashboard={true}
-      />
+      <div className="flex justify-center items-center pt-5 ">
+        <ProjectCarousel artworks={data!.artwork} />
+      </div>
     </>
   );
 };

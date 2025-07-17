@@ -9,7 +9,7 @@ export const AsideBar: React.FC = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="xl:hidden fixed top-2 left-2 z-50 bg-myorange-400 dark:bg-myblue-700 p-2 rounded"
+        className="xl:hidden fixed top-3 left-2 z-50 bg-myorange-400 dark:bg-myblue-700 p-2 rounded"
       >
         {isOpen ? (
           <X className="text-mypink-700 dark:text-myblue-100" />

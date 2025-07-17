@@ -1,5 +1,5 @@
+import { Image, Menu, User, X } from "lucide-react";
 import React, { useState } from "react";
-import { Menu, User, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../Logo";
 
@@ -42,6 +42,13 @@ export const AsideBar: React.FC = () => {
             >
               <User className="mr-2 text-mypink-700  dark:text-myblue-100  font-semibold " />{" "}
               Profile
+            </NavLink>
+            <NavLink
+              to="/collection"
+              className="text-mypink-700 hover:text-myorange-700 dark:text-myblue-100 dark:hover:text-myblue-400 xl:text-xl text-lg  font-semibold  flex items-center gap-2 p-2"
+            >
+              <Image className="mr-2 text-mypink-700  dark:text-myblue-100  font-semibold " />{" "}
+              Collection
             </NavLink>
           </nav>
         </div>

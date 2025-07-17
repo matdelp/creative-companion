@@ -58,7 +58,7 @@ export const ProfileDropdown = () => {
               Profile
             </button>
           )}
-          {!isLoggedIn && (
+          {!isLoggedIn ? (
             <>
               <button
                 onClick={() => navigate("/login")}
@@ -73,8 +73,7 @@ export const ProfileDropdown = () => {
                 Register
               </button>
             </>
-          )}
-          {isLoggedIn && (
+          ) : (
             <button
               onClick={async () => {
                 await handleLogout();

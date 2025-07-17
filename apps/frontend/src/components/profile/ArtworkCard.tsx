@@ -130,7 +130,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                       noValidate
                     >
                       <input
-                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-[8px]"
+                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-xs"
                         placeholder="Title"
                         {...register("title")}
                       />
@@ -140,7 +140,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                         </p>
                       )}
                       <input
-                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-[8px]"
+                        className="text-mytext-light border border-mypink-400 dark:border-mypurple-400 rounded-xl text-center w-auto xl:px-2 px-0.5 xl:text-xl text-xs"
                         placeholder="Description"
                         {...register("description")}
                       />
@@ -150,7 +150,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                         </p>
                       )}
                       <button
-                        className="bg-mypink-400 dark:bg-mypurple-700 xl:p-2 text-shadow-mytext-light font-bold xl:text-lg text-[8px] rounded-2xl cursor-pointer w-full xl:max-w-60 max-w-10 xl:mt-4 mt-1"
+                        className="bg-mypink-400 dark:bg-mypurple-700 py-1 xl:px-8 px-6 text-shadow-mytext-light font-bold xl:text-lg text-xs rounded-2xl cursor-pointer"
                         type="submit"
                         disabled={isPending}
                       >
@@ -159,7 +159,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
                       <button
                         type="button"
                         onClick={() => setEditingId(null)}
-                        className="xl:mt-1 xl:text-sm text-[8px] underline cursor-pointer"
+                        className="xl:mt-1 xl:text-sm text-xs underline cursor-pointer"
                         disabled={isPending}
                       >
                         Cancel

@@ -25,3 +25,17 @@ export type ArtworkModification = {
   title?: string | null;
   description?: string | null;
 };
+
+export type ArtworkCollection = {
+  user: {
+    username: string;
+  };
+
+  id: number;
+  created_at: Date;
+  title: string | null;
+  description: string | null;
+  content: string;
+  user_id: number;
+  prompt_id: number;
+}[];

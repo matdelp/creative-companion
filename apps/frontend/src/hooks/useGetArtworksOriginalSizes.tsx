@@ -16,8 +16,9 @@ export const useGetArtworksWithSizes = () => {
             src: photo.content,
             width,
             height,
-            // title: photo.title,
-            // description: photo.description,
+            title: photo.title,
+            description: photo.description,
+            artist: photo.user.username,
           };
         })
       );

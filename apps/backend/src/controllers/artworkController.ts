@@ -1,14 +1,15 @@
 import {
   Artwork,
+  ArtworkCollection,
   ArtworkCreate,
   ArtworkUpdate,
 } from "@creative-companion/common";
 import { DBClient } from "@creative-companion/database";
+import { endOfDay, startOfDay } from "date-fns";
 import { Request, Response } from "express";
 import { AuthenticatedRequest } from "../middleware/authenticate";
 import { supabase } from "../services/supabaseClient/client";
 import { getTodayPrompt } from "../utils/utilsLimitPrompt";
-import { endOfDay, isToday, startOfDay } from "date-fns";
 
 export const artworkController = {
   getArtworksByUser: async (req: AuthenticatedRequest, res: Response) => {
@@ -71,10 +72,12 @@ export const artworkController = {
     res.status(200).json(dates);
   },
 
-  getAllArtworks: async (req: Request, res: Response) => {
+  getAllArtworks: async (req: Request, res: Response<ArtworkCollection>) => {
     // TODO later on : Add some queries to search through the artwork and make it user friendly
     // const { prompt, tag, date, user, colors } = req.query;
-    const artworks = await DBClient.artwork.findMany({ where: {} });
+    const artworks = await DBClient.artwork.findMany({
+      include: { user: { select: { username: true } } },
+    });
     res.status(200).json(artworks);
   },
 

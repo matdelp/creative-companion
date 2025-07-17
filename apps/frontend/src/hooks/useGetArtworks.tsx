@@ -1,4 +1,4 @@
-import type { Artwork } from "@creative-companion/common";
+import type { ArtworkCollection } from "@creative-companion/common";
 import { useQuery } from "@tanstack/react-query";
 
 const FETCH_URL = "/api/artwork/collection";
@@ -16,7 +16,7 @@ export const useGetArtworks = () => {
         const errorText = (await response.text()) || response.statusText;
         throw new Error(errorText);
       }
-      const data: Artwork[] = await response.json();
+      const data: ArtworkCollection = await response.json();
       return data;
     },
   });

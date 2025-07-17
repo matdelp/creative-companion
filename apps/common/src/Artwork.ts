@@ -26,7 +26,7 @@ export type ArtworkModification = {
   description?: string | null;
 };
 
-export type ArtworkCollection = {
+export type ArtworkForCollection = {
   user: {
     username: string;
   };
@@ -38,4 +38,17 @@ export type ArtworkCollection = {
   content: string;
   user_id: number;
   prompt_id: number;
-}[];
+};
+
+export type ManyArtworkCollection = ArtworkForCollection[];
+
+export type ArtworkCollectionPaginated = {
+  data: ManyArtworkCollection;
+  nextPage: number;
+};
+
+export type ArtworkWithSize = ArtworkForCollection & {
+  src: string;
+  width: number;
+  height: number;
+};

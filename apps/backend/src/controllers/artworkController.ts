@@ -1,6 +1,5 @@
 import {
   Artwork,
-  ArtworkCollection,
   ArtworkCreate,
   ArtworkUpdate,
 } from "@creative-companion/common";
@@ -72,13 +71,25 @@ export const artworkController = {
     res.status(200).json(dates);
   },
 
-  getAllArtworks: async (req: Request, res: Response<ArtworkCollection>) => {
-    // TODO later on : Add some queries to search through the artwork and make it user friendly
-    // const { prompt, tag, date, user, colors } = req.query;
+  getAllArtworks: async (req: Request, res: Response) => {
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 20;
+
     const artworks = await DBClient.artwork.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
       include: { user: { select: { username: true } } },
     });
-    res.status(200).json(artworks);
+
+    const totalArtworks = await DBClient.artwork.count();
+
+    const hasNextPage = page * pageSize < totalArtworks;
+    const nextPage = hasNextPage ? page + 1 : null;
+
+    res.status(200).json({
+      data: artworks,
+      nextPage,
+    });
   },
 
   getAmountOfArtwork: async (

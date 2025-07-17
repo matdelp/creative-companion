@@ -12,24 +12,29 @@ type CustomSlide = Slide & {
   artist?: string;
 };
 export const Album: React.FC = () => {
-  const { data, isLoading, error } = useGetArtworksWithSizes();
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetArtworksWithSizes();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (error) return <div>Error loading artworks</div>;
 
-  const photos = data!.map((photo) => ({
-    ...photo,
-    src: photo.src,
-    title: photo.title || `Art from ${photo.artist}`,
-    description: photo.description,
-    artist: photo.artist,
+  const album = data!.map(({ src, width, height }) => ({
+    src,
+    width,
+    height,
   }));
 
   return (
     <>
       <ColumnsPhotoAlbum
-        photos={photos}
+        photos={album}
         padding={5}
         spacing={0}
         onClick={({ index, event }) => {
@@ -38,11 +43,16 @@ export const Album: React.FC = () => {
           setLightboxIndex(index);
         }}
       />
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+          {isFetchingNextPage ? "Loading..." : "Load More"}
+        </button>
+      )}
 
       <Lightbox
         open={lightboxIndex !== null}
         close={() => setLightboxIndex(null)}
-        slides={photos}
+        slides={data!}
         index={lightboxIndex ?? 0}
         carousel={{ finite: true }}
         render={{

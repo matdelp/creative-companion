@@ -1,34 +1,49 @@
+import { useEffect, useState } from "react";
 import { getImageSize } from "../utils/parseArtworkList";
 import { useGetArtworks } from "./useGetArtworks";
-import { useQuery } from "@tanstack/react-query";
+import type { ArtworkWithSize } from "@creative-companion/common";
 
 export const useGetArtworksWithSizes = () => {
-  const { data: artworks, ...rest } = useGetArtworks();
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+  } = useGetArtworks();
 
-  const sizesQuery = useQuery({
-    queryKey: ["ArtworksWithOriginalSizes", artworks],
-    queryFn: async () => {
-      if (!artworks) return [];
-      return Promise.all(
-        artworks.map(async (photo) => {
-          const { width, height } = await getImageSize(photo.content);
-          return {
-            src: photo.content,
-            width,
-            height,
-            title: photo.title,
-            description: photo.description,
-            artist: photo.user.username,
-          };
-        })
-      );
-    },
-    enabled: !!artworks,
-  });
+  const [artworksWithSizes, setArtworksWithSizes] = useState<ArtworkWithSize[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (!data) return;
+    const allArtworks = data.pages.flatMap((page) => page.data);
+    if (allArtworks.length === artworksWithSizes.length) return;
+    const newArtworks = allArtworks.slice(artworksWithSizes.length);
+
+    Promise.all(
+      newArtworks.map(async (photo) => {
+        const { width, height } = await getImageSize(photo.content);
+        return {
+          ...photo,
+          src: photo.content,
+          width,
+          height,
+        };
+      })
+    ).then((newArtworksWithSizes) => {
+      setArtworksWithSizes((prev) => [...prev, ...newArtworksWithSizes]);
+    });
+  }, [data]);
 
   return {
-    data: sizesQuery.data,
-    isLoading: rest.isLoading || sizesQuery.isLoading,
-    error: rest.error || sizesQuery.error,
+    data: artworksWithSizes,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
   };
 };

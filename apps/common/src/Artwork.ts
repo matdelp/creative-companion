@@ -6,6 +6,12 @@ export type ArtworkCreate = {
   prompt_id: number;
 };
 
+export type ArtworkSubmit = {
+  title?: string | null;
+  description?: string | null;
+  content: FileList;
+};
+
 export type ArtworkUpdate = {
   title?: string | null;
   description?: string | null;

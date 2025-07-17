@@ -9,7 +9,7 @@ artworkRouter.get("/collection", artworkController.getAllArtworks);
 artworkRouter.post(
   "/submit",
   auth,
-  multer().single("art"),
+  multer().single("content"),
   artworkController.submitArtwork
 );
 artworkRouter.delete("/delete/:id", auth, artworkController.deleteArtwork);

@@ -5,11 +5,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import z from "zod";
 import { useIsLoggedIn } from "../../hooks/useIsLoggedIn";
+import { useCreateArtwork } from "../../hooks/useCreateArtwork";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required" }),
   description: z.string().optional(),
-  art: z
+  content: z
     .custom<FileList>()
     .refine((files) => files.length === 1, {
       message: "Please upload a single file",
@@ -21,7 +22,7 @@ const formSchema = z.object({
 
 export const UploadModal: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [backendError, setBackendError] = React.useState<string | null>(null);
+  const { mutate: submit, isPending, error: SubmitError } = useCreateArtwork();
   const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
 
   const navigate = useNavigate();
@@ -34,43 +35,21 @@ export const UploadModal: React.FC = () => {
   if (error) {
     return <div>Login failed</div>;
   }
+  if (isPending) {
+    return <div>Submitting pending</div>;
+  }
+  if (SubmitError) {
+    return <div>Submit failed</div>;
+  }
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form;
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setBackendError(null);
 
-    try {
-      const formData = new FormData();
-      formData.append("title", data.title);
-      if (data.description) {
-        formData.append("description", data.description);
-      }
-      const file = data.art[0];
-      formData.append("art", file);
-
-      const response = await fetch("/api/artwork/submit", {
-        method: "POST",
-        body: formData,
-      }); //TODO
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || "Art upload failed");
-      }
-
-      alert("Thank you, art uploaded successfully");
-      setIsOpen(false);
-    } catch (error) {
-      if (error instanceof Error) {
-        setBackendError(error.message);
-      } else {
-        setBackendError("An unknown error occurred");
-      }
-    }
+  const onSubmit = (formdata: z.infer<typeof formSchema>) => {
+    submit(formdata);
   };
 
   return (
@@ -163,21 +142,16 @@ export const UploadModal: React.FC = () => {
 
                   <div className="col-span-2">
                     <input
-                      {...register("art")}
+                      {...register("content")}
                       type="file"
                       accept="image/*"
                       multiple={false}
                       className={`cursor-pointer text-mytext-dark dark:text-mytext-light ${
-                        errors.art ? "border border-red-500" : ""
+                        errors.content ? "border border-red-500" : ""
                       }`}
                       placeholder="Write a description here (optionnal)"
                     ></input>
                   </div>
-                  {backendError && (
-                    <p className="text-red-600 text-sm text-center">
-                      {backendError}
-                    </p>
-                  )}
                 </div>
                 <button
                   type="submit"

@@ -37,10 +37,10 @@ export const SignUpForm: React.FC = () => {
     mutate(formData);
   };
   if (isPending) {
-    return <div>Update pending</div>;
+    return <div>Registration pending</div>;
   }
   if (mutationError) {
-    return <div>Update failed</div>;
+    return <div>Registration failed</div>;
   }
 
   return (

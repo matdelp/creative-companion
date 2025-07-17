@@ -17,4 +17,5 @@ artworkRouter.patch("/edit/:id", auth, artworkController.editArtwork);
 artworkRouter.get("/dates", auth, artworkController.getArtworkDatesByUser);
 artworkRouter.get("/amount", auth, artworkController.getArtworkDatesByUser);
 artworkRouter.get("/daily", auth, artworkController.getArtworksOfTheDay);
+artworkRouter.get("/collection", auth, artworkController.getAllArtworks);
 artworkRouter.get("/", auth, artworkController.getArtworksByUser);

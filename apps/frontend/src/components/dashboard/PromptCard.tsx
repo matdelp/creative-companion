@@ -52,7 +52,7 @@ export const PromptCard: React.FC = () => {
         </div>
       </div>
       <h2 className="xl:text-2xl text-xl text-mytext-dark dark:text-mytext-light font-semibold pt-8 pb-2 text-center">
-        Your Work
+        Today's work 🫶
       </h2>
       {art ? (
         <div className="flex items-center justify-center w-full pt-2">

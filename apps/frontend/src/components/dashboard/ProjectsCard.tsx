@@ -3,7 +3,7 @@ import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 import { ArtworkCard } from "../profile/ArtworkCard";
 
 export const ProjectsCard: React.FC = () => {
-  const { data, isLoading, error } = useGetUserProfile(5);
+  const { data, isLoading, error } = useGetUserProfile(10);
 
   if (isLoading) {
     return <div>loading</div>;

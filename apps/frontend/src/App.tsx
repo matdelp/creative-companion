@@ -6,6 +6,7 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { Dashboard } from "./pages/DashboardPage";
 import { useThemeStore } from "./store/useThemeStore";
 import { CollectionPage } from "./pages/CollectionPage";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 export const App = () => {
   const { theme } = useThemeStore();
@@ -23,9 +24,11 @@ export const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/collection" element={<CollectionPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/collection" element={<CollectionPage />} />
+        </Route>
       </Routes>
     </>
   );

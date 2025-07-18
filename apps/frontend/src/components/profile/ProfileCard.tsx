@@ -1,4 +1,4 @@
-import type { UserInfo, UserProfile } from "@creative-companion/common";
+import type { UserProfile } from "@creative-companion/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -6,8 +6,8 @@ import z from "zod";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useModifyUserProfile } from "../../hooks/useModifyUserProfile";
 import { NavBar } from "../NavBar";
-import { Picture } from "./Picture";
 import { NavHomeButton } from "../NavHomeButton";
+import { Picture } from "./Picture";
 
 type ProfileCardProps = {
   data: UserProfile;
@@ -32,7 +32,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
   } = data;
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [user, setUser] = useState<UserInfo>({ ...data });
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -65,11 +64,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
     mutate(formData, {
       onSuccess: () => {
         setIsEditing(false);
-        setUser((prev) => ({
-          ...prev,
-          ...formData,
-          picture: prev.picture,
-        }));
       },
     });
   };
@@ -195,13 +189,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
         ) : (
           <>
             <h2 className="xl:text-4xl text-3xl font-bold text-myblue-400 dark:text-myblue-100">
-              {user.first_name} {user.last_name}
+              {data.first_name} {data.last_name}
             </h2>
             <p className="text-mytext-dark dark:text-mytext-light xl:text-2xl text-xl">
-              {user.username}
+              {data.username}
             </p>
             <p className="text-mybackground-dark-100 dark:text-mytext-light  text-center max-w-xl">
-              {user.description}
+              {data.description}
             </p>
           </>
         )}

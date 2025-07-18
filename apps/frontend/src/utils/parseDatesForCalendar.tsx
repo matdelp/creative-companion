@@ -4,12 +4,12 @@ import { differenceInCalendarDays } from "date-fns";
 export const parseCompletedDates = (data: ArtworkDates[]) => {
   return data.map((item) => {
     const date = new Date(item.created_at);
-    return date.toISOString().split("T")[0];
+    return date.toLocaleDateString("en-CA");
   });
 };
 
 export const isPromptCompleted = (date: Date, completedDates: string[]) => {
-  const dateString = date.toISOString().split("T")[0];
+  const dateString = date.toLocaleDateString("en-CA");
   return completedDates.includes(dateString);
 };
 
@@ -32,6 +32,5 @@ export const calculateLongestStreak = (dates: ArtworkDates[]): number => {
       currentStreak = 1;
     }
   }
-
   return longest;
 };

@@ -50,6 +50,7 @@ export const UploadModal: React.FC = () => {
 
   const onSubmit = (formdata: z.infer<typeof formSchema>) => {
     submit(formdata);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -87,7 +88,7 @@ export const UploadModal: React.FC = () => {
           >
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-mypink-400">
               <h3 className="text-lg font-semibold text-mytext-dark dark:text-mytext-light ">
-                Your inspiration for the day
+                Your Daily Spark — Only one Creation
               </h3>
               <button
                 type="button"
@@ -118,7 +119,7 @@ export const UploadModal: React.FC = () => {
                       className={`bg-mypink-100 dark:bg-mypink-700 dark:text-mytext-light border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.title ? "border border-red-500" : ""
                       } `}
-                      placeholder="Give your creation a title"
+                      placeholder="Add a Title to your Creation"
                     />
                   </div>
 
@@ -127,7 +128,7 @@ export const UploadModal: React.FC = () => {
                       htmlFor="description"
                       className="block mb-2 text-xl font-medium text-mytext-dark dark:text-mytext-light"
                     >
-                      Art Description
+                      Description
                     </label>
                     <textarea
                       {...register("description")}
@@ -136,7 +137,7 @@ export const UploadModal: React.FC = () => {
                       className={`bg-mypink-100 dark:bg-mypink-700 dark:text-mytext-light border border-mypurple-700 text-blackText-primary text-sm rounded-lg focus:ring-mypink-700 block w-full p-2.5 ${
                         errors.description ? "border border-red-500" : ""
                       } `}
-                      placeholder="Write a description here (optionnal)"
+                      placeholder="Give your work a little backstory (optional)"
                     ></textarea>
                   </div>
 
@@ -149,13 +150,12 @@ export const UploadModal: React.FC = () => {
                       className={`cursor-pointer text-mytext-dark dark:text-mytext-light ${
                         errors.content ? "border border-red-500" : ""
                       }`}
-                      placeholder="Write a description here (optionnal)"
                     ></input>
                   </div>
                 </div>
                 <button
                   type="submit"
-                  className="text-mytext-dark dark:text-mytext-light bg-myblue-400 dark:bg-myblue-700 rounded-lg px-5 py-2.5 text-center cursor-pointer"
+                  className="text-mytext-light font-bold bg-myblue-400 dark:bg-myblue-700 rounded-lg px-5 py-2.5 text-center cursor-pointer"
                 >
                   Submit your creation
                 </button>

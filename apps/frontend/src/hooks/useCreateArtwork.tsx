@@ -31,8 +31,9 @@ export const useCreateArtwork = () => {
       return;
     },
     onSuccess: () => {
-      navigate("/");
       queryClient.invalidateQueries({ queryKey: ["profileById"] });
+      queryClient.invalidateQueries({ queryKey: ["DailyArt"] });
+      if (window.location.pathname !== "/dashboard") navigate("/profile");
     },
   });
 };

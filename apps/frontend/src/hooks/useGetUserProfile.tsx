@@ -7,8 +7,8 @@ export const useGetUserProfile = (take?: number) => {
   return useQuery({
     queryKey: ["profileById"],
     queryFn: async () => {
-      const qs = take ? new URLSearchParams({ take: take.toString() }) : "";
-      const response = await fetch(`${FETCH_URL}?${qs}`, {
+      const qs = take ? `?take=${take}` : "";
+      const response = await fetch(`${FETCH_URL}${qs}`, {
         method: "GET",
         credentials: "include",
       });

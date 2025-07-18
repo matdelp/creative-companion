@@ -45,9 +45,7 @@ export const NavBar: React.FC<NavBarProps> = ({
               </li>
             ))
           ) : (
-            <li>
-              <a href="/login">Login</a>
-            </li>
+            <></>
           )}
         </ul>
         <div className="flex items-center xl:gap-2 gap-1">

@@ -24,7 +24,7 @@ Features
     📱 Responsive Design
     Optimized for desktop and mobile experiences.
 
-🧰 Tech Stack
+Tech Stack
 
 Frontend:
 

@@ -1,5 +1,3 @@
-import { PaletteDb } from "./colorPalette";
-
 export type PromptRes = {
   id: number;
   inspiration: {

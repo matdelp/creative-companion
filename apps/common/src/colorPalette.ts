@@ -1,4 +1,4 @@
-import { Color, ColorRes } from "./colors";
+import type { Color, ColorRes } from "./colors";
 
 export type PaletteRes = {
   mode: string;

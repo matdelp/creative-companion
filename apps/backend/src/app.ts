@@ -7,8 +7,9 @@ import { userRouter } from "./routes/userRouter";
 import { artworkRouter } from "./routes/artworkRouter";
 import passport from "./services/passeport/googleAuth";
 import session from "express-session";
+import path from "path";
 
-const PORT = process.env.PORT || 5001;
+const PORT = Number(process.env.PORT) || 5001;
 
 const app = express();
 app.use(
@@ -28,13 +29,16 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use("/prompt", promptRouter);
-app.use("/artist", userRouter);
-app.use("/artwork", artworkRouter);
-app.get("/", (req, res) => {
-  res.json({ message: "Hello world" });
+app.use("/api/prompt", promptRouter);
+app.use("/api/artist", userRouter);
+app.use("/api/artwork", artworkRouter);
+
+// Production
+app.use(express.static(path.join(__dirname, "../build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on: http://localhost:${PORT}/`);
 });

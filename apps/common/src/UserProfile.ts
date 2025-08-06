@@ -1,4 +1,4 @@
-import { Artwork } from "./Artwork";
+import type { Artwork } from "./Artwork";
 
 export type UserProfile = {
   id: number;

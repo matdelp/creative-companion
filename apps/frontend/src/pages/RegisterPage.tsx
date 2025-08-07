@@ -11,7 +11,7 @@ export const RegisterPage: React.FC = () => {
         linkMessage="Already have an account?"
         linkText="Login"
         path="/login"
-        google={true}
+        google={false} //TODO reintroduce google when certified
       />
     </div>
   );

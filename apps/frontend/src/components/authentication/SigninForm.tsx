@@ -31,6 +31,7 @@ export const SignInForm: React.FC = () => {
     return <div>Update pending</div>;
   }
   if (mutationError) {
+    console.log("toto");
     return <div>Update failed</div>;
   }
 

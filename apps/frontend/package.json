@@ -29,6 +29,7 @@
     "react-photo-gallery": "^8.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.11",
     "yet-another-react-lightbox": "^3.24.0",
     "zod": "^3.25.74",

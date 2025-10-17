@@ -19,14 +19,16 @@ export const useCreateLoginUser = () => {
         body: JSON.stringify(data),
         credentials: "include",
       });
+      console.log(response);
       if (!response.ok) {
         throw new Error("Login failed");
       }
       return;
     },
     onSuccess: () => {
+      console.log("success");
       setAuthProvider("local");
-      navigate("/profile");
+      navigate("/");
     },
   });
 };

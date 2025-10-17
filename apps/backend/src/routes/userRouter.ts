@@ -3,6 +3,7 @@ import passport from "passport";
 import { userController } from "../controllers/userController";
 import { auth } from "../middleware/authenticate";
 import multer from "multer";
+import { demo } from "../middleware/demo";
 
 export const userRouter = express.Router();
 
@@ -13,11 +14,12 @@ userRouter.get("/profile", auth, userController.getUserById);
 userRouter.get("/me", auth, userController.me);
 userRouter.get("/islogin", userController.checkUser);
 userRouter.get("/creationDate", auth, userController.getCreationDate);
-userRouter.patch("/edit", auth, userController.editUserProfile);
+userRouter.patch("/edit", auth, demo, userController.editUserProfile);
 userRouter.patch(
   "/editPhoto",
-  auth,
   multer().single("picture"),
+  auth,
+  demo,
   userController.submitProfilePhoto
 );
 userRouter.post("/register", userController.createUser);

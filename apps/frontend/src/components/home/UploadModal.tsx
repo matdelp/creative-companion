@@ -39,7 +39,7 @@ export const UploadModal: React.FC = () => {
     return <div>Submitting pending</div>;
   }
   if (SubmitError) {
-    return <div>Submit failed</div>;
+    return <div>Submitting failed: {SubmitError.message}</div>;
   }
 
   const {
@@ -88,7 +88,7 @@ export const UploadModal: React.FC = () => {
           >
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-mypink-400">
               <h3 className="text-lg font-semibold text-mytext-dark dark:text-mytext-light ">
-                Your Daily Spark — Only one Creation
+                Your Daily Spark, only one Creation per day !
               </h3>
               <button
                 type="button"

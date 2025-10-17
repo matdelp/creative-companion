@@ -26,7 +26,7 @@ export const useCreateArtwork = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Submit failed");
+        throw new Error(await response.text());
       }
       return;
     },

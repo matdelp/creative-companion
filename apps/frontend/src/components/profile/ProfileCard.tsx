@@ -94,6 +94,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
             navStyle="w-full text-mytext-light dark:text-mytext-light flex items-center justify-between xl:px-4 xl:py-3"
             modeButtonStyle="cursor-pointer xl:text-3xl text-xl dark:text-mypink-100 dark:hover:text-mypink-400 text-mytext-light hover:text-myblue-700 text-center p-1"
             children={<NavHomeButton />}
+            demoButtonStyle="text-mytext-light dark:text-mypink-100 text-s w-full font-bold border border-b-mypink-100 rounded-2xl px-2 cursor-pointer hover:bg-mypink-100/80 xl:mr-10"
             paintbrushStyle="text-mytext-light dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
             linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-light font-bold"
             links={[

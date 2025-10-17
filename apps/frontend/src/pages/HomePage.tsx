@@ -12,6 +12,7 @@ export const HomePage: React.FC = () => {
         <NavBar
           navStyle="w-full text-myblue-700 dark:text-mypink-100 flex items-center justify-between xl:px-4 xl:py-3"
           modeButtonStyle="cursor-pointer xl:text-3xl text-xl dark:text-mypink-100 text-mypink-400 text-center p-1"
+          demoButtonStyle="text-mypink-400 dark:text-mypink-100 text-s w-full font-bold border border-b-mypink-100 rounded-2xl px-2 cursor-pointer hover:bg-mypink-100/50 xl:mr-10"
           children={<ProfileDropdown />}
           paintbrushStyle="text-myblue-400 dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
           linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-myblue-700 dark:text-mytext-light"

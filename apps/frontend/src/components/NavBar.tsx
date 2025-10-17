@@ -15,6 +15,7 @@ type NavBarProps = PropsWithChildren<{
   paintbrushStyle: string;
   linkStyle: string;
   links: Link[];
+  demoButtonStyle: string;
 }>;
 export const NavBar: React.FC<NavBarProps> = ({
   navStyle,
@@ -23,6 +24,7 @@ export const NavBar: React.FC<NavBarProps> = ({
   paintbrushStyle,
   linkStyle,
   links,
+  demoButtonStyle,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: isLoggedIn, isLoading, error } = useIsLoggedIn();
@@ -67,14 +69,14 @@ export const NavBar: React.FC<NavBarProps> = ({
 
           {isOpen && (
             <div className="absolute top-full -left-10 w-auto bg-white/50 dark:bg-black/50 shadow-md rounded-2xl mt-1 p-2 flex flex-col items-center gap-2 z-50">
-              <ToastDemo />
+              <ToastDemo demoButtonStyle={demoButtonStyle} />
               {children}
               <ThemeToggleButton modeButtonStyle={modeButtonStyle} />
             </div>
           )}
 
           <div className="hidden xl:flex items-center xl:gap-2 gap-1">
-            <ToastDemo />
+            <ToastDemo demoButtonStyle={demoButtonStyle} />
             {children}
             <ThemeToggleButton modeButtonStyle={modeButtonStyle} />
           </div>

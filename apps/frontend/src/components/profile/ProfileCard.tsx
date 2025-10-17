@@ -77,13 +77,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
     return <div>Update pending</div>;
   }
   if (mutationError) {
-    return <div>Update failed</div>;
+    return <div>Update failed: {mutationError.message}</div>;
   }
   if (isDeleting) {
     return <div>Delete pending</div>;
   }
   if (deletingError) {
-    return <div>Delete failed</div>;
+    return <div>Delete failed: {deletingError.message}</div>;
   }
 
   return (

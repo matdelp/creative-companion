@@ -14,7 +14,7 @@ export const useModifyUserProfile = () => {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("Update failed");
+        throw new Error(await response.text());
       }
       return;
     },

@@ -8,6 +8,7 @@ import { useModifyUserProfile } from "../../hooks/useModifyUserProfile";
 import { NavBar } from "../NavBar";
 import { NavHomeButton } from "../NavHomeButton";
 import { Picture } from "./Picture";
+import { ToastError } from "../ToastError";
 
 type ProfileCardProps = {
   data: UserProfile;
@@ -72,22 +73,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
       todelete();
     }
   };
-
-  if (isPending) {
-    return <div>Update pending</div>;
-  }
-  if (mutationError) {
-    return <div>Update failed: {mutationError.message}</div>;
-  }
-  if (isDeleting) {
-    return <div>Delete pending</div>;
-  }
-  if (deletingError) {
-    return <div>Delete failed: {deletingError.message}</div>;
-  }
-
   return (
     <div className="w-full">
+      {mutationError && <ToastError message={mutationError?.message} />}
+      {deletingError && <ToastError message={deletingError?.message} />}
+      {isPending && <div>Update pending</div>}
+      {isDeleting && <div>Delete pending</div>}
+
       <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
         <div className="absolute top-2 left-0 pr-5 pl-2 w-full">
           <NavBar
@@ -159,16 +151,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
                 <p className="text-red-500 text-sm font-semibold">
                   {errors.description.message}
                 </p>
-              )}
-
-              {isPending && <p className="text-myblue-700">Updating...</p>}
-              {mutationError && (
-                <p className="text-red-600">Update failed: {mutationError}</p>
-              )}
-
-              {isDeleting && <p className="text-myblue-700">Deleting...</p>}
-              {deletingError && (
-                <p className="text-red-600">Delete failed: {deletingError}</p>
               )}
 
               <button

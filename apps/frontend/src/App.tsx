@@ -7,6 +7,7 @@ import { Dashboard } from "./pages/DashboardPage";
 import { useThemeStore } from "./store/useThemeStore";
 import { CollectionPage } from "./pages/CollectionPage";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import { ToastContainer } from "react-toastify";
 
 export const App = () => {
   const { theme } = useThemeStore();
@@ -30,6 +31,17 @@ export const App = () => {
           <Route path="/collection" element={<CollectionPage />} />
         </Route>
       </Routes>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
     </>
   );
 };

@@ -35,5 +35,5 @@ userRouter.get(
   userController.googleLoginUser
 );
 userRouter.post("/google/logout", userController.googleLogoutUser);
-userRouter.delete("/delete", auth, userController.deleteUser);
+userRouter.delete("/delete", auth, demo, userController.deleteUser);
 userRouter.get("/", userController.getUsers);

@@ -14,6 +14,7 @@ export const CollectionPage: React.FC = () => {
             children={<ProfileButton />}
             paintbrushStyle="text-mytext-light dark:text-mypink-100 xl:w-12 xl:h-12 w-6 h-6"
             linkStyle="flex items-center xl:space-x-10 space-x-2 xl:text-2xl text-xs text-mytext-light font-bold"
+            demoButtonStyle=""
             links={[
               { path: "/dashboard", name: "Dashboard" },
               { path: "/", name: "Home" },

@@ -3,6 +3,8 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateLoginUser } from "../../hooks/useCreateLoginUser";
+import { ToastError } from "../ToastError";
+import { ToastUpdating } from "../ToastUpdating";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -27,13 +29,6 @@ export const SignInForm: React.FC = () => {
   const onSubmit = (formData: FormData) => {
     mutate(formData);
   };
-  if (isPending) {
-    return <div>Update pending</div>;
-  }
-  if (mutationError) {
-    console.log("toto");
-    return <div>Update failed</div>;
-  }
 
   return (
     <FormProvider {...form}>
@@ -43,6 +38,12 @@ export const SignInForm: React.FC = () => {
         className="flex flex-col items-center justify-center gap-3 w-full"
       >
         <div className="w-full">
+          {mutationError && (
+            <ToastError message={mutationError?.message || "Update failed"} />
+          )}
+          {isPending && (
+            <ToastUpdating message={"Submitting ..."} delay={500} />
+          )}
           <input
             type="email"
             placeholder="Email"

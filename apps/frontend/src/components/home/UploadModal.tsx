@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import z from "zod";
 import { useIsLoggedIn } from "../../hooks/useIsLoggedIn";
 import { useCreateArtwork } from "../../hooks/useCreateArtwork";
+import { ToastUpdating } from "../ToastUpdating";
+import { ToastError } from "../ToastError";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required" }),
@@ -29,18 +31,6 @@ export const UploadModal: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-  if (isLoading) {
-    return <div>Login pending</div>;
-  }
-  if (error) {
-    return <div>Login failed</div>;
-  }
-  if (isPending) {
-    return <div>Submitting pending</div>;
-  }
-  if (SubmitError) {
-    return <div>Submitting failed: {SubmitError.message}</div>;
-  }
 
   const {
     register,
@@ -55,6 +45,13 @@ export const UploadModal: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center xl:p-2 p-4">
+      {error && <ToastError message={error?.message || "Update failed"} />}
+      {SubmitError && (
+        <ToastError message={SubmitError?.message || "Delete failed"} />
+      )}
+      {isPending && <ToastUpdating message={"Submitting ..."} delay={500} />}
+      {isLoading && <ToastUpdating message={"Logging in ..."} delay={500} />}
+
       {isLoggedIn ? (
         <button
           className="bg-linear-to-r from-mypink-100 to-mypink-400 dark:from-myorange-400 dark:to-mypink-400 xl:w-sm w-48 xl:p-4 p-2 font-bold xl:text-2xl text-lg rounded-4xl cursor-pointer text-mytext-light dark:text-mytext-dark"

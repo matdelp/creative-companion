@@ -7,6 +7,8 @@ import z from "zod";
 import { useModifyArtwork } from "../../hooks/useModifyArtwork";
 import { useDeleteArtwork } from "../../hooks/useDeleteArtwork";
 import { X } from "lucide-react";
+import { ToastError } from "../ToastError";
+import { ToastUpdating } from "../ToastUpdating";
 
 type ArtworkCardProps = {
   artworks: Artwork[];
@@ -79,10 +81,15 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({
 
   return (
     <>
-      {isPending && <div>Update pending...</div>}
-      {isDeleting && <div>Deleting pending...</div>}
-      {mutationError && <div className="text-red-600">Update failed</div>}
-      {deletingError && <div className="text-red-600">Delete failed</div>}
+      {" "}
+      {mutationError && (
+        <ToastError message={mutationError?.message || "Update failed"} />
+      )}
+      {deletingError && (
+        <ToastError message={deletingError?.message || "Delete failed"} />
+      )}
+      {isPending && <ToastUpdating message={"Updating ..."} delay={500} />}
+      {isDeleting && <ToastUpdating message={"Deleting ..."} delay={500} />}
       <div
         className={`flex flex-wrap gap-2 bg-mybackground-light-400 ${background}`}
       >

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { FaPen } from "react-icons/fa";
 import { useModifyProfilePicture } from "../../hooks/useModifyProfilePicture";
+import { ToastUpdating } from "../ToastUpdating";
 
 type PictureProps = { image: string; isEditing: boolean };
 
@@ -47,7 +48,7 @@ export const Picture: React.FC<PictureProps> = ({ image, isEditing }) => {
           style={{ display: "none" }}
         />
       </div>
-      {isPending && <div>Update pending...</div>}
+      {isPending && <ToastUpdating message={"Updating ..."} delay={500} />}
       {mutationError && <div className="text-red-600">Update failed</div>}
     </div>
   );

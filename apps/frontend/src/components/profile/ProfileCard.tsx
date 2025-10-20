@@ -9,6 +9,7 @@ import { NavBar } from "../NavBar";
 import { NavHomeButton } from "../NavHomeButton";
 import { Picture } from "./Picture";
 import { ToastError } from "../ToastError";
+import { ToastUpdating } from "../ToastUpdating";
 
 type ProfileCardProps = {
   data: UserProfile;
@@ -77,8 +78,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ data }) => {
     <div className="w-full">
       {mutationError && <ToastError message={mutationError?.message} />}
       {deletingError && <ToastError message={deletingError?.message} />}
-      {isPending && <div>Update pending</div>}
-      {isDeleting && <div>Delete pending</div>}
+      {isPending && <ToastUpdating message={"Updating ..."} delay={500} />}
+      {isDeleting && <ToastUpdating message={"Deleting ..."} delay={500} />}
 
       <div className="xl:h-48 h-36 bg-gradient-to-r from-mypink-400 to-myorange-400 dark:from-myblue-700 dark:to-mypurple-700 relative xl:p-5 p-2">
         <div className="absolute top-2 left-0 pr-5 pl-2 w-full">

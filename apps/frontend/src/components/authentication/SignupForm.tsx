@@ -3,6 +3,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useCreateUser } from "../../hooks/useCreateUser";
+import { ToastUpdating } from "../ToastUpdating";
+import { ToastError } from "../ToastError";
 
 const formSchema = z.object({
   first_name: z
@@ -36,12 +38,6 @@ export const SignUpForm: React.FC = () => {
   const onSubmit = (formData: FormData) => {
     mutate(formData);
   };
-  if (isPending) {
-    return <div>Registration pending</div>;
-  }
-  if (mutationError) {
-    return <div>Registration failed</div>;
-  }
 
   return (
     <FormProvider {...form}>
@@ -53,6 +49,12 @@ export const SignUpForm: React.FC = () => {
         method="POST"
       >
         <div className="w-full">
+          {mutationError && (
+            <ToastError message={mutationError?.message || "Update failed"} />
+          )}
+          {isPending && (
+            <ToastUpdating message={"Submitting ..."} delay={500} />
+          )}
           <input
             type="text"
             placeholder="First Name"
